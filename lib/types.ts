@@ -158,7 +158,15 @@ export type CompanyProfile = {
   tinNumber: string;
   vendorNumber: string;
   logoUrl: string;
+  bankAccounts: BankAccount[];
   updatedAt?: string;
+};
+
+export type BankAccount = {
+  bankName: string;
+  branch: string;
+  currency: string;
+  accountNumber: string;
 };
 
 export type ExpenseCategory =

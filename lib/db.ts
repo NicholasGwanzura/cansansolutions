@@ -185,12 +185,14 @@ async function ensureSchema(): Promise<void> {
 	      tin_number    TEXT NOT NULL DEFAULT '',
 	      vendor_number TEXT NOT NULL DEFAULT '',
 	      logo_url      TEXT NOT NULL DEFAULT '/images/brand/cansan-logo.png',
+      bank_accounts JSONB NOT NULL DEFAULT '[{"bankName":"CABS","branch":"","currency":"USD","accountNumber":"1149564261"},{"bankName":"CBZ","branch":"","currency":"USD","accountNumber":"01127428320019"}]'::jsonb,
       updated_at    TIMESTAMPTZ NOT NULL DEFAULT NOW()
     )
   `;
   // Add tin_number column if it doesn't exist (migration for existing databases)
   await sql()`ALTER TABLE company_profile ADD COLUMN IF NOT EXISTS tin_number TEXT NOT NULL DEFAULT ''`;
   await sql()`ALTER TABLE company_profile ADD COLUMN IF NOT EXISTS vendor_number TEXT NOT NULL DEFAULT ''`;
+  await sql()`ALTER TABLE company_profile ADD COLUMN IF NOT EXISTS bank_accounts JSONB NOT NULL DEFAULT '[{"bankName":"CABS","branch":"","currency":"USD","accountNumber":"1149564261"},{"bankName":"CBZ","branch":"","currency":"USD","accountNumber":"01127428320019"}]'::jsonb`;
   // Ensure existing row has the correct TIN, VAT, and vendor values
   await sql()`
     UPDATE company_profile
@@ -1032,6 +1034,19 @@ function rowToCompanyProfile(row: Record<string, unknown>): CompanyProfile {
     tinNumber: String(row.tin_number ?? ''),
     vendorNumber: String(row.vendor_number ?? ''),
     logoUrl: String(row.logo_url ?? '/images/brand/cansan-logo.png'),
+    bankAccounts: Array.isArray(row.bank_accounts)
+      ? row.bank_accounts.map((account) => {
+          const value = account as Record<string, unknown>;
+          return {
+            bankName: String(value.bankName ?? ''),
+            branch: String(value.branch ?? ''),
+            currency: String(value.currency ?? ''),
+            accountNumber: String(value.accountNumber ?? ''),
+          };
+        })
+      : typeof row.bank_accounts === 'string'
+        ? (JSON.parse(row.bank_accounts) as CompanyProfile['bankAccounts'])
+        : [],
     updatedAt: toIsoString(row.updated_at),
   };
 }
@@ -1057,7 +1072,7 @@ export async function saveCompanyProfile(profile: CompanyProfile): Promise<Compa
   const now = new Date();
   const rows = await sql()`
 	    INSERT INTO company_profile (
-	      id, name, tagline, address_line1, address_line2, city, country, phone, email, website, vat_number, tin_number, vendor_number, logo_url, updated_at
+	      id, name, tagline, address_line1, address_line2, city, country, phone, email, website, vat_number, tin_number, vendor_number, logo_url, bank_accounts, updated_at
 	    ) VALUES (
 	      'default',
 	      ${profile.name},
@@ -1073,6 +1088,7 @@ export async function saveCompanyProfile(profile: CompanyProfile): Promise<Compa
 	      ${profile.tinNumber},
 	      ${profile.vendorNumber},
 	      ${profile.logoUrl},
+	      ${JSON.stringify(profile.bankAccounts || [])}::jsonb,
 	      ${now}
 	    )
 	    ON CONFLICT (id) DO UPDATE SET
@@ -1089,6 +1105,7 @@ export async function saveCompanyProfile(profile: CompanyProfile): Promise<Compa
 	      tin_number    = EXCLUDED.tin_number,
 	      vendor_number = EXCLUDED.vendor_number,
 	      logo_url      = EXCLUDED.logo_url,
+      bank_accounts = EXCLUDED.bank_accounts,
       updated_at    = ${now}
     RETURNING *
   `;

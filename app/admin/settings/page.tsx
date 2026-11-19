@@ -31,6 +31,10 @@ export default function SettingsPage() {
     tinNumber: '',
     vendorNumber: '',
     logoUrl: '/images/brand/cansan-logo.png',
+    bankAccounts: [
+      { bankName: 'CABS', branch: '', currency: 'USD', accountNumber: '1149564261' },
+      { bankName: 'CBZ', branch: '', currency: 'USD', accountNumber: '01127428320019' },
+    ],
   });
   const [savingCompany, setSavingCompany] = useState(false);
   const [, setSavingSettings] = useState(false);
@@ -294,6 +298,81 @@ export default function SettingsPage() {
                     className="w-full rounded-lg border border-zinc-200 px-3 py-2 text-sm"
                     placeholder="e.g. 723804"
                   />
+                </div>
+              </div>
+              <div className="rounded-xl border border-zinc-200 p-4">
+                <div className="mb-4 flex items-center justify-between gap-3">
+                  <div>
+                    <h4 className="text-sm font-semibold text-zinc-900">Banking Details</h4>
+                    <p className="mt-1 text-xs text-zinc-500">Shown on printed invoices and quotes.</p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setCompany({
+                      ...company,
+                      bankAccounts: [...(company.bankAccounts || []), { bankName: '', branch: '', currency: 'USD', accountNumber: '' }],
+                    })}
+                    className="shrink-0 rounded-lg border border-zinc-200 px-3 py-2 text-xs font-semibold text-zinc-700 hover:bg-zinc-50"
+                  >
+                    Add bank
+                  </button>
+                </div>
+                <div className="space-y-4">
+                  {(company.bankAccounts || []).map((account, index) => (
+                    <div key={index} className="rounded-lg bg-zinc-50 p-3">
+                      <div className="mb-3 flex items-center justify-between">
+                        <p className="text-xs font-semibold text-zinc-600">Bank account {index + 1}</p>
+                        <button
+                          type="button"
+                          onClick={() => setCompany({
+                            ...company,
+                            bankAccounts: company.bankAccounts.filter((_, accountIndex) => accountIndex !== index),
+                          })}
+                          className="text-xs font-medium text-red-600 hover:text-red-700"
+                        >
+                          Remove
+                        </button>
+                      </div>
+                      <div className="grid grid-cols-2 gap-3">
+                        <div>
+                          <label className="mb-1 block text-xs font-semibold text-zinc-500">Bank name</label>
+                          <input
+                            value={account.bankName}
+                            onChange={(e) => setCompany({ ...company, bankAccounts: company.bankAccounts.map((item, i) => i === index ? { ...item, bankName: e.target.value } : item) })}
+                            className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm"
+                            placeholder="e.g. CABS"
+                          />
+                        </div>
+                        <div>
+                          <label className="mb-1 block text-xs font-semibold text-zinc-500">Branch</label>
+                          <input
+                            value={account.branch}
+                            onChange={(e) => setCompany({ ...company, bankAccounts: company.bankAccounts.map((item, i) => i === index ? { ...item, branch: e.target.value } : item) })}
+                            className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm"
+                            placeholder="e.g. Harare"
+                          />
+                        </div>
+                        <div>
+                          <label className="mb-1 block text-xs font-semibold text-zinc-500">Currency</label>
+                          <input
+                            value={account.currency}
+                            onChange={(e) => setCompany({ ...company, bankAccounts: company.bankAccounts.map((item, i) => i === index ? { ...item, currency: e.target.value } : item) })}
+                            className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm"
+                            placeholder="USD"
+                          />
+                        </div>
+                        <div>
+                          <label className="mb-1 block text-xs font-semibold text-zinc-500">Account number</label>
+                          <input
+                            value={account.accountNumber}
+                            onChange={(e) => setCompany({ ...company, bankAccounts: company.bankAccounts.map((item, i) => i === index ? { ...item, accountNumber: e.target.value } : item) })}
+                            className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm"
+                            placeholder="Account number"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
               <button

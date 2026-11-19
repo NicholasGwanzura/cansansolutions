@@ -1238,24 +1238,26 @@ export default function QuotesAdmin() {
                   </div>
                 )}
                 {/* Bank Details */}
-                <div className="mb-8 rounded-lg border border-zinc-200 bg-white px-4 py-3">
-                  <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-400 mb-2">
-                    Bank Details
-                  </p>
-                  <p className="text-sm font-semibold text-zinc-900 mb-2">CANSAN SOLUTIONS</p>
-                  <div className="grid grid-cols-2 gap-4 text-xs text-zinc-600">
-                    <div>
-                      <p className="font-semibold text-zinc-700">CABS</p>
-                      <p>Currency: USD</p>
-                      <p>Account Number: 1149564261</p>
-                    </div>
-                    <div>
-                      <p className="font-semibold text-zinc-700">CBZ</p>
-                      <p>Currency: USD</p>
-                      <p>Account Number: 01127428320019</p>
+                {(company?.bankAccounts || []).length > 0 && (
+                  <div className="mb-8 rounded-lg border border-zinc-200 bg-white px-4 py-3">
+                    <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-400 mb-2">
+                      Bank Details
+                    </p>
+                    <p className="text-sm font-semibold text-zinc-900 mb-2">
+                      {company?.name || 'CANSAN SOLUTIONS'}
+                    </p>
+                    <div className="grid grid-cols-2 gap-4 text-xs text-zinc-600">
+                      {(company?.bankAccounts || []).map((account, index) => (
+                        <div key={`${account.bankName}-${index}`}>
+                          <p className="font-semibold text-zinc-700">{account.bankName}</p>
+                          {account.branch && <p>Branch: {account.branch}</p>}
+                          {account.currency && <p>Currency: {account.currency}</p>}
+                          {account.accountNumber && <p>Account Number: {account.accountNumber}</p>}
+                        </div>
+                      ))}
                     </div>
                   </div>
-                </div>
+                )}
                 <div className="border-t-2 border-zinc-900 pt-4 flex justify-between items-center">
                   <div>
                     <p className="text-xs font-semibold text-zinc-700">
