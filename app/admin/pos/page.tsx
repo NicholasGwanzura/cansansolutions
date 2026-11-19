@@ -4,7 +4,6 @@ import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import type { Product, Client, CompanyProfile, LineItem, CustomerInfo, PaymentMethod, Invoice, Receipt } from '@/lib/types';
 import AdminLayout from '../components/AdminLayout';
-import AdminAuthGate from '../components/AdminAuthGate';
 
 const WALK_IN: CustomerInfo = { name: 'Walk-in Customer', email: '', phone: '', address: '' };
 const PAYMENT_METHODS: PaymentMethod[] = ['cash', 'card', 'bank_transfer', 'mobile_money', 'other'];
@@ -26,7 +25,7 @@ function newLineId() {
 
 type SaleResult = { invoice: Invoice; receipt: Receipt };
 
-function POS({ onLogout }: { onLogout: () => void }) {
+function POS() {
   const [products, setProducts] = useState<Product[]>([]);
   const [clients, setClients] = useState<Client[]>([]);
   const [company, setCompany] = useState<CompanyProfile | null>(null);
@@ -180,12 +179,12 @@ function POS({ onLogout }: { onLogout: () => void }) {
   });
 
   return (
-    <AdminLayout onLogout={onLogout}>
-      <main className="flex h-[calc(100vh-4rem)] flex-col lg:flex-row">
+    <AdminLayout>
+      <main className="flex flex-col pb-20 lg:h-[calc(100vh-3.5rem)] lg:flex-row lg:pb-0">
         {/* Product catalog */}
-        <section className="flex flex-1 flex-col border-b border-zinc-200 bg-zinc-50 lg:border-b-0 lg:border-r">
+        <section className="flex flex-col border-b border-zinc-200 bg-zinc-50 lg:min-h-0 lg:flex-1 lg:border-b-0 lg:border-r">
           <div className="border-b border-zinc-200 bg-white p-4">
-            <h1 className="text-lg font-bold text-zinc-900">POS</h1>
+            <h1 className="text-lg font-semibold tracking-tight text-zinc-950">Point of sale</h1>
             <input
               autoFocus
               value={search}
@@ -194,7 +193,7 @@ function POS({ onLogout }: { onLogout: () => void }) {
               className="mt-3 w-full rounded-lg border border-zinc-200 bg-white px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-red-500"
             />
           </div>
-          <div className="flex-1 overflow-y-auto p-4">
+          <div className="p-4 lg:min-h-0 lg:flex-1 lg:overflow-y-auto">
             {filteredProducts.length === 0 ? (
               <p className="text-center text-sm text-zinc-400 py-12">
                 {search ? 'No products match that search.' : 'No products available.'}
@@ -218,7 +217,7 @@ function POS({ onLogout }: { onLogout: () => void }) {
         </section>
 
         {/* Cart */}
-        <aside className="flex w-full flex-col bg-white lg:w-[400px] xl:w-[440px]">
+        <aside id="pos-cart" className="flex w-full scroll-mt-16 flex-col bg-white lg:w-[400px] xl:w-[440px]">
           <div className="flex items-center justify-between border-b border-zinc-200 px-5 py-4">
             <div>
               <p className="text-[11px] font-bold uppercase tracking-widest text-zinc-400">Current Sale</p>
@@ -511,11 +510,28 @@ function POS({ onLogout }: { onLogout: () => void }) {
             </div>
           </div>
         )}
+
+        {/* Mobile: the cart sits below the catalog, so keep the running total in reach. */}
+        {cart.length > 0 && !lastSale ? (
+          <div className="fixed inset-x-0 bottom-0 z-30 border-t border-zinc-200 bg-white/95 px-4 py-3 shadow-[0_-4px_16px_rgba(0,0,0,0.06)] backdrop-blur lg:hidden">
+            <button
+              type="button"
+              onClick={() => document.getElementById('pos-cart')?.scrollIntoView({ behavior: 'smooth' })}
+              className="flex w-full items-center justify-between rounded-lg bg-red-600 px-4 py-3 text-sm font-semibold text-white"
+            >
+              <span>
+                Review sale · {cart.reduce((n, li) => n + li.quantity, 0)} item
+                {cart.reduce((n, li) => n + li.quantity, 0) === 1 ? '' : 's'}
+              </span>
+              <span>{fmt(total, currency)}</span>
+            </button>
+          </div>
+        ) : null}
       </main>
     </AdminLayout>
   );
 }
 
 export default function POSPage() {
-  return <AdminAuthGate>{({ onLogout }) => <POS onLogout={onLogout} />}</AdminAuthGate>;
+  return <POS />;
 }

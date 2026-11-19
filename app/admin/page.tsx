@@ -3,7 +3,6 @@
 import { useEffect, useState, type ReactNode } from 'react';
 import Link from 'next/link';
 import AdminLayout from './components/AdminLayout';
-import AdminAuthGate from './components/AdminAuthGate';
 
 type OverviewData = {
   summary: {
@@ -433,7 +432,7 @@ function TopCustomers({ customers }: { customers: OverviewData['topCustomers'] }
   );
 }
 
-function DashboardOverview({ onLogout }: { onLogout: () => void }) {
+function DashboardOverview() {
   const [data, setData] = useState<OverviewData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -447,7 +446,7 @@ function DashboardOverview({ onLogout }: { onLogout: () => void }) {
   }, []);
 
   return (
-    <AdminLayout onLogout={onLogout}>
+    <AdminLayout>
       <main className="mx-auto max-w-[1600px] space-y-6 p-4 sm:p-6 lg:p-8">
         <div className="flex items-start justify-between">
           <div>
@@ -552,6 +551,6 @@ function DashboardOverview({ onLogout }: { onLogout: () => void }) {
 
 export default function AdminHomePage() {
   return (
-    <AdminAuthGate>{({ onLogout }) => <DashboardOverview onLogout={onLogout} />}</AdminAuthGate>
+    <DashboardOverview />
   );
 }

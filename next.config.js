@@ -11,6 +11,10 @@ const nextConfig = {
   },
   reactStrictMode: true,
   output: 'standalone',
+  // Forme ships a WebAssembly engine that it loads from disk at runtime; keep it
+  // (and the React serializer it pairs with) out of the bundle so there's a
+  // single @formepdf/react instance and the .wasm file is traced into standalone.
+  serverExternalPackages: ['@formepdf/core', '@formepdf/react'],
   distDir: '.next',
   poweredByHeader: false,
   compress: true,

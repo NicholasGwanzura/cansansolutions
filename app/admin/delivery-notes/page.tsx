@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import type { DeliveryNote, DeliveryNoteStatus, LineItem, CustomerInfo, CompanyProfile, Product, Client } from '@/lib/types';
 import AdminLayout from '../components/AdminLayout';
+import { Notice } from '../components/ui';
 
 const CURRENCIES = ['USD', 'ZWL', 'ZAR', 'KES'];
 const STATUSES: DeliveryNoteStatus[] = ['draft', 'dispatched', 'delivered', 'cancelled'];
@@ -59,6 +60,7 @@ export default function DeliveryNotesAdmin() {
   const [editing, setEditing] = useState<DeliveryNote | null>(null);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState('');
+  const dismissMessage = useCallback(() => setMessage(''), []);
   const [printing, setPrinting] = useState<DeliveryNote | null>(null);
   const [downloading, setDownloading] = useState(false);
   const [company, setCompany] = useState<CompanyProfile | null>(null);
@@ -254,13 +256,22 @@ export default function DeliveryNotesAdmin() {
 
   return (
     <AdminLayout onLogout={handleLogout}>
-      <main className="p-6">
-        {message && (
-          <div className="mb-4 rounded-lg bg-green-50 border border-green-200 px-4 py-3 text-sm text-green-700 flex justify-between items-center">
-            {message}
-            <button onClick={() => setMessage('')} className="text-green-500 hover:text-green-700">&#10005;</button>
-          </div>
-        )}
+      <main className="px-4 py-6 sm:px-6 lg:px-8">
+        <Notice message={message} onDismiss={dismissMessage} />
+
+        {/* Header */}
+        <div className="mb-6 flex items-center justify-between">
+          <h1 className="text-2xl font-semibold tracking-tight text-zinc-950">Delivery Notes</h1>
+          <button
+            onClick={() => startEdit()}
+            className="flex items-center gap-1.5 rounded-xl bg-red-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-red-700"
+          >
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+            </svg>
+            New Delivery Note
+          </button>
+        </div>
 
         {/* Stats */}
         <div className="mb-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
@@ -280,20 +291,6 @@ export default function DeliveryNotesAdmin() {
             <p className="text-xs font-medium text-zinc-500">Delivered</p>
             <p className="text-2xl font-bold text-green-600">{deliveredCount}</p>
           </div>
-        </div>
-
-        {/* Header */}
-        <div className="mb-6 flex items-center justify-between">
-          <h1 className="text-xl font-bold text-zinc-900">Delivery Notes</h1>
-          <button
-            onClick={() => startEdit()}
-            className="flex items-center gap-1.5 rounded-xl bg-red-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-red-700"
-          >
-            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-            </svg>
-            New Delivery Note
-          </button>
         </div>
 
         {/* List */}

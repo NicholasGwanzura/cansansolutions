@@ -124,3 +124,23 @@ export async function downloadElementAsPdf(
 
   pdf.save(filename);
 }
+
+/**
+ * Download a server-rendered PDF (e.g. /api/admin/invoices/:id/pdf).
+ * Throws with the server's error message if rendering fails.
+ */
+export async function downloadServerPdf(url: string, filename: string): Promise<void> {
+  const res = await fetch(url, { credentials: 'same-origin' });
+  if (!res.ok) {
+    const data = (await res.json().catch(() => null)) as { error?: string } | null;
+    throw new Error(data?.error || `Failed to generate PDF (${res.status})`);
+  }
+  const blobUrl = URL.createObjectURL(await res.blob());
+  const link = document.createElement('a');
+  link.href = blobUrl;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  setTimeout(() => URL.revokeObjectURL(blobUrl), 10_000);
+}

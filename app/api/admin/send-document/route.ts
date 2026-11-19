@@ -25,26 +25,49 @@ export async function POST(req: NextRequest) {
 
   try {
     const body = await req.json();
-    const { to, documentType, documentNumber, customerName, total, currency, pdfBase64 } = body;
-
-    // Validate required fields
-    if (
-      !to ||
-      !documentType ||
-      !documentNumber ||
-      !customerName ||
-      total === undefined ||
-      !currency ||
-      !pdfBase64
-    ) {
-      return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
-    }
+    const { to, documentType, documentId } = body;
+    let { documentNumber, customerName, total, currency, pdfBase64 } = body;
 
     if (typeof to !== 'string' || to.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(to)) {
       return NextResponse.json({ error: 'Invalid email address' }, { status: 400 });
     }
     if (!['Invoice', 'Quote', 'Receipt'].includes(documentType)) {
       return NextResponse.json({ error: 'Invalid document type' }, { status: 400 });
+    }
+
+    // Invoices and quotes: render the real PDF on the server from the saved
+    // record, so the attachment and the email details always match the data.
+    if (documentId && (documentType === 'Invoice' || documentType === 'Quote')) {
+      if (typeof documentId !== 'string' || documentId.length > 100) {
+        return NextResponse.json({ error: 'Invalid document id' }, { status: 400 });
+      }
+      const [{ getInvoice, getQuote }, pdf] = await Promise.all([
+        import('@/lib/db'),
+        import('@/lib/render-sales-pdf'),
+      ]);
+      const company = await getCompanyProfile();
+      const invoice = documentType === 'Invoice' ? await getInvoice(documentId) : null;
+      const quote = documentType === 'Quote' ? await getQuote(documentId) : null;
+      const record = invoice ?? quote;
+      const data = invoice
+        ? pdf.invoiceToSalesData(invoice, company)
+        : quote
+          ? pdf.quoteToSalesData(quote, company)
+          : null;
+      if (!record || !data) {
+        return NextResponse.json({ error: 'Document not found' }, { status: 404 });
+      }
+      const bytes = await pdf.renderSalesPdf(data, company);
+      pdfBase64 = Buffer.from(bytes).toString('base64');
+      documentNumber = record.number;
+      customerName = record.customer.name;
+      total = record.total.toFixed(2);
+      currency = record.currency;
+    }
+
+    // Validate required fields
+    if (!documentNumber || !customerName || total === undefined || !currency || !pdfBase64) {
+      return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
     }
     if (
       typeof pdfBase64 !== 'string' ||

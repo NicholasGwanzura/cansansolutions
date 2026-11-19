@@ -105,7 +105,7 @@ export default function ReportsAdmin() {
   if (!data) {
     return (
       <AdminLayout onLogout={handleLogout}>
-        <main className="p-6">
+        <main className="px-4 py-6 sm:px-6 lg:px-8">
           <p className="text-zinc-500">Failed to load report data.</p>
         </main>
       </AdminLayout>
@@ -122,9 +122,9 @@ export default function ReportsAdmin() {
 
   return (
     <AdminLayout onLogout={handleLogout}>
-      <main className="p-6 space-y-6">
+      <main className="space-y-6 px-4 py-6 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
-          <h1 className="text-xl font-bold text-zinc-900">Financial Reports</h1>
+          <h1 className="text-2xl font-semibold tracking-tight text-zinc-950">Financial Reports</h1>
           <button
             onClick={downloadReport}
             disabled={downloading}

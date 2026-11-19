@@ -1,14 +1,16 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import type { CompanyProfile } from '@/lib/types';
 import AdminLayout from '../components/AdminLayout';
+import { Notice } from '../components/ui';
 
 export default function SettingsPage() {
   const [authed, setAuthed] = useState(false);
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState('');
+  const dismissMessage = useCallback(() => setMessage(''), []);
 
   // Site settings
   const [currency, setCurrency] = useState('USD');
@@ -136,26 +138,13 @@ export default function SettingsPage() {
 
   return (
     <AdminLayout onLogout={handleLogout}>
-      <main className="p-6 max-w-3xl">
+      <main className="max-w-3xl px-4 py-6 sm:px-6 lg:px-8">
         <div className="mb-6">
-          <h1 className="text-xl font-bold text-zinc-900">Settings</h1>
+          <h1 className="text-2xl font-semibold tracking-tight text-zinc-950">Settings</h1>
           <p className="text-sm text-zinc-500">Manage admin preferences</p>
         </div>
 
-        {message && (
-          <div
-            className={`mb-6 rounded-lg border px-4 py-3 text-sm ${
-              message.includes('success') || message.includes('saved')
-                ? 'bg-green-50 border-green-200 text-green-700'
-                : 'bg-red-50 border-red-200 text-red-700'
-            }`}
-          >
-            {message}
-            <button onClick={() => setMessage('')} className="ml-2 hover:underline">
-              Dismiss
-            </button>
-          </div>
-        )}
+        <Notice message={message} onDismiss={dismissMessage} />
 
         <div className="space-y-6">
           {/* Company Profile */}

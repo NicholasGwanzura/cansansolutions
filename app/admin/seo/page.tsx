@@ -88,10 +88,10 @@ export default function SeoAdminPage() {
 
   return (
     <AdminLayout onLogout={handleLogout}>
-      <main className="p-6">
+      <main className="px-4 py-6 sm:px-6 lg:px-8">
         <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
           <div>
-            <h1 className="text-xl font-bold text-zinc-900">SEO Analytics</h1>
+            <h1 className="text-2xl font-semibold tracking-tight text-zinc-950">SEO Analytics</h1>
             <p className="text-sm text-zinc-500">
               Track search traffic, source quality, and top-performing pages
             </p>

@@ -3,6 +3,7 @@ import { checkAdminAuth } from '@/lib/check-admin-auth';
 import type { Invoice } from '@/lib/types';
 import { getInvoice, saveInvoice, deleteInvoice } from '@/lib/db';
 import {
+  bankAccounts,
   currency,
   customer,
   dateOnly,
@@ -61,6 +62,9 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
       notes: note(body.notes ?? existing.notes),
       issueDate: dateOnly(body.issueDate ?? existing.issueDate, 'Issue date'),
       dueDate: dateOnly(body.dueDate ?? existing.dueDate, 'Due date'),
+      bankAccounts: bankAccounts(
+        'bankAccounts' in body ? body.bankAccounts : existing.bankAccounts,
+      ),
       createdAt: existing.createdAt,
     };
 

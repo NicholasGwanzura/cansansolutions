@@ -102,6 +102,8 @@ export type Invoice = {
   notes?: string;
   issueDate: string;
   dueDate: string;
+  /** Per-document bank details. Null/undefined falls back to the company profile. */
+  bankAccounts?: BankAccount[] | null;
   createdAt?: string;
   updatedAt?: string;
 };
@@ -121,6 +123,8 @@ export type Quote = {
   notes?: string;
   validUntil: string;
   issueDate: string;
+  /** Per-document bank details. Null/undefined falls back to the company profile. */
+  bankAccounts?: BankAccount[] | null;
   createdAt?: string;
   updatedAt?: string;
 };

@@ -1,8 +1,9 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import type { Expense, ExpenseCategory } from '@/lib/types';
 import AdminLayout from '../components/AdminLayout';
+import { Notice } from '../components/ui';
 import { downloadCsv } from '@/lib/csv-export';
 
 const CURRENCIES = ['USD', 'ZWL', 'ZAR', 'KES'];
@@ -62,6 +63,7 @@ export default function ExpensesAdmin() {
   const [editing, setEditing] = useState<Expense | null>(null);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState('');
+  const dismissMessage = useCallback(() => setMessage(''), []);
 
   // Filters
   const [filterMonth, setFilterMonth] = useState('');
@@ -173,38 +175,12 @@ export default function ExpensesAdmin() {
 
   return (
     <AdminLayout onLogout={handleLogout}>
-      <main className="p-6">
-        {message && (
-          <div className="mb-4 rounded-lg bg-green-50 border border-green-200 px-4 py-3 text-sm text-green-700 flex justify-between items-center">
-            {message}
-            <button onClick={() => setMessage('')} className="text-green-500 hover:text-green-700">&#10005;</button>
-          </div>
-        )}
-
-        {/* Stats */}
-        <div className="mb-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
-          <div className="rounded-xl border border-zinc-200 bg-white p-4">
-            <p className="text-xs font-medium text-zinc-500">Total Expenses</p>
-            <p className="text-2xl font-bold text-zinc-900">{fmtCurrency(totalExpenses, 'USD')}</p>
-          </div>
-          <div className="rounded-xl border border-zinc-200 bg-white p-4">
-            <p className="text-xs font-medium text-zinc-500">This Month</p>
-            <p className="text-2xl font-bold text-red-600">{fmtCurrency(thisMonthTotal, 'USD')}</p>
-          </div>
-          <div className="rounded-xl border border-zinc-200 bg-white p-4">
-            <p className="text-xs font-medium text-zinc-500">Top Category</p>
-            <p className="text-2xl font-bold text-zinc-900">{topCategory ? CATEGORIES.find((c) => c.value === topCategory[0])?.label || topCategory[0] : '-'}</p>
-            {topCategory && <p className="text-xs text-zinc-400">{fmtCurrency(topCategory[1], 'USD')}</p>}
-          </div>
-          <div className="rounded-xl border border-zinc-200 bg-white p-4">
-            <p className="text-xs font-medium text-zinc-500">Entries</p>
-            <p className="text-2xl font-bold text-zinc-900">{expenses.length}</p>
-          </div>
-        </div>
+      <main className="px-4 py-6 sm:px-6 lg:px-8">
+        <Notice message={message} onDismiss={dismissMessage} />
 
         {/* Header + Filters */}
         <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-          <h1 className="text-xl font-bold text-zinc-900">Expenses</h1>
+          <h1 className="text-2xl font-semibold tracking-tight text-zinc-950">Expenses</h1>
           <div className="flex items-center gap-2">
             <button
               onClick={() => downloadCsv(
@@ -234,6 +210,27 @@ export default function ExpensesAdmin() {
               </svg>
               New Expense
             </button>
+          </div>
+        </div>
+
+        {/* Stats */}
+        <div className="mb-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <div className="rounded-xl border border-zinc-200 bg-white p-4">
+            <p className="text-xs font-medium text-zinc-500">Total Expenses</p>
+            <p className="text-2xl font-bold text-zinc-900">{fmtCurrency(totalExpenses, 'USD')}</p>
+          </div>
+          <div className="rounded-xl border border-zinc-200 bg-white p-4">
+            <p className="text-xs font-medium text-zinc-500">This Month</p>
+            <p className="text-2xl font-bold text-red-600">{fmtCurrency(thisMonthTotal, 'USD')}</p>
+          </div>
+          <div className="rounded-xl border border-zinc-200 bg-white p-4">
+            <p className="text-xs font-medium text-zinc-500">Top Category</p>
+            <p className="text-2xl font-bold text-zinc-900">{topCategory ? CATEGORIES.find((c) => c.value === topCategory[0])?.label || topCategory[0] : '-'}</p>
+            {topCategory && <p className="text-xs text-zinc-400">{fmtCurrency(topCategory[1], 'USD')}</p>}
+          </div>
+          <div className="rounded-xl border border-zinc-200 bg-white p-4">
+            <p className="text-xs font-medium text-zinc-500">Entries</p>
+            <p className="text-2xl font-bold text-zinc-900">{expenses.length}</p>
           </div>
         </div>
 

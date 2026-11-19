@@ -1,8 +1,9 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import type { Banner } from '@/lib/types';
 import AdminLayout from '../components/AdminLayout';
+import { Notice } from '../components/ui';
 
 const EMPTY_BANNER: Banner = {
   id: '',
@@ -121,6 +122,7 @@ export default function BannersAdmin() {
   const [editing, setEditing] = useState<Banner | null>(null);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState('');
+  const dismissMessage = useCallback(() => setMessage(''), []);
 
   useEffect(() => {
     fetchBanners();
@@ -190,15 +192,11 @@ export default function BannersAdmin() {
 
   return (
     <AdminLayout onLogout={handleLogout}>
-      <main className="p-6">
-        {message && (
-          <div className="mb-4 rounded-lg bg-green-50 border border-green-200 px-4 py-3 text-sm text-green-700">
-            {message}
-          </div>
-        )}
+      <main className="px-4 py-6 sm:px-6 lg:px-8">
+        <Notice message={message} onDismiss={dismissMessage} />
 
         <div className="mb-6 flex items-center justify-between">
-          <h1 className="text-xl font-bold text-zinc-900">Homepage Banners</h1>
+          <h1 className="text-2xl font-semibold tracking-tight text-zinc-950">Homepage Banners</h1>
           <button
             onClick={() => setEditing({ ...EMPTY_BANNER, id: `banner-${Date.now()}` })}
             className="flex items-center gap-1.5 rounded-xl bg-red-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-red-700"

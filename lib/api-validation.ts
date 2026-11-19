@@ -1,4 +1,4 @@
-import type { CustomerInfo, LineItem } from './types';
+import type { BankAccount, CustomerInfo, LineItem } from './types';
 
 export class ValidationError extends Error {}
 
@@ -92,4 +92,27 @@ export function lineItems(value: unknown): LineItem[] {
 
 export function note(value: unknown): string | undefined {
   return value == null ? undefined : String(value).trim().slice(0, 5000);
+}
+
+/**
+ * Per-document bank details. `null`/`undefined` means "use the company profile
+ * defaults"; an array (possibly empty) is an explicit override.
+ */
+export function bankAccounts(value: unknown): BankAccount[] | null {
+  if (value === null || value === undefined) return null;
+  if (!Array.isArray(value)) throw new ValidationError('Bank details must be a list');
+  if (value.length > 10) throw new ValidationError('Too many bank accounts');
+  return value
+    .map((entry) => {
+      if (!entry || typeof entry !== 'object') throw new ValidationError('Invalid bank account');
+      const data = entry as Record<string, unknown>;
+      const text = (field: unknown, max: number) => String(field ?? '').trim().slice(0, max);
+      return {
+        bankName: text(data.bankName, 120),
+        branch: text(data.branch, 120),
+        currency: text(data.currency, 10).toUpperCase(),
+        accountNumber: text(data.accountNumber, 64),
+      };
+    })
+    .filter((account) => account.bankName || account.accountNumber);
 }

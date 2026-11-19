@@ -11,6 +11,8 @@ import type {
   Client,
 } from '@/lib/types';
 import AdminLayout from '../components/AdminLayout';
+import { Notice } from '../components/ui';
+import DocumentBankDetails from '../components/DocumentBankDetails';
 import { downloadCsv } from '@/lib/csv-export';
 
 const CURRENCIES = ['USD', 'KES', 'ZAR', 'ZWL'];
@@ -75,6 +77,7 @@ export default function QuotesAdmin() {
   const [editing, setEditing] = useState<Quote | null>(null);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState('');
+  const dismissMessage = useCallback(() => setMessage(''), []);
   const [formError, setFormError] = useState('');
   const [printing, setPrinting] = useState<Quote | null>(null);
   const [downloading, setDownloading] = useState(false);
@@ -299,25 +302,16 @@ export default function QuotesAdmin() {
     setProductSearch({});
   };
 
-  const downloadPdf = async (elementId: string, filename: string) => {
+  const downloadPdf = async (doc: Quote) => {
     setDownloading(true);
+    setMessage('');
     try {
-      const { downloadElementAsPdf } = await import('@/lib/pdf');
-      await downloadElementAsPdf(elementId, filename);
+      const { downloadServerPdf } = await import('@/lib/pdf');
+      await downloadServerPdf(`/api/admin/quotes/${encodeURIComponent(doc.id)}/pdf?download=1`, `${doc.number}.pdf`);
+    } catch (err) {
+      setMessage(err instanceof Error ? err.message : 'Failed to generate PDF');
     } finally {
       setDownloading(false);
-    }
-  };
-
-  const downloadRowPdf = async (q: Quote) => {
-    setPrinting(q);
-    setDownloading(true);
-    try {
-      const { downloadElementAsPdf } = await import('@/lib/pdf');
-      await downloadElementAsPdf('quote-print', `${q.number}.pdf`);
-    } finally {
-      setDownloading(false);
-      setPrinting(null);
     }
   };
 
@@ -329,26 +323,17 @@ export default function QuotesAdmin() {
     setSendingEmail(true);
     setMessage('');
     try {
-      const { toCanvas } = await import('html-to-image');
-      const element = document.getElementById('quote-print');
-      if (!element) throw new Error('Print element not found');
-      const canvas = await toCanvas(element, { quality: 0.95, pixelRatio: 2 });
-      const pdfBase64 = canvas.toDataURL('image/png').split(',')[1];
-
+      // The server renders the PDF from the saved quote, so the attachment is
+      // a real PDF and always matches what's stored.
       const res = await fetch('/api/admin/send-document', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           to: printing.customer.email,
           documentType: 'Quote',
-          documentNumber: printing.number,
-          customerName: printing.customer.name,
-          total: printing.total.toFixed(2),
-          currency: printing.currency,
-          pdfBase64,
+          documentId: printing.id,
         }),
       });
-
       const data = await res.json();
       setMessage(res.ok ? 'Email sent successfully' : data.error || 'Failed to send email');
     } catch (err) {
@@ -368,44 +353,12 @@ export default function QuotesAdmin() {
 
   return (
     <AdminLayout onLogout={handleLogout}>
-      <main className="p-6">
-        {message && (
-          <div className="mb-4 rounded-lg bg-green-50 border border-green-200 px-4 py-3 text-sm text-green-700 flex justify-between items-center">
-            {message}
-            <button onClick={() => setMessage('')} className="text-green-500 hover:text-green-700">
-              &#10005;
-            </button>
-          </div>
-        )}
-
-        {/* Stats */}
-        <div className="mb-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
-          <div className="rounded-xl border border-zinc-200 bg-white p-4">
-            <p className="text-xs font-medium text-zinc-500">Total Quotes</p>
-            <p className="text-2xl font-bold text-zinc-900">{totalCount}</p>
-          </div>
-          <div className="rounded-xl border border-zinc-200 bg-white p-4">
-            <p className="text-xs font-medium text-zinc-500">Accepted</p>
-            <p className="text-2xl font-bold text-green-600">
-              {fmtCurrency(acceptedAmount, 'USD')}
-            </p>
-            <p className="text-xs text-zinc-400">{acceptedCount} quotes</p>
-          </div>
-          <div className="rounded-xl border border-zinc-200 bg-white p-4">
-            <p className="text-xs font-medium text-zinc-500">Pending</p>
-            <p className="text-2xl font-bold text-blue-600">{pendingCount}</p>
-          </div>
-          <div className="rounded-xl border border-zinc-200 bg-white p-4">
-            <p className="text-xs font-medium text-zinc-500">Rejected</p>
-            <p className="text-2xl font-bold text-red-600">
-              {quotes.filter((q) => q.status === 'rejected').length}
-            </p>
-          </div>
-        </div>
+      <main className="px-4 py-6 sm:px-6 lg:px-8">
+        <Notice message={message} onDismiss={dismissMessage} />
 
         {/* Header */}
         <div className="mb-6 flex items-center justify-between">
-          <h1 className="text-xl font-bold text-zinc-900">Quotes</h1>
+          <h1 className="text-2xl font-semibold tracking-tight text-zinc-950">Quotes</h1>
           <div className="flex items-center gap-2">
             <button
               onClick={() =>
@@ -449,6 +402,31 @@ export default function QuotesAdmin() {
               </svg>
               New Quote
             </button>
+          </div>
+        </div>
+
+        {/* Stats */}
+        <div className="mb-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <div className="rounded-xl border border-zinc-200 bg-white p-4">
+            <p className="text-xs font-medium text-zinc-500">Total Quotes</p>
+            <p className="text-2xl font-bold text-zinc-900">{totalCount}</p>
+          </div>
+          <div className="rounded-xl border border-zinc-200 bg-white p-4">
+            <p className="text-xs font-medium text-zinc-500">Accepted</p>
+            <p className="text-2xl font-bold text-green-600">
+              {fmtCurrency(acceptedAmount, 'USD')}
+            </p>
+            <p className="text-xs text-zinc-400">{acceptedCount} quotes</p>
+          </div>
+          <div className="rounded-xl border border-zinc-200 bg-white p-4">
+            <p className="text-xs font-medium text-zinc-500">Pending</p>
+            <p className="text-2xl font-bold text-blue-600">{pendingCount}</p>
+          </div>
+          <div className="rounded-xl border border-zinc-200 bg-white p-4">
+            <p className="text-xs font-medium text-zinc-500">Rejected</p>
+            <p className="text-2xl font-bold text-red-600">
+              {quotes.filter((q) => q.status === 'rejected').length}
+            </p>
           </div>
         </div>
 
@@ -528,7 +506,7 @@ export default function QuotesAdmin() {
                           Preview
                         </button>
                         <button
-                          onClick={() => downloadRowPdf(q)}
+                          onClick={() => downloadPdf(q)}
                           disabled={downloading}
                           className="rounded-lg border border-zinc-900 bg-zinc-900 px-2.5 py-1 text-xs font-medium text-white hover:bg-zinc-700 disabled:opacity-60"
                         >
@@ -924,6 +902,11 @@ export default function QuotesAdmin() {
                         placeholder="Terms, conditions..."
                       />
                     </div>
+                    <DocumentBankDetails
+                      value={editing.bankAccounts}
+                      defaults={company?.bankAccounts || []}
+                      onChange={(bankAccounts) => setEditing({ ...editing, bankAccounts })}
+                    />
                   </div>
 
                   <div className="space-y-2 rounded-xl bg-zinc-50 p-4">
@@ -1004,7 +987,7 @@ export default function QuotesAdmin() {
                 <h3 className="font-semibold text-zinc-900">Quote Preview</h3>
                 <div className="flex gap-2">
                   <button
-                    onClick={() => downloadPdf('quote-print', `${printing.number}.pdf`)}
+                    onClick={() => downloadPdf(printing)}
                     disabled={downloading}
                     className="flex items-center gap-1.5 rounded-lg bg-zinc-900 px-4 py-2 text-sm font-semibold text-white hover:bg-zinc-700 disabled:opacity-60"
                   >
@@ -1238,7 +1221,7 @@ export default function QuotesAdmin() {
                   </div>
                 )}
                 {/* Bank Details */}
-                {(company?.bankAccounts || []).length > 0 && (
+                {(printing.bankAccounts ?? company?.bankAccounts ?? []).length > 0 && (
                   <div className="mb-8 rounded-lg border border-zinc-200 bg-white px-4 py-3">
                     <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-400 mb-2">
                       Bank Details
@@ -1247,7 +1230,7 @@ export default function QuotesAdmin() {
                       {company?.name || 'CANSAN SOLUTIONS'}
                     </p>
                     <div className="grid grid-cols-2 gap-4 text-xs text-zinc-600">
-                      {(company?.bankAccounts || []).map((account, index) => (
+                      {(printing.bankAccounts ?? company?.bankAccounts ?? []).map((account, index) => (
                         <div key={`${account.bankName}-${index}`}>
                           <p className="font-semibold text-zinc-700">{account.bankName}</p>
                           {account.branch && <p>Branch: {account.branch}</p>}

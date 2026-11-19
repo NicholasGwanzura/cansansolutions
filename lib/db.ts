@@ -2,6 +2,7 @@ import postgres from 'postgres';
 import { promises as fs } from 'fs';
 import path from 'path';
 import type {
+  BankAccount,
   Banner,
   Brand,
   Client,
@@ -192,6 +193,8 @@ async function ensureSchema(): Promise<void> {
   // Add tin_number column if it doesn't exist (migration for existing databases)
   await sql()`ALTER TABLE company_profile ADD COLUMN IF NOT EXISTS tin_number TEXT NOT NULL DEFAULT ''`;
   await sql()`ALTER TABLE company_profile ADD COLUMN IF NOT EXISTS vendor_number TEXT NOT NULL DEFAULT ''`;
+  await sql()`ALTER TABLE invoices ADD COLUMN IF NOT EXISTS bank_accounts JSONB`;
+  await sql()`ALTER TABLE quotes ADD COLUMN IF NOT EXISTS bank_accounts JSONB`;
   await sql()`ALTER TABLE company_profile ADD COLUMN IF NOT EXISTS bank_accounts JSONB NOT NULL DEFAULT '[{"bankName":"CABS","branch":"","currency":"USD","accountNumber":"1149564261"},{"bankName":"CBZ","branch":"","currency":"USD","accountNumber":"01127428320019"}]'::jsonb`;
   // Ensure existing row has the correct TIN, VAT, and vendor values
   await sql()`
@@ -730,6 +733,21 @@ function parseJsonb<T>(value: unknown): T {
   return value as T;
 }
 
+function rowToBankAccounts(value: unknown): BankAccount[] | null {
+  if (value === null || value === undefined) return null;
+  const parsed = typeof value === 'string' ? (JSON.parse(value) as unknown) : value;
+  if (!Array.isArray(parsed)) return null;
+  return parsed.map((account) => {
+    const item = (account ?? {}) as Record<string, unknown>;
+    return {
+      bankName: String(item.bankName ?? ''),
+      branch: String(item.branch ?? ''),
+      currency: String(item.currency ?? ''),
+      accountNumber: String(item.accountNumber ?? ''),
+    };
+  });
+}
+
 function rowToInvoice(row: Record<string, unknown>): Invoice {
   return {
     id: String(row.id ?? ''),
@@ -746,6 +764,7 @@ function rowToInvoice(row: Record<string, unknown>): Invoice {
     notes: row.notes ? String(row.notes) : undefined,
     issueDate: String(row.issue_date ?? ''),
     dueDate: String(row.due_date ?? ''),
+    bankAccounts: rowToBankAccounts(row.bank_accounts),
     createdAt: toIsoString(row.created_at),
     updatedAt: toIsoString(row.updated_at),
   };
@@ -771,7 +790,7 @@ export async function saveInvoice(invoice: Invoice): Promise<Invoice> {
   const rows = await sql()`
     INSERT INTO invoices (
       id, number, status, customer, line_items, subtotal, tax_rate, tax_amount,
-      discount, total, currency, notes, issue_date, due_date, created_at, updated_at
+      discount, total, currency, notes, issue_date, due_date, bank_accounts, created_at, updated_at
     ) VALUES (
       ${invoice.id},
       ${invoice.number},
@@ -787,6 +806,7 @@ export async function saveInvoice(invoice: Invoice): Promise<Invoice> {
       ${invoice.notes ?? null},
       ${invoice.issueDate},
       ${invoice.dueDate},
+      ${invoice.bankAccounts ? JSON.stringify(invoice.bankAccounts) : null}::jsonb,
       ${invoice.createdAt ? new Date(invoice.createdAt) : now},
       ${now}
     )
@@ -804,6 +824,7 @@ export async function saveInvoice(invoice: Invoice): Promise<Invoice> {
       notes      = EXCLUDED.notes,
       issue_date = EXCLUDED.issue_date,
       due_date   = EXCLUDED.due_date,
+      bank_accounts = EXCLUDED.bank_accounts,
       updated_at = ${now}
     RETURNING *
   `;
@@ -843,6 +864,7 @@ function rowToQuote(row: Record<string, unknown>): Quote {
     notes: row.notes ? String(row.notes) : undefined,
     validUntil: String(row.valid_until ?? ''),
     issueDate: String(row.issue_date ?? ''),
+    bankAccounts: rowToBankAccounts(row.bank_accounts),
     createdAt: toIsoString(row.created_at),
     updatedAt: toIsoString(row.updated_at),
   };
@@ -868,7 +890,7 @@ export async function saveQuote(quote: Quote): Promise<Quote> {
   const rows = await sql()`
     INSERT INTO quotes (
       id, number, status, customer, line_items, subtotal, tax_rate, tax_amount,
-      discount, total, currency, notes, issue_date, valid_until, created_at, updated_at
+      discount, total, currency, notes, issue_date, valid_until, bank_accounts, created_at, updated_at
     ) VALUES (
       ${quote.id},
       ${quote.number},
@@ -884,6 +906,7 @@ export async function saveQuote(quote: Quote): Promise<Quote> {
       ${quote.notes ?? null},
       ${quote.issueDate},
       ${quote.validUntil},
+      ${quote.bankAccounts ? JSON.stringify(quote.bankAccounts) : null}::jsonb,
       ${quote.createdAt ? new Date(quote.createdAt) : now},
       ${now}
     )
@@ -901,6 +924,7 @@ export async function saveQuote(quote: Quote): Promise<Quote> {
       notes       = EXCLUDED.notes,
       issue_date  = EXCLUDED.issue_date,
       valid_until = EXCLUDED.valid_until,
+      bank_accounts = EXCLUDED.bank_accounts,
       updated_at  = ${now}
     RETURNING *
   `;

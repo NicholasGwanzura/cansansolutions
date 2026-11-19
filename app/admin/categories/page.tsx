@@ -1,7 +1,8 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import AdminLayout from '../components/AdminLayout';
+import { Notice } from '../components/ui';
 
 interface Category {
   id: string;
@@ -60,6 +61,7 @@ export default function CategoriesPage() {
   const [editing, setEditing] = useState<Category | null>(null);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState('');
+  const dismissMessage = useCallback(() => setMessage(''), []);
   const [authed, setAuthed] = useState(false);
 
   useEffect(() => {
@@ -148,17 +150,12 @@ export default function CategoriesPage() {
 
   return (
     <AdminLayout onLogout={handleLogout}>
-      <main className="p-6">
-        {message && (
-          <div className="mb-4 rounded-lg bg-green-50 border border-green-200 px-4 py-3 text-sm text-green-700">
-            {message}
-            <button onClick={() => setMessage('')} className="ml-2 text-green-800 hover:underline">Dismiss</button>
-          </div>
-        )}
+      <main className="px-4 py-6 sm:px-6 lg:px-8">
+        <Notice message={message} onDismiss={dismissMessage} />
 
         <div className="mb-6 flex items-center justify-between">
           <div>
-            <h1 className="text-xl font-bold text-zinc-900">Categories</h1>
+            <h1 className="text-2xl font-semibold tracking-tight text-zinc-950">Categories</h1>
             <p className="text-sm text-zinc-500">Manage product categories</p>
           </div>
           <button

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { checkAdminAuth } from '@/lib/check-admin-auth';
 import type { Quote } from '@/lib/types';
 import { getQuote, saveQuote, deleteQuote } from '@/lib/db';
+import { bankAccounts, ValidationError } from '@/lib/api-validation';
 
 export async function GET(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   if (!(await checkAdminAuth(req))) {
@@ -44,6 +45,9 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
       taxAmount,
       discount,
       total,
+      bankAccounts: bankAccounts(
+        'bankAccounts' in body ? body.bankAccounts : existing.bankAccounts,
+      ),
       createdAt: existing.createdAt,
     };
 
@@ -51,7 +55,10 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
     return NextResponse.json(saved);
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Failed to update quote';
-    return NextResponse.json({ error: message }, { status: 500 });
+    return NextResponse.json(
+      { error: message },
+      { status: error instanceof ValidationError ? 400 : 500 },
+    );
   }
 }
 

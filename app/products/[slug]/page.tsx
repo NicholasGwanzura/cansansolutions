@@ -27,26 +27,39 @@ function getProductImage(productImage: string) {
   return productImage || '/images/products/placeholder.svg';
 }
 
-function getCorpus(product: Pick<Product, 'name' | 'description' | 'tags' | 'specs' | 'category'>) {
-  const specsText = Object.entries(product.specs ?? {})
-    .map(([key, value]) => `${key} ${value}`)
-    .join(' ');
-  return `${product.name} ${stripHtml(product.description)} ${product.tags.join(' ')} ${specsText} ${product.category}`.toLowerCase();
-}
+// Categories whose products can mention "SSD" + "USB-C" in their specs without
+// being an external SSD themselves (e.g. a laptop with a 512GB SSD and USB-C ports).
+const NON_DRIVE_CATEGORIES = new Set([
+  'laptops',
+  'gaming laptops',
+  'desktops',
+  'networking',
+  'mobile',
+  'smartphones',
+  'tablets',
+  'gaming',
+  'printers',
+  'printing',
+  'monitors',
+  'cctv',
+  'tv-audio-video',
+  'audio',
+  'bundles',
+  'money counters',
+]);
 
-function isLikelyExternalSsd(
-  product: Pick<Product, 'name' | 'description' | 'tags' | 'specs' | 'category'>,
-) {
-  const corpus = getCorpus(product);
-  const hasSsd = corpus.includes('ssd');
-  const hasExternalSignal =
-    corpus.includes('external') ||
-    corpus.includes('pocket') ||
-    corpus.includes('usb 3.2') ||
-    corpus.includes('usb-c') ||
-    corpus.includes('drives');
+function isLikelyExternalSsd(product: Pick<Product, 'name' | 'tags' | 'category'>) {
+  if (NON_DRIVE_CATEGORIES.has(product.category.toLowerCase())) return false;
 
-  return hasSsd && hasExternalSignal;
+  // Judge by the product's own name/tags, not its description: descriptions of
+  // computers routinely mention SSD storage and USB-C ports.
+  const label = `${product.name} ${product.tags.join(' ')}`.toLowerCase();
+  const isSsd = /\bssd\b|solid[- ]state/.test(label);
+  const isExternal =
+    product.category.toLowerCase() === 'drives' ||
+    /\b(external|portable|pocket)\b/.test(label);
+
+  return isSsd && isExternal;
 }
 
 function getSpecValue(product: Pick<Product, 'specs'>, keywords: string[]) {
@@ -287,9 +300,14 @@ export async function generateMetadata({ params }: { params: RouteParams }): Pro
   const isVerbatimPocketSsd =
     isExternalSsd && /verbatim/i.test(product.name) && /1tb/i.test(product.name);
 
-  const readSpeed = getSpecValue(product, ['read speed']) ?? '1000 MB/s';
-  const connector = getSpecValue(product, ['connector', 'usb']) ?? 'USB-C';
-  const transferRate = getSpecValue(product, ['data transfer rate', 'transfer rate']) ?? '10Gbps';
+  const readSpeed = getSpecValue(product, ['read speed']);
+  const connector = getSpecValue(product, ['connector', 'usb']);
+  const transferRate = getSpecValue(product, ['data transfer rate', 'transfer rate']);
+  const ssdHighlights = [
+    readSpeed && `up to ${readSpeed} speed`,
+    connector && `${connector} connectivity`,
+    transferRate && `${transferRate} transfer rate`,
+  ].filter(Boolean);
 
   const title = isVerbatimPocketSsd
     ? 'Verbatim 1TB Pocket SSD USB-C 10Gbps | Cansan Zimbabwe'
@@ -297,12 +315,14 @@ export async function generateMetadata({ params }: { params: RouteParams }): Pro
       ? `${product.name} Price in Zimbabwe | Buy in Harare`
       : `${product.name} | ${category?.label ?? 'Tech'} | Cansan`;
 
-  const description = isExternalSsd
-    ? truncateText(
-        `Buy ${product.name} in Zimbabwe. Up to ${readSpeed} speed, ${connector} connectivity, ${transferRate} transfer rate, Harare delivery, and USD/EcoCash payment support.`,
-        155,
-      )
-    : shortDescription;
+  const ssdSummary = ssdHighlights.join(', ');
+  const description =
+    isExternalSsd && ssdSummary
+      ? truncateText(
+          `Buy ${product.name} in Zimbabwe. ${ssdSummary.charAt(0).toUpperCase()}${ssdSummary.slice(1)}, Harare delivery, and USD/EcoCash payment support.`,
+          155,
+        )
+      : shortDescription;
 
   return buildAbsoluteMetadata({
     title,
@@ -332,21 +352,25 @@ export default async function ProductPage({ params }: { params: RouteParams }) {
   const specEntries = Object.entries(product.specs ?? {});
 
   const readSpeed =
-    getSpecValue(product, ['read speed']) ?? (isExternalSsd ? '1000 MB/s' : undefined);
+    getSpecValue(product, ['read speed']);
   const writeSpeed =
-    getSpecValue(product, ['write speed']) ?? (isExternalSsd ? '1000 MB/s' : undefined);
+    getSpecValue(product, ['write speed']);
   const transferRate =
-    getSpecValue(product, ['data transfer rate', 'transfer rate']) ??
-    (isExternalSsd ? '10 Gbps' : undefined);
+    getSpecValue(product, ['data transfer rate', 'transfer rate']);
   const connector =
-    getSpecValue(product, ['connector', 'usb connector']) ?? (isExternalSsd ? 'USB-C' : undefined);
+    getSpecValue(product, ['connector', 'usb connector']);
   const interfaceVersion =
-    getSpecValue(product, ['usb version', 'interface']) ??
-    (isExternalSsd ? 'USB 3.2 Gen 2' : undefined);
+    getSpecValue(product, ['usb version', 'interface']);
   const capacity =
     getSpecValue(product, ['capacity']) ?? (/\b1tb\b/i.test(product.name) ? '1TB' : undefined);
-  const formFactor = getSpecValue(product, ['form factor']) ?? (isExternalSsd ? 'M.2' : undefined);
-  const weight = getSpecValue(product, ['weight']) ?? (isExternalSsd ? '58g' : undefined);
+  const formFactor = getSpecValue(product, ['form factor']);
+  const weight = getSpecValue(product, ['weight']);
+  const speedSummary =
+    readSpeed && writeSpeed
+      ? `up to ${readSpeed} read and ${writeSpeed} write`
+      : readSpeed
+        ? `up to ${readSpeed} read`
+        : undefined;
 
   const hasDiscount = Boolean(product.originalPrice && product.originalPrice > product.price);
   const savingAmount =
@@ -361,22 +385,26 @@ export default async function ProductPage({ params }: { params: RouteParams }) {
   const criticallyLowStock = product.inStock && stockCount !== undefined && stockCount <= 2;
   const isSaImport = isSaImportProduct(product);
 
-  const seoHeadline = isExternalSsd
-    ? `${product.name} External SSD ${connector} ${interfaceVersion} in Zimbabwe`
-    : product.name;
+  const seoHeadline = product.name;
 
-  const heroSummary = isExternalSsd
-    ? `Transfer large files faster with up to ${readSpeed} read speed and ${writeSpeed} write speed in a compact ${weight} pocket-friendly SSD. Built for creators, gamers, and business backups in Zimbabwe.`
-    : stripHtml(product.description);
+  const heroSummary =
+    isExternalSsd && speedSummary
+      ? `Transfer large files faster with ${speedSummary} speeds${weight ? ` in a compact ${weight} design` : ''}. Built for creators, gamers, and business backups in Zimbabwe.`
+      : stripHtml(product.description);
 
-  const benefitBullets = isExternalSsd
-    ? [
-        `Up to ${readSpeed} read and ${writeSpeed} write performance`,
-        `${interfaceVersion} with ${connector} for modern laptops and desktops`,
-        `${formFactor} SSD architecture with no moving parts for better reliability`,
-        `${weight} compact design for daily carry and off-site backups`,
-      ]
-    : [
+  // Only list SSD claims backed by the product's own specs.
+  const ssdBullets = [
+    speedSummary && `${speedSummary.charAt(0).toUpperCase()}${speedSummary.slice(1)} performance`,
+    interfaceVersion &&
+      `${interfaceVersion}${connector ? ` with ${connector}` : ''} for modern laptops and desktops`,
+    formFactor && `${formFactor} SSD architecture with no moving parts for better reliability`,
+    weight && `${weight} compact design for daily carry and off-site backups`,
+  ].filter((bullet): bullet is string => Boolean(bullet));
+
+  const benefitBullets =
+    isExternalSsd && ssdBullets.length >= 2
+      ? ssdBullets
+      : [
         'Genuine product sourced from verified suppliers',
         isSaImport
           ? 'Imported from South Africa with a clear 5-day lead time'
@@ -397,9 +425,10 @@ export default async function ProductPage({ params }: { params: RouteParams }) {
   const categoryKey = category?.slug ?? product.category;
   const useCases = getUseCasesForCategory(categoryKey);
 
-  const performanceDetail = isExternalSsd
-    ? `Built for speed with up to ${readSpeed} read and ${writeSpeed} write performance.`
-    : [processor, memory, storage, display].filter(Boolean).slice(0, 3).join(' • ') ||
+  const performanceDetail =
+    isExternalSsd && speedSummary
+      ? `Built for speed with ${speedSummary} performance.`
+      : [processor, memory, storage, display].filter(Boolean).slice(0, 3).join(' • ') ||
       'Balanced everyday performance for practical work, study, and daily use.';
 
   const portabilityDetail = [weight, dimensions, battery].filter(Boolean).slice(0, 2).join(' • ');
@@ -827,8 +856,8 @@ export default async function ProductPage({ params }: { params: RouteParams }) {
                 <tr>
                   <td className="px-4 py-3 font-semibold text-zinc-900">{product.name}</td>
                   <td className="px-4 py-3 text-zinc-600">
-                    {isExternalSsd
-                      ? `Up to ${readSpeed} / ${writeSpeed}`
+                    {isExternalSsd && speedSummary
+                      ? speedSummary.charAt(0).toUpperCase() + speedSummary.slice(1)
                       : [processor, memory, storage].filter(Boolean).slice(0, 2).join(' • ') ||
                         'Balanced daily performance'}
                   </td>

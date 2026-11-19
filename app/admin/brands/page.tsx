@@ -269,7 +269,7 @@ export default function BrandsAdminPage() {
 
   return (
     <AdminLayout onLogout={handleLogout}>
-      <main className="p-6">
+      <main className="px-4 py-6 sm:px-6 lg:px-8">
         {message ? (
           <div className="mb-4 rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-700">
             {message}
@@ -279,7 +279,7 @@ export default function BrandsAdminPage() {
 
           <div className="mb-6 flex items-center justify-between">
             <div>
-              <h1 className="text-xl font-bold text-zinc-900">Brands</h1>
+              <h1 className="text-2xl font-semibold tracking-tight text-zinc-950">Brands</h1>
               <p className="text-sm text-zinc-500">Upload and order brand logos for the homepage slider</p>
             </div>
           <button

@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import type { Receipt, PaymentMethod, LineItem, CustomerInfo, CompanyProfile, Product, Client } from '@/lib/types';
 import AdminLayout from '../components/AdminLayout';
+import { Notice } from '../components/ui';
 
 const CURRENCIES = ['USD', 'KES', 'ZAR', 'ZWL'];
 const PAYMENT_METHODS: { value: PaymentMethod; label: string }[] = [
@@ -60,6 +61,7 @@ export default function ReceiptsAdmin() {
   const [editing, setEditing] = useState<Receipt | null>(null);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState('');
+  const dismissMessage = useCallback(() => setMessage(''), []);
 	const [printing, setPrinting] = useState<Receipt | null>(null);
 	  const [downloading, setDownloading] = useState(false);
 	  const [sendingEmail, setSendingEmail] = useState(false);
@@ -282,13 +284,22 @@ export default function ReceiptsAdmin() {
 
   return (
     <AdminLayout onLogout={handleLogout}>
-      <main className="p-6">
-        {message && (
-          <div className="mb-4 rounded-lg bg-green-50 border border-green-200 px-4 py-3 text-sm text-green-700 flex justify-between items-center">
-            {message}
-            <button onClick={() => setMessage('')} className="text-green-500 hover:text-green-700">&#10005;</button>
-          </div>
-        )}
+      <main className="px-4 py-6 sm:px-6 lg:px-8">
+        <Notice message={message} onDismiss={dismissMessage} />
+
+        {/* Header */}
+        <div className="mb-6 flex items-center justify-between">
+          <h1 className="text-2xl font-semibold tracking-tight text-zinc-950">Receipts</h1>
+          <button
+            onClick={() => startEdit()}
+            className="flex items-center gap-1.5 rounded-xl bg-red-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-red-700"
+          >
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+            </svg>
+            New Receipt
+          </button>
+        </div>
 
         {/* Stats */}
         <div className="mb-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
@@ -308,20 +319,6 @@ export default function ReceiptsAdmin() {
             <p className="text-xs font-medium text-zinc-500">Card Payments</p>
             <p className="text-2xl font-bold text-zinc-900">{cardCount}</p>
           </div>
-        </div>
-
-        {/* Header */}
-        <div className="mb-6 flex items-center justify-between">
-          <h1 className="text-xl font-bold text-zinc-900">Receipts</h1>
-          <button
-            onClick={() => startEdit()}
-            className="flex items-center gap-1.5 rounded-xl bg-red-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-red-700"
-          >
-            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-            </svg>
-            New Receipt
-          </button>
         </div>
 
         {/* List */}

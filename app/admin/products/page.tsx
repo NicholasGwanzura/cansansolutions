@@ -5,7 +5,7 @@ import dynamic from 'next/dynamic';
 import type { Product, Category } from '@/lib/types';
 import { CATALOG_CATEGORIES, getCategoryLabel, isBundleProduct } from '@/lib/catalog';
 import AdminLayout from '../components/AdminLayout';
-import AdminAuthGate from '../components/AdminAuthGate';
+import { PageHeader } from '../components/ui';
 import ConfirmModal from '../components/ConfirmModal';
 
 const CATEGORIES = CATALOG_CATEGORIES as Category[];
@@ -1406,7 +1406,7 @@ const ITEMS_PER_PAGE = 20;
 type SortField = 'name' | 'price' | 'stock' | 'category';
 type SortDirection = 'asc' | 'desc';
 
-function Dashboard({ onLogout }: { onLogout: () => void }) {
+function Dashboard() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
@@ -1881,8 +1881,33 @@ function Dashboard({ onLogout }: { onLogout: () => void }) {
   const featuredCount = products.filter((p) => p.featured).length;
 
   return (
-    <AdminLayout onLogout={onLogout}>
-      <main className="p-6">
+    <AdminLayout>
+      <main className="px-4 py-6 sm:px-6 lg:px-8">
+        <PageHeader
+          title="Products"
+          description="Manage the storefront catalog, stock and pricing."
+          actions={
+            <>
+              <button
+                onClick={openAdd}
+                className="inline-flex items-center gap-1.5 rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-red-700 shadow-sm"
+              >
+                <svg
+                  width="14"
+                  height="14"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2.5}
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                </svg>
+                Add Product
+              </button>
+            </>
+          }
+        />
+
         {/* Header Stats */}
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-5 mb-6">
           {[
@@ -1932,22 +1957,6 @@ function Dashboard({ onLogout }: { onLogout: () => void }) {
                 className="w-full rounded-xl border border-zinc-200 bg-white pl-9 pr-3 py-2 text-sm outline-none focus:border-red-300 focus:ring-2 focus:ring-red-100"
               />
             </div>
-            <button
-              onClick={openAdd}
-              className="ml-auto inline-flex items-center gap-1.5 rounded-xl bg-red-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-red-700 shadow-sm"
-            >
-              <svg
-                width="14"
-                height="14"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2.5}
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-              </svg>
-              Add Product
-            </button>
           </div>
 
           <div className="flex flex-wrap items-center gap-2">
@@ -2648,5 +2657,5 @@ function Dashboard({ onLogout }: { onLogout: () => void }) {
 // Root export
 // ─────────────────────────────────────────────
 export default function ProductsAdminPage() {
-  return <AdminAuthGate>{({ onLogout }) => <Dashboard onLogout={onLogout} />}</AdminAuthGate>;
+  return <Dashboard />;
 }

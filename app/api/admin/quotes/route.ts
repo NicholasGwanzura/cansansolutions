@@ -3,6 +3,7 @@ import { checkAdminAuth } from '@/lib/check-admin-auth';
 import type { Quote } from '@/lib/types';
 import { getQuotes, saveQuote, getNextQuoteNumber } from '@/lib/db';
 import {
+  bankAccounts,
   currency,
   customer,
   dateOnly,
@@ -52,6 +53,7 @@ export async function POST(req: NextRequest) {
         body.validUntil || new Date().toISOString().split('T')[0],
         'Valid until',
       ),
+      bankAccounts: bankAccounts(body.bankAccounts),
     };
 
     const saved = await saveQuote(quote);

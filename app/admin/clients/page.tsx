@@ -1,8 +1,9 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import type { Client } from '@/lib/types';
 import AdminLayout from '../components/AdminLayout';
+import { Notice } from '../components/ui';
 import { downloadCsv } from '@/lib/csv-export';
 
 function getInitials(name: string) {
@@ -38,6 +39,7 @@ export default function ClientsAdmin() {
   const [editing, setEditing] = useState<Client | null>(null);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState('');
+  const dismissMessage = useCallback(() => setMessage(''), []);
   const [search, setSearch] = useState('');
 
   useEffect(() => {
@@ -128,34 +130,12 @@ export default function ClientsAdmin() {
 
   return (
     <AdminLayout onLogout={handleLogout}>
-      <main className="p-6">
-        {message && (
-          <div className="mb-4 rounded-lg bg-green-50 border border-green-200 px-4 py-3 text-sm text-green-700 flex justify-between items-center">
-            {message}
-            <button onClick={() => setMessage('')} className="text-green-500 hover:text-green-700">&#10005;</button>
-          </div>
-        )}
-
-        {/* Stats */}
-        <div className="mb-6 grid grid-cols-2 gap-3 sm:grid-cols-3">
-          <div className="rounded-xl border border-zinc-200 bg-white p-4">
-            <p className="text-xs font-medium text-zinc-500">Total Clients</p>
-            <p className="text-2xl font-bold text-zinc-900">{totalCount}</p>
-          </div>
-          <div className="rounded-xl border border-zinc-200 bg-white p-4">
-            <p className="text-xs font-medium text-zinc-500">With Company</p>
-            <p className="text-2xl font-bold text-blue-600">{withCompany}</p>
-          </div>
-          <div className="rounded-xl border border-zinc-200 bg-white p-4">
-            <p className="text-xs font-medium text-zinc-500">Recently Added</p>
-            <p className="text-2xl font-bold text-green-600">{thisMonth}</p>
-            <p className="text-xs text-zinc-400">this month</p>
-          </div>
-        </div>
+      <main className="px-4 py-6 sm:px-6 lg:px-8">
+        <Notice message={message} onDismiss={dismissMessage} />
 
         {/* Header */}
         <div className="mb-4 flex items-center justify-between">
-          <h1 className="text-xl font-bold text-zinc-900">Clients</h1>
+          <h1 className="text-2xl font-semibold tracking-tight text-zinc-950">Clients</h1>
           <div className="flex items-center gap-2">
             <button
               onClick={() => downloadCsv(
@@ -184,6 +164,23 @@ export default function ClientsAdmin() {
               </svg>
               New Client
             </button>
+          </div>
+        </div>
+
+        {/* Stats */}
+        <div className="mb-6 grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <div className="rounded-xl border border-zinc-200 bg-white p-4">
+            <p className="text-xs font-medium text-zinc-500">Total Clients</p>
+            <p className="text-2xl font-bold text-zinc-900">{totalCount}</p>
+          </div>
+          <div className="rounded-xl border border-zinc-200 bg-white p-4">
+            <p className="text-xs font-medium text-zinc-500">With Company</p>
+            <p className="text-2xl font-bold text-blue-600">{withCompany}</p>
+          </div>
+          <div className="rounded-xl border border-zinc-200 bg-white p-4">
+            <p className="text-xs font-medium text-zinc-500">Recently Added</p>
+            <p className="text-2xl font-bold text-green-600">{thisMonth}</p>
+            <p className="text-xs text-zinc-400">this month</p>
           </div>
         </div>
 

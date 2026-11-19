@@ -3,6 +3,7 @@ import { checkAdminAuth } from '@/lib/check-admin-auth';
 import type { Invoice } from '@/lib/types';
 import { getInvoices, saveInvoice, getNextInvoiceNumber } from '@/lib/db';
 import {
+  bankAccounts,
   currency,
   customer,
   dateOnly,
@@ -49,6 +50,7 @@ export async function POST(req: NextRequest) {
       notes: note(body.notes),
       issueDate: dateOnly(body.issueDate || new Date().toISOString().split('T')[0], 'Issue date'),
       dueDate: dateOnly(body.dueDate || new Date().toISOString().split('T')[0], 'Due date'),
+      bankAccounts: bankAccounts(body.bankAccounts),
     };
 
     const saved = await saveInvoice(invoice);

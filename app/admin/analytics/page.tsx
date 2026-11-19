@@ -194,9 +194,9 @@ export default function AnalyticsPage() {
 
   return (
     <AdminLayout onLogout={handleLogout}>
-      <main className="p-6">
+      <main className="px-4 py-6 sm:px-6 lg:px-8">
         <div className="mb-6">
-          <h1 className="text-xl font-bold text-zinc-900">Analytics Dashboard</h1>
+          <h1 className="text-2xl font-semibold tracking-tight text-zinc-950">Analytics Dashboard</h1>
           <p className="text-sm text-zinc-500">Overview of your product catalog</p>
         </div>
 

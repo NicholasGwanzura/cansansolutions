@@ -3,6 +3,8 @@
 import { useState, useEffect, useCallback } from 'react';
 import type { Invoice, InvoiceStatus, LineItem, CustomerInfo, CompanyProfile, Product, Client } from '@/lib/types';
 import AdminLayout from '../components/AdminLayout';
+import { Notice } from '../components/ui';
+import DocumentBankDetails from '../components/DocumentBankDetails';
 import { downloadCsv } from '@/lib/csv-export';
 
 const CURRENCIES = ['USD', 'KES', 'ZAR', 'ZWL'];
@@ -59,6 +61,7 @@ export default function InvoicesAdmin() {
   const [editing, setEditing] = useState<Invoice | null>(null);
 	const [saving, setSaving] = useState(false);
 	  const [message, setMessage] = useState('');
+  const dismissMessage = useCallback(() => setMessage(''), []);
 	  const [printing, setPrinting] = useState<Invoice | null>(null);
 	  const [downloading, setDownloading] = useState(false);
 	  const [sendingEmail, setSendingEmail] = useState(false);
@@ -236,73 +239,47 @@ export default function InvoicesAdmin() {
     setProductSearch({});
   };
 
-  const downloadPdf = async (elementId: string, filename: string) => {
+  const downloadPdf = async (doc: Invoice) => {
     setDownloading(true);
+    setMessage('');
     try {
-      const { downloadElementAsPdf } = await import('@/lib/pdf');
-      await downloadElementAsPdf(elementId, filename);
+      const { downloadServerPdf } = await import('@/lib/pdf');
+      await downloadServerPdf(`/api/admin/invoices/${encodeURIComponent(doc.id)}/pdf?download=1`, `${doc.number}.pdf`);
+    } catch (err) {
+      setMessage(err instanceof Error ? err.message : 'Failed to generate PDF');
     } finally {
       setDownloading(false);
     }
   };
 
-	  const downloadRowPdf = async (inv: Invoice) => {
-	    setPrinting(inv);
-	    setDownloading(true);
-	    try {
-	      const { downloadElementAsPdf } = await import('@/lib/pdf');
-	      await downloadElementAsPdf('invoice-print', `${inv.number}.pdf`);
-	    } finally {
-	      setDownloading(false);
-	      setPrinting(null);
-	    }
-	  };
-
-	  const sendEmailPdf = async () => {
-	    if (!printing || !printing.customer.email) {
-	      setMessage('Customer email is required');
-	      return;
-	    }
-	    setSendingEmail(true);
-	    setMessage('');
-	    try {
-	      // Capture the PDF element as a canvas image
-	      const { toCanvas } = await import('html-to-image');
-	      const element = document.getElementById('invoice-print');
-	      if (!element) throw new Error('Print element not found');
-	      
-	      const canvas = await toCanvas(element, { quality: 0.95, pixelRatio: 2 });
-	      // Convert to base64 PNG (Resend accepts images as PDF attachments too, 
-	      // but we inline the canvas as PNG for simplicity)
-	      const pdfBase64 = canvas.toDataURL('image/png').split(',')[1];
-
-	      const res = await fetch('/api/admin/send-document', {
-	        method: 'POST',
-	        headers: { 'Content-Type': 'application/json' },
-	        body: JSON.stringify({
-	          to: printing.customer.email,
-	          documentType: 'Invoice',
-	          documentNumber: printing.number,
-	          customerName: printing.customer.name,
-	          total: printing.total.toFixed(2),
-	          currency: printing.currency,
-	          pdfBase64,
-	        }),
-	      });
-
-	      const data = await res.json();
-	      if (res.ok) {
-	        setMessage('Email sent successfully');
-	      } else {
-	        setMessage(data.error || 'Failed to send email');
-	      }
-	    } catch (err) {
-	      console.error('[Send Email]', err);
-	      setMessage('Error sending email');
-	    } finally {
-	      setSendingEmail(false);
-	    }
-	  };
+  const sendEmailPdf = async () => {
+    if (!printing || !printing.customer.email) {
+      setMessage('Customer email is required');
+      return;
+    }
+    setSendingEmail(true);
+    setMessage('');
+    try {
+      // The server renders the PDF from the saved invoice, so the attachment is
+      // a real PDF and always matches what's stored.
+      const res = await fetch('/api/admin/send-document', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          to: printing.customer.email,
+          documentType: 'Invoice',
+          documentId: printing.id,
+        }),
+      });
+      const data = await res.json();
+      setMessage(res.ok ? 'Email sent successfully' : data.error || 'Failed to send email');
+    } catch (err) {
+      console.error('[Send Email]', err);
+      setMessage('Error sending email');
+    } finally {
+      setSendingEmail(false);
+    }
+  };
 
   // Stats
   const totalCount = invoices.length;
@@ -313,38 +290,12 @@ export default function InvoicesAdmin() {
 
   return (
     <AdminLayout onLogout={handleLogout}>
-      <main className="p-6">
-        {message && (
-          <div className="mb-4 rounded-lg bg-green-50 border border-green-200 px-4 py-3 text-sm text-green-700 flex justify-between items-center">
-            {message}
-            <button onClick={() => setMessage('')} className="text-green-500 hover:text-green-700">&#10005;</button>
-          </div>
-        )}
-
-        {/* Stats */}
-        <div className="mb-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
-          <div className="rounded-xl border border-zinc-200 bg-white p-4">
-            <p className="text-xs font-medium text-zinc-500">Total Invoices</p>
-            <p className="text-2xl font-bold text-zinc-900">{totalCount}</p>
-          </div>
-          <div className="rounded-xl border border-zinc-200 bg-white p-4">
-            <p className="text-xs font-medium text-zinc-500">Total Paid</p>
-            <p className="text-2xl font-bold text-green-600">{fmtCurrency(paidAmount, 'USD')}</p>
-            <p className="text-xs text-zinc-400">{paidCount} invoices</p>
-          </div>
-          <div className="rounded-xl border border-zinc-200 bg-white p-4">
-            <p className="text-xs font-medium text-zinc-500">Outstanding</p>
-            <p className="text-2xl font-bold text-blue-600">{fmtCurrency(outstandingAmount, 'USD')}</p>
-          </div>
-          <div className="rounded-xl border border-zinc-200 bg-white p-4">
-            <p className="text-xs font-medium text-zinc-500">Overdue</p>
-            <p className="text-2xl font-bold text-red-600">{overdueCount}</p>
-          </div>
-        </div>
+      <main className="px-4 py-6 sm:px-6 lg:px-8">
+        <Notice message={message} onDismiss={dismissMessage} />
 
         {/* Header */}
         <div className="mb-6 flex items-center justify-between">
-          <h1 className="text-xl font-bold text-zinc-900">Invoices</h1>
+          <h1 className="text-2xl font-semibold tracking-tight text-zinc-950">Invoices</h1>
           <div className="flex items-center gap-2">
             <button
               onClick={() => downloadCsv(
@@ -379,6 +330,27 @@ export default function InvoicesAdmin() {
               </svg>
               New Invoice
             </button>
+          </div>
+        </div>
+
+        {/* Stats */}
+        <div className="mb-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <div className="rounded-xl border border-zinc-200 bg-white p-4">
+            <p className="text-xs font-medium text-zinc-500">Total Invoices</p>
+            <p className="text-2xl font-bold text-zinc-900">{totalCount}</p>
+          </div>
+          <div className="rounded-xl border border-zinc-200 bg-white p-4">
+            <p className="text-xs font-medium text-zinc-500">Total Paid</p>
+            <p className="text-2xl font-bold text-green-600">{fmtCurrency(paidAmount, 'USD')}</p>
+            <p className="text-xs text-zinc-400">{paidCount} invoices</p>
+          </div>
+          <div className="rounded-xl border border-zinc-200 bg-white p-4">
+            <p className="text-xs font-medium text-zinc-500">Outstanding</p>
+            <p className="text-2xl font-bold text-blue-600">{fmtCurrency(outstandingAmount, 'USD')}</p>
+          </div>
+          <div className="rounded-xl border border-zinc-200 bg-white p-4">
+            <p className="text-xs font-medium text-zinc-500">Overdue</p>
+            <p className="text-2xl font-bold text-red-600">{overdueCount}</p>
           </div>
         </div>
 
@@ -428,7 +400,7 @@ export default function InvoicesAdmin() {
                       <div className="flex gap-1.5">
                         <button onClick={() => startEdit(inv)} className="rounded-lg border border-zinc-200 px-2.5 py-1 text-xs font-medium text-zinc-600 hover:bg-zinc-50">Edit</button>
                         <button onClick={() => setPrinting(inv)} className="rounded-lg border border-zinc-200 px-2.5 py-1 text-xs font-medium text-zinc-600 hover:bg-zinc-50">Preview</button>
-                        <button onClick={() => downloadRowPdf(inv)} disabled={downloading} className="rounded-lg border border-zinc-900 bg-zinc-900 px-2.5 py-1 text-xs font-medium text-white hover:bg-zinc-700 disabled:opacity-60">PDF</button>
+                        <button onClick={() => downloadPdf(inv)} disabled={downloading} className="rounded-lg border border-zinc-900 bg-zinc-900 px-2.5 py-1 text-xs font-medium text-white hover:bg-zinc-700 disabled:opacity-60">PDF</button>
                         <button onClick={() => removeInvoice(inv.id)} className="rounded-lg border border-red-200 bg-red-50 px-2.5 py-1 text-xs font-medium text-red-600 hover:bg-red-100">Delete</button>
                       </div>
                     </td>
@@ -592,6 +564,11 @@ export default function InvoicesAdmin() {
                       <label className="block text-xs font-semibold text-zinc-500 mb-1">Notes</label>
                       <textarea value={editing.notes || ''} onChange={(e) => setEditing({ ...editing, notes: e.target.value })} rows={3} className="w-full rounded-lg border border-zinc-200 px-3 py-2 text-sm" placeholder="Payment terms, notes..." />
                     </div>
+                    <DocumentBankDetails
+                      value={editing.bankAccounts}
+                      defaults={company?.bankAccounts || []}
+                      onChange={(bankAccounts) => setEditing({ ...editing, bankAccounts })}
+                    />
                   </div>
 
                   <div className="space-y-2 rounded-xl bg-zinc-50 p-4">
@@ -637,7 +614,7 @@ export default function InvoicesAdmin() {
                 <h3 className="font-semibold text-zinc-900">Invoice Preview</h3>
                 <div className="flex gap-2">
                   <button
-                    onClick={() => downloadPdf('invoice-print', `${printing.number}.pdf`)}
+                    onClick={() => downloadPdf(printing)}
                     disabled={downloading}
                     className="flex items-center gap-1.5 rounded-lg bg-zinc-900 px-4 py-2 text-sm font-semibold text-white hover:bg-zinc-700 disabled:opacity-60"
                   >
@@ -774,12 +751,12 @@ export default function InvoicesAdmin() {
                 )}
 
                 {/* Bank Details */}
-                {(company?.bankAccounts || []).length > 0 && (
+                {(printing.bankAccounts ?? company?.bankAccounts ?? []).length > 0 && (
                   <div className="mb-8 rounded-lg border border-zinc-200 bg-white px-4 py-3">
                     <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-400 mb-2">Bank Details</p>
                     <p className="text-sm font-semibold text-zinc-900 mb-2">{company?.name || 'CANSAN SOLUTIONS'}</p>
                     <div className="grid grid-cols-2 gap-4 text-xs text-zinc-600">
-                      {(company?.bankAccounts || []).map((account, index) => (
+                      {(printing.bankAccounts ?? company?.bankAccounts ?? []).map((account, index) => (
                         <div key={`${account.bankName}-${index}`}>
                           <p className="font-semibold text-zinc-700">{account.bankName}</p>
                           {account.branch && <p>Branch: {account.branch}</p>}

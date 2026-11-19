@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { useState } from 'react';
 
 function ClientsIcon({ className }: { className?: string }) {
   return (
@@ -357,249 +356,172 @@ function LogoutIcon({ className }: { className?: string }) {
   );
 }
 
-const NAV_SECTIONS = [
+type NavItem = {
+  href: string;
+  label: string;
+  icon: (props: { className?: string }) => React.ReactElement;
+};
+
+export const NAV_SECTIONS: { label: string; items: NavItem[] }[] = [
   {
-    label: 'Storefront',
+    label: 'Overview',
     items: [
       { href: '/admin', label: 'Dashboard', icon: DashboardIcon },
-      { href: '/admin/pos', label: 'POS', icon: PosIcon },
+      { href: '/admin/pos', label: 'Point of sale', icon: PosIcon },
+    ],
+  },
+  {
+    label: 'Catalog',
+    items: [
       { href: '/admin/products', label: 'Products', icon: PackageIcon },
       { href: '/admin/categories', label: 'Categories', icon: FolderIcon },
-      { href: '/admin/banners', label: 'Banners', icon: ImageIcon },
       { href: '/admin/brands', label: 'Brands', icon: ImageStackIcon },
+      { href: '/admin/banners', label: 'Banners', icon: ImageIcon },
     ],
   },
   {
-    label: 'Sales & finance',
+    label: 'Sales',
     items: [
       { href: '/admin/clients', label: 'Clients', icon: ClientsIcon },
-      { href: '/admin/invoices', label: 'Invoices', icon: InvoiceIcon },
       { href: '/admin/quotes', label: 'Quotes', icon: QuoteIcon },
+      { href: '/admin/invoices', label: 'Invoices', icon: InvoiceIcon },
       { href: '/admin/receipts', label: 'Receipts', icon: ReceiptIcon },
-      { href: '/admin/delivery-notes', label: 'Delivery Notes', icon: DeliveryIcon },
-      { href: '/admin/expenses', label: 'Expenses', icon: ExpenseIcon },
+      { href: '/admin/delivery-notes', label: 'Delivery notes', icon: DeliveryIcon },
     ],
   },
   {
-    label: 'Insights & settings',
+    label: 'Finance',
     items: [
+      { href: '/admin/expenses', label: 'Expenses', icon: ExpenseIcon },
       { href: '/admin/reports', label: 'Reports', icon: ReportsIcon },
+    ],
+  },
+  {
+    label: 'Insights',
+    items: [
       { href: '/admin/analytics', label: 'Analytics', icon: ChartIcon },
-      { href: '/admin/seo', label: 'SEO Analytics', icon: SeoIcon },
-      { href: '/admin/settings', label: 'Settings', icon: SettingsIcon },
+      { href: '/admin/seo', label: 'SEO', icon: SeoIcon },
     ],
   },
 ];
 
-interface AdminSidebarProps {
-  onLogout: () => void;
+const SETTINGS_ITEM: NavItem = { href: '/admin/settings', label: 'Settings', icon: SettingsIcon };
+
+export function isNavItemActive(pathname: string, href: string) {
+  if (href === '/admin') return pathname === '/admin';
+  return pathname === href || pathname.startsWith(`${href}/`);
 }
 
-function NavList({ pathname, onNavigate }: { pathname: string; onNavigate?: () => void }) {
-  const isItemActive = (href: string) => {
-    if (href === '/admin') {
-      return pathname === '/admin';
-    }
-    return pathname === href || pathname.startsWith(`${href}/`);
-  };
+/** Section + item for the current route, used by the top bar breadcrumb. */
+export function findNavItem(pathname: string): { section: string; item: NavItem } | null {
+  for (const section of NAV_SECTIONS) {
+    const item = section.items.find((entry) => isNavItemActive(pathname, entry.href));
+    if (item) return { section: section.label, item };
+  }
+  if (isNavItemActive(pathname, SETTINGS_ITEM.href)) {
+    return { section: 'Account', item: SETTINGS_ITEM };
+  }
+  return null;
+}
 
+function NavLink({
+  item,
+  pathname,
+  onNavigate,
+}: {
+  item: NavItem;
+  pathname: string;
+  onNavigate?: () => void;
+}) {
+  const active = isNavItemActive(pathname, item.href);
   return (
-    <div className="space-y-5">
-      {NAV_SECTIONS.map((section) => (
-        <div key={section.label}>
-          <p className="px-3 pb-1 text-[10px] font-bold uppercase tracking-[0.14em] text-zinc-500">
-            {section.label}
-          </p>
-          <ul className="space-y-1">
-            {section.items.map((item) => {
-              const isActive = isItemActive(item.href);
-              return (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    onClick={onNavigate}
-                    className={`flex min-h-11 items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-400 ${
-                      isActive
-                        ? 'bg-red-600 text-white shadow-[0_8px_20px_rgba(220,38,38,0.2)]'
-                        : 'text-zinc-400 hover:bg-white/[0.08] hover:text-white'
-                    }`}
-                  >
-                    <item.icon className={isActive ? 'text-white' : 'text-zinc-400'} />
-                    {item.label}
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-      ))}
-    </div>
+    <Link
+      href={item.href}
+      onClick={onNavigate}
+      aria-current={active ? 'page' : undefined}
+      className={`group relative flex h-8 items-center gap-2.5 rounded-md px-2.5 text-[13px] font-medium transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-400 ${
+        active
+          ? 'bg-white/[0.08] text-white'
+          : 'text-zinc-400 hover:bg-white/[0.05] hover:text-zinc-100'
+      }`}
+    >
+      {active ? (
+        <span aria-hidden className="absolute inset-y-2 left-0 w-0.5 rounded-full bg-red-500" />
+      ) : null}
+      <item.icon
+        className={`h-[17px] w-[17px] shrink-0 ${active ? 'text-red-400' : 'text-zinc-500 group-hover:text-zinc-300'}`}
+      />
+      {item.label}
+    </Link>
   );
 }
 
-export default function AdminSidebar({ onLogout }: AdminSidebarProps) {
+function SidebarBody({ pathname, onNavigate }: { pathname: string; onNavigate?: () => void }) {
+  return (
+    <>
+      <div className="flex h-14 shrink-0 items-center gap-2.5 px-4">
+        <Image
+          src="/images/brand/cansan-logo.png"
+          alt="Cansan"
+          width={116}
+          height={31}
+          className="h-6 w-auto object-contain brightness-0 invert"
+        />
+        <span className="rounded border border-zinc-700 px-1.5 py-px text-[9px] font-semibold uppercase tracking-[0.14em] text-zinc-400">
+          Admin
+        </span>
+      </div>
+      <nav aria-label="Admin" className="flex-1 space-y-3.5 overflow-y-auto px-2.5 pb-4 pt-1 [scrollbar-color:#3f3f46_transparent] [scrollbar-width:thin]">
+        {NAV_SECTIONS.map((section) => (
+          <div key={section.label}>
+            <p className="px-2.5 pb-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-zinc-600">
+              {section.label}
+            </p>
+            <div className="space-y-px">
+              {section.items.map((item) => (
+                <NavLink key={item.href} item={item} pathname={pathname} onNavigate={onNavigate} />
+              ))}
+            </div>
+          </div>
+        ))}
+      </nav>
+      <div className="shrink-0 border-t border-white/[0.06] p-2.5">
+        <NavLink item={SETTINGS_ITEM} pathname={pathname} onNavigate={onNavigate} />
+      </div>
+    </>
+  );
+}
+
+export default function AdminSidebar({
+  mobileOpen,
+  onMobileClose,
+}: {
+  mobileOpen: boolean;
+  onMobileClose: () => void;
+}) {
   const pathname = usePathname();
-  const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
     <>
-      <div className="fixed inset-x-0 top-0 z-40 flex h-14 items-center justify-between border-b border-zinc-200 bg-white px-4 lg:hidden">
-        <button
-          type="button"
-          onClick={() => setMobileOpen(true)}
-          className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-zinc-200 text-zinc-700 transition hover:bg-zinc-50"
-          aria-label="Open admin navigation"
-        >
-          <svg
-            width="16"
-            height="16"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth={2}
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-            />
-          </svg>
-        </button>
-        <div className="flex items-center gap-2.5">
-          <Image
-            src="/images/brand/cansan-logo.png"
-            alt="Cansan"
-            width={116}
-            height={31}
-            className="h-7 w-auto object-contain"
-          />
-          <span className="rounded-full bg-zinc-100 px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.12em] text-zinc-500">
-            Admin
-          </span>
-        </div>
-        <a
-          href="/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-xs font-semibold text-zinc-600 transition hover:text-zinc-900"
-        >
-          View Site
-        </a>
-      </div>
-
       {mobileOpen ? (
-        <div className="fixed inset-0 z-50 flex lg:hidden">
+        <div className="fixed inset-0 z-50 flex lg:hidden" role="dialog" aria-modal="true">
+          <aside className="flex h-full w-64 flex-col bg-zinc-950 text-white shadow-2xl">
+            <SidebarBody pathname={pathname} onNavigate={onMobileClose} />
+          </aside>
           <button
             type="button"
-            onClick={() => setMobileOpen(false)}
-            className="h-full flex-1 bg-black/40"
-            aria-label="Close admin navigation overlay"
+            onClick={onMobileClose}
+            className="h-full flex-1 bg-black/50 backdrop-blur-[2px]"
+            aria-label="Close navigation"
           />
-          <aside className="flex h-full w-72 flex-col bg-zinc-900 text-white shadow-xl">
-            <div className="flex h-14 items-center justify-between border-b border-zinc-800 px-4">
-              <Image
-                src="/images/brand/cansan-logo.png"
-                alt="Cansan"
-                width={116}
-                height={31}
-                className="h-7 w-auto brightness-0 invert object-contain"
-              />
-              <button
-                type="button"
-                onClick={() => setMobileOpen(false)}
-                className="inline-flex h-8 w-8 items-center justify-center rounded-md text-zinc-300 transition hover:bg-zinc-800 hover:text-white"
-                aria-label="Close admin navigation"
-              >
-                <svg
-                  width="16"
-                  height="16"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={2.2}
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
-            <nav className="flex-1 overflow-y-auto p-3">
-              <NavList pathname={pathname} onNavigate={() => setMobileOpen(false)} />
-            </nav>
-            <div className="border-t border-zinc-800 p-3">
-              <button
-                onClick={onLogout}
-                className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-zinc-400 transition hover:bg-zinc-800 hover:text-white"
-              >
-                <LogoutIcon />
-                Sign Out
-              </button>
-            </div>
-          </aside>
         </div>
       ) : null}
 
-      <aside className="fixed left-0 top-0 z-40 hidden h-full w-60 flex-col bg-zinc-900 text-white lg:flex">
-        <div className="flex h-14 items-center gap-3 border-b border-zinc-800 px-4">
-          <Image
-            src="/images/brand/cansan-logo.png"
-            alt="Cansan"
-            width={116}
-            height={31}
-            className="h-7 w-auto brightness-0 invert object-contain"
-          />
-          <span className="rounded-full border border-zinc-700 px-2 py-0.5 text-[9px] font-bold uppercase tracking-[0.12em] text-zinc-400">
-            Admin
-          </span>
-        </div>
-
-        <nav className="flex-1 overflow-y-auto p-3">
-          <NavList pathname={pathname} />
-        </nav>
-
-        <div className="border-t border-zinc-800 p-3">
-          <button
-            type="button"
-            onClick={() => window.dispatchEvent(new CustomEvent('open-admin-search'))}
-            className="mb-2 flex w-full items-center justify-between rounded-lg border border-zinc-700 bg-zinc-800/60 px-3 py-2 text-left text-xs font-semibold text-zinc-300 transition hover:border-zinc-600 hover:bg-zinc-800 hover:text-white"
-          >
-            <span className="flex items-center gap-2">
-              <span className="text-zinc-500">⌕</span> Quick search
-            </span>
-            <kbd className="rounded border border-zinc-600 px-1.5 py-0.5 text-[10px] text-zinc-500">
-              ⌘K
-            </kbd>
-          </button>
-          <button
-            onClick={onLogout}
-            className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-zinc-400 transition hover:bg-zinc-800 hover:text-white"
-          >
-            <LogoutIcon />
-            Sign Out
-          </button>
-          <a
-            href="/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-1 flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-zinc-500 transition hover:text-zinc-300"
-          >
-            <svg
-              width="18"
-              height="18"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={1.5}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"
-              />
-            </svg>
-            View Site
-          </a>
-        </div>
+      <aside className="fixed inset-y-0 left-0 z-40 hidden w-56 flex-col border-r border-white/[0.06] bg-zinc-950 text-white lg:flex">
+        <SidebarBody pathname={pathname} />
       </aside>
     </>
   );
 }
+
+export { LogoutIcon };
