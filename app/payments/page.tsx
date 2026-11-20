@@ -49,7 +49,7 @@ export default function PaymentsPage() {
         <section className="bg-zinc-950 px-6 py-20 text-white">
           <div className="mx-auto max-w-3xl text-center">
             <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-red-400">Payment Clarity</p>
-            <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">How pricing and payment work</h1>
+            <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">How Pricing and Payment Work</h1>
             <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-zinc-400">
               Buyers should know the accepted payment methods and when a price becomes final. This page makes that explicit before the order moves forward.
             </p>
@@ -60,19 +60,19 @@ export default function PaymentsPage() {
           <div className="grid gap-6 lg:grid-cols-3">
             {[
               {
-                title: 'Final price confirmed before payment',
+                title: 'Final Price Confirmed Before Payment',
                 body: 'The site helps customers shortlist products, but the transaction is confirmed through direct communication before money changes hands.',
               },
               {
-                title: 'Retail and business use cases',
+                title: 'Retail and Business Use Cases',
                 body: 'Smaller purchases may move quickly, while corporate, school, or office orders can be handled through quotes and invoices.',
               },
               {
-                title: 'Clear next step',
+                title: 'Clear Next Step',
                 body: 'Instead of forcing checkout friction, Cansan uses WhatsApp and direct support to confirm the details that matter most.',
               },
             ].map((item) => (
-              <div key={item.title} className="rounded-3xl border border-zinc-200 bg-white p-6 shadow-sm">
+              <div key={item.title} className="rounded-panel border border-zinc-200 bg-white p-6 shadow-sm">
                 <h2 className="text-lg font-semibold text-zinc-900">{item.title}</h2>
                 <p className="mt-3 text-sm leading-relaxed text-zinc-600">{item.body}</p>
               </div>
@@ -82,10 +82,10 @@ export default function PaymentsPage() {
 
         <section className="bg-zinc-50 px-6 py-16">
           <div className="mx-auto max-w-4xl">
-            <h2 className="text-2xl font-bold text-zinc-900">Frequently asked payment questions</h2>
+            <h2 className="text-2xl font-bold text-zinc-900">Frequently Asked Payment Questions</h2>
             <div className="mt-6 space-y-4">
               {faqs.map((faq) => (
-                <div key={faq.question} className="rounded-2xl border border-zinc-200 bg-white p-5">
+                <div key={faq.question} className="rounded-card border border-zinc-200 bg-white p-5">
                   <h3 className="text-sm font-semibold text-zinc-900">{faq.question}</h3>
                   <p className="mt-2 text-sm leading-relaxed text-zinc-600">{faq.answer}</p>
                 </div>
@@ -95,16 +95,16 @@ export default function PaymentsPage() {
         </section>
 
         <section className="px-6 py-16">
-          <div className="mx-auto max-w-5xl rounded-3xl bg-red-600 px-8 py-10 text-white">
+          <div className="mx-auto max-w-5xl rounded-panel bg-red-600 px-8 py-10 text-white">
             <h2 className="text-2xl font-bold">Need a final quote before you pay?</h2>
             <p className="mt-3 max-w-2xl text-sm leading-relaxed text-emerald-100">
               Send the product links or quantities you want. We will confirm price, stock, and the best payment route for the order.
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
-              <Link href="/bulk-orders" className="rounded-full bg-white px-5 py-3 text-sm font-semibold text-emerald-700 transition hover:bg-emerald-50">
+              <Link href="/bulk-orders" className="rounded-button bg-white px-5 py-3 text-sm font-semibold text-emerald-700 transition hover:bg-emerald-50">
                 Request a Quote
               </Link>
-              <Link href="/contact" className="rounded-full border border-white/30 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/10">
+              <Link href="/contact" className="rounded-button border border-white/30 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/10">
                 Contact the Store
               </Link>
             </div>

@@ -38,19 +38,19 @@ const icons = {
 
 const defaultContent = {
   search: {
-    title: 'No products found',
+    title: 'No Products Found',
     description: 'Try adjusting your search or filters to find what you\'re looking for.',
   },
   cart: {
-    title: 'Your cart is empty',
+    title: 'Your Cart Is Empty',
     description: 'Looks like you haven\'t added anything to your cart yet.',
   },
   products: {
-    title: 'No products available',
+    title: 'No Products Available',
     description: 'Check back later for new arrivals.',
   },
   error: {
-    title: 'Something went wrong',
+    title: 'Something Went Wrong',
     description: 'We couldn\'t load the content. Please try again.',
   },
 };
@@ -76,14 +76,14 @@ export function EmptyState({ type, title, description, action }: EmptyStateProps
         action.href ? (
           <Link
             href={action.href}
-            className="inline-flex items-center gap-2 rounded-full bg-red-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-red-500"
+            className="inline-flex items-center gap-2 rounded-button bg-red-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-red-500"
           >
             {action.label}
           </Link>
         ) : (
           <button
             onClick={action.onClick}
-            className="inline-flex items-center gap-2 rounded-full bg-red-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-red-500"
+            className="inline-flex items-center gap-2 rounded-button bg-red-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-red-500"
           >
             {action.label}
           </button>

@@ -3,6 +3,8 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  /* Shared with plain CSS below (the @theme block is inlined, so it can't be read via var()). */
+  --button-radius: 0.625rem;
 }
 
 @theme inline {
@@ -12,6 +14,16 @@
   --font-heading: var(--font-geist-sans), system-ui, sans-serif;
   --animate-marquee: marquee 32s linear infinite;
   --animate-marquee-slow: marquee 52s linear infinite;
+
+  /* Radius scale: one value per kind of surface. Tune the whole site here. */
+  --radius-card: 0.875rem; /* product, category, insight and info cards */
+  --radius-panel: 1.25rem; /* hero, large feature panels, page sections */
+  --radius-inner: 0.5rem; /* elements nested inside cards (chips, thumbnails) */
+  --radius-button: var(--button-radius); /* every text button and form field */
+
+  /* Motion */
+  --ease-smooth: cubic-bezier(0.22, 1, 0.36, 1);
+  --shadow-card-hover: 0 14px 34px -14px rgb(24 24 27 / 0.22);
 }
 
 body {
@@ -35,5 +47,176 @@ h6 {
   }
   100% {
     transform: translateX(-50%);
+  }
+}
+
+/* ── Admin form fields ─────────────────────────────────────────────────────
+   One look for every admin input, select and textarea. Deliberately unlayered
+   so it wins over the per-page Tailwind classes these fields grew over time;
+   layout utilities (width, padding, margins) still come from the markup. */
+.admin-shell
+  :where(
+    input:not([type='checkbox'], [type='radio'], [type='range'], [type='file'], [type='color'], [type='hidden']),
+    select,
+    textarea
+  ) {
+  background-color: #fff;
+  border: 1px solid var(--color-zinc-300);
+  border-radius: var(--button-radius);
+  color: var(--color-zinc-900);
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  box-shadow: 0 1px 0 rgb(24 24 27 / 0.03);
+  transition:
+    border-color 120ms ease,
+    box-shadow 120ms ease,
+    background-color 120ms ease;
+}
+
+.admin-shell :where(input:not([type='checkbox'], [type='radio'], [type='range'], [type='file'], [type='color'], [type='hidden']), select) {
+  min-height: 2.25rem;
+}
+
+.admin-shell :where(input, select, textarea)::placeholder {
+  color: var(--color-zinc-400);
+}
+
+.admin-shell
+  :where(input:not([type='checkbox'], [type='radio'], [type='range'], [type='file'], [type='color']), select, textarea):hover:not(:disabled):not(:focus) {
+  border-color: var(--color-zinc-400);
+}
+
+.admin-shell
+  :where(input:not([type='checkbox'], [type='radio'], [type='range'], [type='file'], [type='color']), select, textarea):focus,
+.admin-shell
+  :where(input:not([type='checkbox'], [type='radio'], [type='range'], [type='file'], [type='color']), select, textarea):focus-visible {
+  border-color: var(--color-red-500);
+  box-shadow: 0 0 0 3px rgb(239 68 68 / 0.15);
+  outline: none;
+}
+
+.admin-shell :where(input, select, textarea):disabled,
+.admin-shell :where(input, textarea)[readonly] {
+  background-color: var(--color-zinc-50);
+  color: var(--color-zinc-500);
+  cursor: not-allowed;
+}
+
+.admin-shell :where(input, select, textarea)[aria-invalid='true'] {
+  border-color: var(--color-red-500);
+}
+
+.admin-shell :where(select) {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' viewBox='0 0 24 24' stroke='%2371717a' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='m19.5 8.25-7.5 7.5-7.5-7.5'/%3E%3C/svg%3E");
+  background-position: right 0.6rem center;
+  background-repeat: no-repeat;
+  background-size: 1rem;
+  padding-right: 2rem;
+}
+
+.admin-shell :where(input[type='checkbox'], input[type='radio']) {
+  accent-color: var(--color-red-600);
+  height: 1rem;
+  width: 1rem;
+}
+
+/* Tabular figures keep money and counts aligned in tables and stat cards. */
+.admin-shell {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Storefront hero: copy eases in on each slide change. */
+@keyframes hero-slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-slide-in > * {
+  animation: hero-slide-in 520ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.hero-slide-in > *:nth-child(2) {
+  animation-delay: 60ms;
+}
+
+.hero-slide-in > *:nth-child(3) {
+  animation-delay: 120ms;
+}
+
+.hero-slide-in > *:nth-child(n + 4) {
+  animation-delay: 180ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-slide-in > * {
+    animation: none;
+  }
+}
+
+/* ── Scroll reveal ─────────────────────────────────────────────────────────
+   <ScrollReveal> adds .reveal-ready to <html> once JS runs (and only when the
+   visitor hasn't asked for reduced motion), so content is never hidden if
+   scripts fail. Anything already on screen at load is marked visible first. */
+.reveal-ready [data-reveal]:not(.is-revealed) {
+  opacity: 0;
+  transform: translateY(14px);
+}
+
+.reveal-ready [data-reveal] {
+  transition:
+    opacity 600ms var(--ease-smooth),
+    transform 600ms var(--ease-smooth);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.reveal-ready [data-reveal].is-revealed {
+  opacity: 1;
+  transform: none;
+}
+
+/* Hover/press feel shared by interactive cards. */
+.card-interactive {
+  transition:
+    transform 300ms var(--ease-smooth),
+    box-shadow 300ms var(--ease-smooth),
+    border-color 200ms ease;
+}
+
+@media (hover: hover) {
+  .card-interactive:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-card-hover);
+    border-color: var(--color-zinc-300);
+  }
+}
+
+.card-interactive:active {
+  transform: translateY(-1px) scale(0.995);
+}
+
+.press {
+  transition:
+    transform 160ms var(--ease-smooth),
+    background-color 160ms ease,
+    box-shadow 200ms ease;
+}
+
+.press:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-interactive,
+  .card-interactive:hover,
+  .card-interactive:active,
+  .press:active:not(:disabled) {
+    transform: none;
   }
 }

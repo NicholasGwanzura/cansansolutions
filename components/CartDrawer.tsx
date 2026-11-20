@@ -214,7 +214,7 @@ export function CartDrawer({ open, onClose }: Props) {
                         </div>
                         <div>
                           <p className="font-heading text-sm font-semibold text-zinc-700">
-                            Your cart is empty
+                            Your Cart Is Empty
                           </p>
                           <p className="mt-1 text-sm text-zinc-500">
                             Browse products and add items to get started
@@ -223,16 +223,16 @@ export function CartDrawer({ open, onClose }: Props) {
                         <Link
                           href="/products"
                           onClick={onClose}
-                          className="inline-flex min-h-11 items-center rounded-full bg-red-600 px-5 py-2 text-sm font-semibold text-white transition hover:bg-red-700"
+                          className="inline-flex min-h-11 items-center rounded-button bg-red-600 px-5 py-2 text-sm font-semibold text-white transition hover:bg-red-700"
                         >
                           Browse Products
                         </Link>
                       </div>
                     ) : (
                       <div className="space-y-4">
-                        <div className="rounded-2xl border border-emerald-100 bg-emerald-50 p-3">
+                        <div className="rounded-card border border-emerald-100 bg-emerald-50 p-3">
                           <p className="text-sm font-semibold text-emerald-800">
-                            What happens next
+                            What Happens Next
                           </p>
                           <p className="mt-1 text-sm leading-relaxed text-emerald-700">
                             Review your items, add any delivery or collection note, then send the
@@ -399,7 +399,7 @@ export function CartDrawer({ open, onClose }: Props) {
                                   : suggestion,
                               )
                             }
-                            className="inline-flex min-h-10 items-center rounded-full border border-zinc-200 bg-white px-3 py-2 text-sm font-medium text-zinc-600 transition hover:border-red-300 hover:text-red-600"
+                            className="inline-flex min-h-10 items-center rounded-button border border-zinc-200 bg-white px-3 py-2 text-sm font-medium text-zinc-600 transition hover:border-red-300 hover:text-red-600"
                           >
                             {suggestion}
                           </button>
@@ -417,7 +417,7 @@ export function CartDrawer({ open, onClose }: Props) {
                     {/* WhatsApp message preview */}
                     <div>
                       <p className="mb-1.5 font-heading text-xs font-bold uppercase tracking-wide text-zinc-500">
-                        Message preview
+                        Message Preview
                       </p>
                       <div className="whitespace-pre-wrap rounded-xl border border-green-100 bg-green-50 p-3 font-mono text-sm leading-relaxed text-zinc-700">
                         {buildWhatsAppPreview(items, note)}
@@ -466,14 +466,14 @@ export function CartDrawer({ open, onClose }: Props) {
                       onClick={clearCart}
                       className="w-full text-[11px] font-medium text-zinc-300 hover:text-zinc-600 transition-colors"
                     >
-                      Clear cart
+                      Clear Cart
                     </button>
                   </>
                 )}
 
                 {currentStep === 'review' && (
                   <>
-                    <div className="rounded-2xl border border-zinc-200 bg-zinc-50 p-3 text-center">
+                    <div className="rounded-card border border-zinc-200 bg-zinc-50 p-3 text-center">
                       <p className="text-[11px] font-semibold text-zinc-700">
                         Stock, delivery, and final price are confirmed before payment.
                       </p>

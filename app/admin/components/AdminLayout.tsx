@@ -57,7 +57,7 @@ function TopBar({ onMenu, onSignOut }: { onMenu: () => void; onSignOut: () => vo
       <button
         type="button"
         onClick={onMenu}
-        className="-ml-1 inline-flex h-9 w-9 items-center justify-center rounded-md text-zinc-600 transition hover:bg-zinc-100 lg:hidden"
+        className="-ml-1 inline-flex h-9 w-9 items-center justify-center rounded-lg text-zinc-600 transition hover:bg-zinc-100 lg:hidden"
         aria-label="Open navigation"
       >
         <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -81,7 +81,7 @@ function TopBar({ onMenu, onSignOut }: { onMenu: () => void; onSignOut: () => vo
         <button
           type="button"
           onClick={() => window.dispatchEvent(new CustomEvent('open-admin-search'))}
-          className="flex h-9 items-center gap-2 rounded-md border border-zinc-200 bg-white px-2.5 text-sm text-zinc-500 transition hover:border-zinc-300 hover:text-zinc-700 sm:w-56"
+          className="flex h-9 items-center gap-2 rounded-button border border-zinc-200 bg-white px-2.5 text-sm text-zinc-500 transition hover:border-zinc-300 hover:text-zinc-700 sm:w-56"
           aria-label="Search"
         >
           <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -96,7 +96,7 @@ function TopBar({ onMenu, onSignOut }: { onMenu: () => void; onSignOut: () => vo
           href="/"
           target="_blank"
           rel="noopener noreferrer"
-          className="hidden h-9 items-center gap-1.5 rounded-md px-2.5 text-sm font-medium text-zinc-600 transition hover:bg-zinc-100 hover:text-zinc-900 sm:flex"
+          className="hidden h-9 items-center gap-1.5 rounded-button px-2.5 text-sm font-medium text-zinc-600 transition hover:bg-zinc-100 hover:text-zinc-900 sm:flex"
         >
           View site
           <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -106,7 +106,7 @@ function TopBar({ onMenu, onSignOut }: { onMenu: () => void; onSignOut: () => vo
         <button
           type="button"
           onClick={onSignOut}
-          className="inline-flex h-9 w-9 items-center justify-center rounded-md text-zinc-500 transition hover:bg-zinc-100 hover:text-zinc-900"
+          className="inline-flex h-9 w-9 items-center justify-center rounded-lg text-zinc-500 transition hover:bg-zinc-100 hover:text-zinc-900"
           aria-label="Sign out"
           title="Sign out"
         >

@@ -31,7 +31,7 @@ export default function DocumentBankDetails({ value, defaults, onChange }: Props
     <div className="rounded-xl border border-zinc-200 p-4">
       <div className="mb-3 flex flex-wrap items-start justify-between gap-2">
         <div>
-          <p className="text-sm font-semibold text-zinc-900">Bank details</p>
+          <p className="text-sm font-semibold text-zinc-900">Bank Details</p>
           <p className="mt-0.5 text-xs text-zinc-500">
             {customized
               ? 'Custom for this document only.'
@@ -42,15 +42,15 @@ export default function DocumentBankDetails({ value, defaults, onChange }: Props
           <button
             type="button"
             onClick={() => onChange(null)}
-            className="shrink-0 rounded-lg border border-zinc-200 px-3 py-1.5 text-xs font-semibold text-zinc-600 hover:bg-zinc-50"
+            className="shrink-0 rounded-button border border-zinc-200 px-3 py-1.5 text-xs font-semibold text-zinc-600 hover:bg-zinc-50"
           >
-            Reset to defaults
+            Reset to Defaults
           </button>
         ) : (
           <button
             type="button"
             onClick={() => onChange(defaults.map((account) => ({ ...account })))}
-            className="shrink-0 rounded-lg border border-zinc-200 px-3 py-1.5 text-xs font-semibold text-zinc-700 hover:bg-zinc-50"
+            className="shrink-0 rounded-button border border-zinc-200 px-3 py-1.5 text-xs font-semibold text-zinc-700 hover:bg-zinc-50"
           >
             Edit for this document
           </button>
@@ -92,7 +92,7 @@ export default function DocumentBankDetails({ value, defaults, onChange }: Props
               </div>
               <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
                 <label className="block">
-                  <span className="mb-1 block text-xs font-semibold text-zinc-500">Bank name</span>
+                  <span className="mb-1 block text-xs font-semibold text-zinc-500">Bank Name</span>
                   <input
                     value={account.bankName}
                     onChange={(e) => update(index, 'bankName', e.target.value)}
@@ -119,7 +119,7 @@ export default function DocumentBankDetails({ value, defaults, onChange }: Props
                   />
                 </label>
                 <label className="block">
-                  <span className="mb-1 block text-xs font-semibold text-zinc-500">Account number</span>
+                  <span className="mb-1 block text-xs font-semibold text-zinc-500">Account Number</span>
                   <input
                     value={account.accountNumber}
                     onChange={(e) => update(index, 'accountNumber', e.target.value)}
@@ -133,7 +133,7 @@ export default function DocumentBankDetails({ value, defaults, onChange }: Props
           <button
             type="button"
             onClick={() => onChange([...accounts, emptyAccount()])}
-            className="rounded-lg border border-dashed border-zinc-300 px-3 py-2 text-xs font-semibold text-zinc-600 hover:bg-zinc-50"
+            className="rounded-button border border-dashed border-zinc-300 px-3 py-2 text-xs font-semibold text-zinc-600 hover:bg-zinc-50"
           >
             + Add bank account
           </button>

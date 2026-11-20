@@ -5,6 +5,7 @@ import { OrganizationJsonLd, LocalBusinessJsonLd, WebsiteJsonLd } from '@/compon
 import { Geist } from 'next/font/google';
 import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from '@/lib/site';
 import { ToastProvider } from '@/components/Toast';
+import { ScrollReveal } from '@/components/ScrollReveal';
 
 const geistSans = Geist({
   subsets: ['latin'],
@@ -67,12 +68,13 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <body className={`${geistSans.variable} font-sans antialiased bg-white text-zinc-900`}>
         <a
           href="#main-content"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:rounded-lg focus:bg-red-600 focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-white focus:shadow-lg"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:rounded-button focus:bg-red-600 focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-white focus:shadow-lg"
         >
-          Skip to main content
+          Skip to Main Content
         </a>
         <ToastProvider>
           <PublicChrome>{children}</PublicChrome>
+          <ScrollReveal />
         </ToastProvider>
       </body>
     </html>

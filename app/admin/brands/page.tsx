@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import type { Brand } from '@/lib/types';
 import AdminLayout from '../components/AdminLayout';
+import { Icon } from '@/components/icons';
 
 const EMPTY_BRAND: Brand = {
   id: '',
@@ -120,7 +121,7 @@ function LogoUpload({ value, onChange }: { value: string; onChange: (url: string
       </p>
 
       {preview ? (
-        <div className="relative flex h-32 items-center justify-center rounded-lg border border-zinc-200 bg-white overflow-hidden p-4">
+        <div className="relative flex h-32 items-center justify-center rounded-xl border border-zinc-200 bg-white overflow-hidden p-4">
           <img src={preview} alt="Logo preview" className="max-h-full w-auto max-w-full object-contain" />
           <button
             type="button"
@@ -284,7 +285,7 @@ export default function BrandsAdminPage() {
             </div>
           <button
             onClick={() => setEditing({ ...EMPTY_BRAND, id: `brand-${Date.now()}`, sortOrder: brands.length })}
-            className="flex items-center gap-1.5 rounded-xl bg-red-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-red-700"
+            className="flex items-center gap-1.5 rounded-button bg-red-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-red-700"
           >
             <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
@@ -293,7 +294,7 @@ export default function BrandsAdminPage() {
           </button>
         </div>
 
-        <div className="mb-6 rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900">
+        <div className="mb-6 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900">
           Homepage logos must be clean brand marks, not screenshots or promotional artwork. Wide wordmarks and transparent badge exports display best.
         </div>
 
@@ -302,13 +303,13 @@ export default function BrandsAdminPage() {
             <div className="h-7 w-7 animate-spin rounded-full border-2 border-red-600 border-t-transparent" />
           </div>
         ) : brands.length === 0 ? (
-          <div className="rounded-2xl border border-zinc-200 bg-white p-8 text-center">
+          <div className="rounded-xl border border-zinc-200 bg-white p-8 text-center">
             <p className="text-zinc-500">No uploaded brands yet. Add your first logo to power the homepage slider.</p>
           </div>
         ) : (
           <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
             {brands.map((brand) => (
-              <div key={brand.id} className="rounded-2xl border border-zinc-200 bg-white p-4">
+              <div key={brand.id} className="rounded-xl border border-zinc-200 bg-white p-4">
                 <div className="flex min-h-28 items-center justify-center rounded-xl border border-zinc-100 bg-zinc-50 p-4">
                   <img src={brand.logoUrl} alt={brand.name} className="max-h-16 w-auto max-w-full object-contain" />
                 </div>
@@ -324,13 +325,13 @@ export default function BrandsAdminPage() {
                 <div className="mt-4 flex gap-2">
                   <button
                     onClick={() => setEditing(brand)}
-                    className="flex-1 rounded-lg border border-zinc-200 px-3 py-1.5 text-xs font-medium text-zinc-600 transition hover:bg-zinc-50"
+                    className="flex-1 rounded-button border border-zinc-200 px-3 py-1.5 text-xs font-medium text-zinc-600 transition hover:bg-zinc-50"
                   >
                     Edit
                   </button>
                   <button
                     onClick={() => remove(brand.id)}
-                    className="rounded-lg border border-red-200 bg-red-50 px-3 py-1.5 text-xs font-medium text-red-600 transition hover:bg-red-100"
+                    className="rounded-button border border-red-200 bg-red-50 px-3 py-1.5 text-xs font-medium text-red-600 transition hover:bg-red-100"
                   >
                     Delete
                   </button>
@@ -348,7 +349,7 @@ export default function BrandsAdminPage() {
                 <h2 className="font-heading text-sm font-bold text-zinc-900">
                   {editing.id && brands.find((item) => item.id === editing.id) ? 'Edit Brand' : 'New Brand'}
                 </h2>
-                <button onClick={() => setEditing(null)} className="text-zinc-400 hover:text-zinc-600">✕</button>
+                <button aria-label="Close" onClick={() => setEditing(null)} className="text-zinc-400 hover:text-zinc-600"><Icon name="xMark" className="h-4 w-4" /></button>
               </div>
 
               <form
@@ -390,21 +391,21 @@ export default function BrandsAdminPage() {
                     onChange={(e) => setEditing({ ...editing, active: e.target.checked })}
                     className="rounded border-zinc-300"
                   />
-                  <span className="text-sm text-zinc-700">Active (visible on site)</span>
+                  <span className="text-sm text-zinc-700">Active (Visible on Site)</span>
                 </label>
 
                 <div className="flex gap-2 pt-4">
                   <button
                     type="button"
                     onClick={() => setEditing(null)}
-                    className="flex-1 rounded-xl border border-zinc-200 py-2.5 text-sm font-semibold text-zinc-600"
+                    className="flex-1 rounded-lg border border-zinc-200 py-2.5 text-sm font-semibold text-zinc-600"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
                     disabled={saving}
-                    className="flex-1 rounded-xl bg-red-600 py-2.5 text-sm font-semibold text-white disabled:opacity-60"
+                    className="flex-1 rounded-lg bg-red-600 py-2.5 text-sm font-semibold text-white disabled:opacity-60"
                   >
                     {saving ? 'Saving…' : 'Save Brand'}
                   </button>

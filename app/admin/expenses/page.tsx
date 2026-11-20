@@ -5,6 +5,7 @@ import type { Expense, ExpenseCategory } from '@/lib/types';
 import AdminLayout from '../components/AdminLayout';
 import { Notice } from '../components/ui';
 import { downloadCsv } from '@/lib/csv-export';
+import { Icon } from '@/components/icons';
 
 const CURRENCIES = ['USD', 'ZWL', 'ZAR', 'KES'];
 
@@ -197,13 +198,13 @@ export default function ExpensesAdmin() {
                 expenses,
               )}
               disabled={expenses.length === 0}
-              className="flex items-center gap-1.5 rounded-xl border border-zinc-200 bg-white px-3 py-2 text-sm font-semibold text-zinc-700 transition hover:bg-zinc-50 disabled:opacity-50"
+              className="flex items-center gap-1.5 rounded-button border border-zinc-200 bg-white px-3 py-2 text-sm font-semibold text-zinc-700 transition hover:bg-zinc-50 disabled:opacity-50"
             >
               Export CSV
             </button>
             <button
               onClick={() => startEdit()}
-              className="flex items-center gap-1.5 rounded-xl bg-red-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-red-700"
+              className="flex items-center gap-1.5 rounded-button bg-red-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-red-700"
             >
               <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
@@ -217,7 +218,7 @@ export default function ExpensesAdmin() {
         <div className="mb-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
           <div className="rounded-xl border border-zinc-200 bg-white p-4">
             <p className="text-xs font-medium text-zinc-500">Total Expenses</p>
-            <p className="text-2xl font-bold text-zinc-900">{fmtCurrency(totalExpenses, 'USD')}</p>
+            <p className="text-2xl font-semibold tracking-tight text-zinc-950">{fmtCurrency(totalExpenses, 'USD')}</p>
           </div>
           <div className="rounded-xl border border-zinc-200 bg-white p-4">
             <p className="text-xs font-medium text-zinc-500">This Month</p>
@@ -225,12 +226,12 @@ export default function ExpensesAdmin() {
           </div>
           <div className="rounded-xl border border-zinc-200 bg-white p-4">
             <p className="text-xs font-medium text-zinc-500">Top Category</p>
-            <p className="text-2xl font-bold text-zinc-900">{topCategory ? CATEGORIES.find((c) => c.value === topCategory[0])?.label || topCategory[0] : '-'}</p>
+            <p className="text-2xl font-semibold tracking-tight text-zinc-950">{topCategory ? CATEGORIES.find((c) => c.value === topCategory[0])?.label || topCategory[0] : '-'}</p>
             {topCategory && <p className="text-xs text-zinc-400">{fmtCurrency(topCategory[1], 'USD')}</p>}
           </div>
           <div className="rounded-xl border border-zinc-200 bg-white p-4">
             <p className="text-xs font-medium text-zinc-500">Entries</p>
-            <p className="text-2xl font-bold text-zinc-900">{expenses.length}</p>
+            <p className="text-2xl font-semibold tracking-tight text-zinc-950">{expenses.length}</p>
           </div>
         </div>
 
@@ -267,12 +268,12 @@ export default function ExpensesAdmin() {
             <div className="h-7 w-7 animate-spin rounded-full border-2 border-red-600 border-t-transparent" />
           </div>
         ) : filtered.length === 0 ? (
-          <div className="rounded-2xl border border-zinc-200 bg-white p-12 text-center">
+          <div className="rounded-xl border border-zinc-200 bg-white p-12 text-center">
             <svg className="mx-auto mb-3 text-zinc-300" width="48" height="48" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 18.75a60.07 60.07 0 0 1 15.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 0 1 3 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 0 0-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 0 1-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 0 0 3 15h-.75M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
             </svg>
-            <p className="text-zinc-500 mb-3">No expenses found</p>
-            <button onClick={() => startEdit()} className="rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white hover:bg-red-700">
+            <p className="text-zinc-500 mb-3">No Expenses Found</p>
+            <button onClick={() => startEdit()} className="rounded-button bg-red-600 px-4 py-2 text-sm font-semibold text-white hover:bg-red-700">
               Add First Expense
             </button>
           </div>
@@ -303,8 +304,8 @@ export default function ExpensesAdmin() {
                     <td className="px-4 py-3 text-right font-medium text-zinc-900">{fmtCurrency(exp.amount, exp.currency)}</td>
                     <td className="px-4 py-3">
                       <div className="flex gap-1.5">
-                        <button onClick={() => startEdit(exp)} className="rounded-lg border border-zinc-200 px-2.5 py-1 text-xs font-medium text-zinc-600 hover:bg-zinc-50">Edit</button>
-                        <button onClick={() => removeExpense(exp.id)} className="rounded-lg border border-red-200 bg-red-50 px-2.5 py-1 text-xs font-medium text-red-600 hover:bg-red-100">Delete</button>
+                        <button onClick={() => startEdit(exp)} className="rounded-button border border-zinc-200 px-2.5 py-1 text-xs font-medium text-zinc-600 hover:bg-zinc-50">Edit</button>
+                        <button onClick={() => removeExpense(exp.id)} className="rounded-button border border-red-200 bg-red-50 px-2.5 py-1 text-xs font-medium text-red-600 hover:bg-red-100">Delete</button>
                       </div>
                     </td>
                   </tr>
@@ -323,7 +324,7 @@ export default function ExpensesAdmin() {
                 <h2 className="font-heading text-sm font-bold text-zinc-900">
                   {expenses.find((e) => e.id === editing.id) ? 'Edit Expense' : 'New Expense'}
                 </h2>
-                <button onClick={() => setEditing(null)} className="text-zinc-400 hover:text-zinc-600">&#10005;</button>
+                <button aria-label="Close" onClick={() => setEditing(null)} className="text-zinc-400 hover:text-zinc-600"><Icon name="xMark" className="h-4 w-4" /></button>
               </div>
 
               <form
@@ -347,7 +348,7 @@ export default function ExpensesAdmin() {
                   <input value={editing.description} onChange={(e) => setEditing({ ...editing, description: e.target.value })} className="w-full rounded-lg border border-zinc-200 px-3 py-2 text-sm" placeholder="What was this expense for?" required />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-zinc-500 mb-1">Vendor (optional)</label>
+                  <label className="block text-xs font-semibold text-zinc-500 mb-1">Vendor (Optional)</label>
                   <input value={editing.vendor} onChange={(e) => setEditing({ ...editing, vendor: e.target.value })} className="w-full rounded-lg border border-zinc-200 px-3 py-2 text-sm" placeholder="Supplier / vendor name" />
                 </div>
                 <div className="grid grid-cols-2 gap-3">
@@ -363,12 +364,12 @@ export default function ExpensesAdmin() {
                   </div>
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-zinc-500 mb-1">Notes (optional)</label>
+                  <label className="block text-xs font-semibold text-zinc-500 mb-1">Notes (Optional)</label>
                   <textarea value={editing.notes || ''} onChange={(e) => setEditing({ ...editing, notes: e.target.value })} rows={3} className="w-full rounded-lg border border-zinc-200 px-3 py-2 text-sm" placeholder="Additional notes..." />
                 </div>
                 <div className="flex gap-2 pt-2">
-                  <button type="button" onClick={() => setEditing(null)} className="flex-1 rounded-xl border border-zinc-200 py-2.5 text-sm font-semibold text-zinc-600">Cancel</button>
-                  <button type="submit" disabled={saving} className="flex-1 rounded-xl bg-red-600 py-2.5 text-sm font-semibold text-white disabled:opacity-60">{saving ? 'Saving...' : 'Save Expense'}</button>
+                  <button type="button" onClick={() => setEditing(null)} className="flex-1 rounded-lg border border-zinc-200 py-2.5 text-sm font-semibold text-zinc-600">Cancel</button>
+                  <button type="submit" disabled={saving} className="flex-1 rounded-lg bg-red-600 py-2.5 text-sm font-semibold text-white disabled:opacity-60">{saving ? 'Saving...' : 'Save Expense'}</button>
                 </div>
               </form>
             </div>

@@ -33,7 +33,7 @@ export default async function BrandsPage() {
         <section className="bg-zinc-950 px-6 py-20 text-white">
           <div className="mx-auto max-w-3xl text-center">
             <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-red-400">Collections</p>
-            <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">Shop by brand</h1>
+            <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">Shop by Brand</h1>
             <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-zinc-400">
               Some buyers already know the brand they trust. These collection pages make it easier to browse by brand before confirming price and stock with the store.
             </p>
@@ -49,7 +49,7 @@ export default async function BrandsPage() {
                 <Link
                   key={brand.slug}
                   href={getBrandHref(brand.slug)}
-                  className="group rounded-3xl border border-zinc-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md"
+                  className="group rounded-panel border border-zinc-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md"
                 >
                   <p className="text-xs font-bold uppercase tracking-widest text-zinc-400">Brand Collection</p>
                   <h2 className="mt-3 text-2xl font-bold text-zinc-900">{brand.name}</h2>
@@ -58,7 +58,7 @@ export default async function BrandsPage() {
                     <span className="font-medium text-zinc-500">
                       {brandCount > 0 ? `${brandCount} matching product${brandCount === 1 ? '' : 's'}` : 'Browse collection'}
                     </span>
-                    <span className="font-semibold text-red-600 group-hover:underline">View brand</span>
+                    <span className="font-semibold text-red-600 group-hover:underline">View Brand</span>
                   </div>
                 </Link>
               );

@@ -1,7 +1,7 @@
 'use client';
 
 import Image, { type ImageProps } from 'next/image';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 const FALLBACK = '/images/products/placeholder.svg';
 
@@ -17,10 +17,10 @@ export function ProductImage({
   onError,
   ...props
 }: ProductImageProps) {
-  const [failed, setFailed] = useState(false);
+  const sourceKey = `${src ?? ''}\0${fallbackSrc}`;
+  const [failedSource, setFailedSource] = useState<string | null>(null);
+  const failed = failedSource === sourceKey;
   const value = !failed && src ? src : fallbackSrc;
-
-  useEffect(() => setFailed(false), [src, fallbackSrc]);
 
   return (
     <Image
@@ -28,7 +28,7 @@ export function ProductImage({
       src={value}
       alt={alt}
       onError={(event) => {
-        setFailed(true);
+        setFailedSource(sourceKey);
         onError?.(event);
       }}
     />

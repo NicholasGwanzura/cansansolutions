@@ -216,7 +216,7 @@ export default function AnalyticsPage() {
               ].map((stat) => (
                 <div key={stat.label} className="rounded-xl border border-zinc-200 bg-white p-4">
                   <p className="text-xs text-zinc-400">{stat.label}</p>
-                  <p className="text-2xl font-bold text-zinc-900 mt-1">{stat.value}</p>
+                  <p className="text-2xl font-semibold tracking-tight text-zinc-950 mt-1">{stat.value}</p>
                 </div>
               ))}
             </div>
@@ -224,7 +224,7 @@ export default function AnalyticsPage() {
             {/* Charts Grid */}
             <div className="grid gap-6 lg:grid-cols-2">
               {/* Categories */}
-              <div className="rounded-2xl border border-zinc-200 bg-white p-5">
+              <div className="rounded-xl border border-zinc-200 bg-white p-5">
                 <h3 className="font-semibold text-zinc-900 mb-4">Products by Category</h3>
                 {stats.categoryChart.length > 0 ? (
                   <BarChart
@@ -232,35 +232,35 @@ export default function AnalyticsPage() {
                     maxValue={Math.max(...stats.categoryChart.map((d) => d.value), 1)}
                   />
                 ) : (
-                  <p className="text-sm text-zinc-500">No data available</p>
+                  <p className="text-sm text-zinc-500">No Data Available</p>
                 )}
               </div>
 
               {/* Price Distribution */}
-              <div className="rounded-2xl border border-zinc-200 bg-white p-5">
+              <div className="rounded-xl border border-zinc-200 bg-white p-5">
                 <h3 className="font-semibold text-zinc-900 mb-4">Price Distribution</h3>
                 {stats.priceRanges.length > 0 ? (
                   <PieChart data={stats.priceRanges} />
                 ) : (
-                  <p className="text-sm text-zinc-500">No data available</p>
+                  <p className="text-sm text-zinc-500">No Data Available</p>
                 )}
               </div>
 
               {/* Stock Status */}
-              <div className="rounded-2xl border border-zinc-200 bg-white p-5">
+              <div className="rounded-xl border border-zinc-200 bg-white p-5">
                 <h3 className="font-semibold text-zinc-900 mb-4">Stock Status</h3>
                 <PieChart data={stats.stockData} />
               </div>
 
               {/* Product Types */}
-              <div className="rounded-2xl border border-zinc-200 bg-white p-5">
+              <div className="rounded-xl border border-zinc-200 bg-white p-5">
                 <h3 className="font-semibold text-zinc-900 mb-4">Product Types</h3>
                 <PieChart data={stats.typeData} />
               </div>
             </div>
 
             {/* Summary Table */}
-            <div className="mt-6 rounded-2xl border border-zinc-200 bg-white overflow-hidden">
+            <div className="mt-6 rounded-xl border border-zinc-200 bg-white overflow-hidden">
               <div className="px-5 py-4 border-b border-zinc-100">
                 <h3 className="font-semibold text-zinc-900">Catalog Summary</h3>
               </div>

@@ -5,6 +5,7 @@ import type { Client } from '@/lib/types';
 import AdminLayout from '../components/AdminLayout';
 import { Notice } from '../components/ui';
 import { downloadCsv } from '@/lib/csv-export';
+import { Icon } from '@/components/icons';
 
 function getInitials(name: string) {
   return name.charAt(0).toUpperCase() || '?';
@@ -151,13 +152,13 @@ export default function ClientsAdmin() {
                 clients,
               )}
               disabled={clients.length === 0}
-              className="flex items-center gap-1.5 rounded-xl border border-zinc-200 bg-white px-3 py-2 text-sm font-semibold text-zinc-700 transition hover:bg-zinc-50 disabled:opacity-50"
+              className="flex items-center gap-1.5 rounded-button border border-zinc-200 bg-white px-3 py-2 text-sm font-semibold text-zinc-700 transition hover:bg-zinc-50 disabled:opacity-50"
             >
               Export CSV
             </button>
             <button
               onClick={() => startEdit()}
-              className="flex items-center gap-1.5 rounded-xl bg-red-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-red-700"
+              className="flex items-center gap-1.5 rounded-button bg-red-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-red-700"
             >
               <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
@@ -171,15 +172,15 @@ export default function ClientsAdmin() {
         <div className="mb-6 grid grid-cols-2 gap-3 sm:grid-cols-3">
           <div className="rounded-xl border border-zinc-200 bg-white p-4">
             <p className="text-xs font-medium text-zinc-500">Total Clients</p>
-            <p className="text-2xl font-bold text-zinc-900">{totalCount}</p>
+            <p className="text-2xl font-semibold tracking-tight text-zinc-950">{totalCount}</p>
           </div>
           <div className="rounded-xl border border-zinc-200 bg-white p-4">
             <p className="text-xs font-medium text-zinc-500">With Company</p>
-            <p className="text-2xl font-bold text-blue-600">{withCompany}</p>
+            <p className="text-2xl font-semibold tracking-tight text-zinc-950">{withCompany}</p>
           </div>
           <div className="rounded-xl border border-zinc-200 bg-white p-4">
             <p className="text-xs font-medium text-zinc-500">Recently Added</p>
-            <p className="text-2xl font-bold text-green-600">{thisMonth}</p>
+            <p className="text-2xl font-semibold tracking-tight text-zinc-950">{thisMonth}</p>
             <p className="text-xs text-zinc-400">this month</p>
           </div>
         </div>
@@ -200,17 +201,17 @@ export default function ClientsAdmin() {
             <div className="h-7 w-7 animate-spin rounded-full border-2 border-red-600 border-t-transparent" />
           </div>
         ) : filtered.length === 0 && !search ? (
-          <div className="rounded-2xl border border-zinc-200 bg-white p-12 text-center">
+          <div className="rounded-xl border border-zinc-200 bg-white p-12 text-center">
             <svg className="mx-auto mb-3 text-zinc-300" width="48" height="48" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
             </svg>
             <p className="text-zinc-500 mb-3">No clients yet &mdash; add your first client</p>
-            <button onClick={() => startEdit()} className="rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white hover:bg-red-700">
+            <button onClick={() => startEdit()} className="rounded-button bg-red-600 px-4 py-2 text-sm font-semibold text-white hover:bg-red-700">
               Add First Client
             </button>
           </div>
         ) : filtered.length === 0 ? (
-          <div className="rounded-2xl border border-zinc-200 bg-white p-12 text-center">
+          <div className="rounded-xl border border-zinc-200 bg-white p-12 text-center">
             <p className="text-zinc-500">No clients matching &ldquo;{search}&rdquo;</p>
           </div>
         ) : (
@@ -230,8 +231,8 @@ export default function ClientsAdmin() {
                   </div>
                 </div>
                 <div className="mt-3 flex gap-2 justify-end">
-                  <button onClick={() => startEdit(c)} className="rounded-lg border border-zinc-200 px-2.5 py-1 text-xs font-medium text-zinc-600 hover:bg-zinc-50">Edit</button>
-                  <button onClick={() => removeClient(c.id)} className="rounded-lg border border-red-200 bg-red-50 px-2.5 py-1 text-xs font-medium text-red-600 hover:bg-red-100">Delete</button>
+                  <button onClick={() => startEdit(c)} className="rounded-button border border-zinc-200 px-2.5 py-1 text-xs font-medium text-zinc-600 hover:bg-zinc-50">Edit</button>
+                  <button onClick={() => removeClient(c.id)} className="rounded-button border border-red-200 bg-red-50 px-2.5 py-1 text-xs font-medium text-red-600 hover:bg-red-100">Delete</button>
                 </div>
               </div>
             ))}
@@ -247,7 +248,7 @@ export default function ClientsAdmin() {
                 <h2 className="font-heading text-sm font-bold text-zinc-900">
                   {clients.find((c) => c.id === editing.id) ? 'Edit Client' : 'New Client'}
                 </h2>
-                <button onClick={() => setEditing(null)} className="text-zinc-400 hover:text-zinc-600">&#10005;</button>
+                <button aria-label="Close" onClick={() => setEditing(null)} className="text-zinc-400 hover:text-zinc-600"><Icon name="xMark" className="h-4 w-4" /></button>
               </div>
 
               <form
@@ -309,8 +310,8 @@ export default function ClientsAdmin() {
                 </div>
 
                 <div className="flex gap-2 pt-2">
-                  <button type="button" onClick={() => setEditing(null)} className="flex-1 rounded-xl border border-zinc-200 py-2.5 text-sm font-semibold text-zinc-600">Cancel</button>
-                  <button type="submit" disabled={saving} className="flex-1 rounded-xl bg-red-600 py-2.5 text-sm font-semibold text-white disabled:opacity-60">{saving ? 'Saving...' : 'Save Client'}</button>
+                  <button type="button" onClick={() => setEditing(null)} className="flex-1 rounded-lg border border-zinc-200 py-2.5 text-sm font-semibold text-zinc-600">Cancel</button>
+                  <button type="submit" disabled={saving} className="flex-1 rounded-lg bg-red-600 py-2.5 text-sm font-semibold text-white disabled:opacity-60">{saving ? 'Saving...' : 'Save Client'}</button>
                 </div>
               </form>
             </div>

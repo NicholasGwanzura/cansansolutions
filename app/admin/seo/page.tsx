@@ -123,17 +123,17 @@ export default function SeoAdminPage() {
             <div className="grid grid-cols-2 gap-4 lg:grid-cols-7">
               <div className="rounded-xl border border-zinc-200 bg-white p-4">
                 <p className="text-xs text-zinc-400">Page Views</p>
-                <p className="mt-1 text-2xl font-bold text-zinc-900">{summary?.totalViews ?? 0}</p>
+                <p className="mt-1 text-2xl font-semibold tracking-tight text-zinc-950">{summary?.totalViews ?? 0}</p>
               </div>
               <div className="rounded-xl border border-zinc-200 bg-white p-4">
                 <p className="text-xs text-zinc-400">Unique Visitors</p>
-                <p className="mt-1 text-2xl font-bold text-zinc-900">
+                <p className="mt-1 text-2xl font-semibold tracking-tight text-zinc-950">
                   {summary?.uniqueVisitors ?? 0}
                 </p>
               </div>
               <div className="rounded-xl border border-zinc-200 bg-white p-4">
                 <p className="text-xs text-zinc-400">Unique Pages</p>
-                <p className="mt-1 text-2xl font-bold text-zinc-900">{summary?.uniquePages ?? 0}</p>
+                <p className="mt-1 text-2xl font-semibold tracking-tight text-zinc-950">{summary?.uniquePages ?? 0}</p>
               </div>
               <div className="rounded-xl border border-zinc-200 bg-white p-4">
                 <p className="text-xs text-zinc-400">Organic Share</p>
@@ -149,7 +149,7 @@ export default function SeoAdminPage() {
               </div>
               <div className="rounded-xl border border-zinc-200 bg-white p-4">
                 <p className="text-xs text-zinc-400">Direct Share</p>
-                <p className="mt-1 text-2xl font-bold text-zinc-900">
+                <p className="mt-1 text-2xl font-semibold tracking-tight text-zinc-950">
                   {formatPercent(derived.directShare)}
                 </p>
               </div>
@@ -161,7 +161,7 @@ export default function SeoAdminPage() {
               </div>
             </div>
 
-            <section className="mt-6 rounded-2xl border border-zinc-200 bg-white p-5">
+            <section className="mt-6 rounded-xl border border-zinc-200 bg-white p-5">
               <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
                 <h2 className="text-base font-semibold text-zinc-900">Google Integrations</h2>
                 <div className="flex flex-wrap gap-2 text-xs">
@@ -208,7 +208,7 @@ export default function SeoAdminPage() {
             </section>
 
             {summary?.ga4 ? (
-              <section className="mt-6 rounded-2xl border border-zinc-200 bg-white p-5">
+              <section className="mt-6 rounded-xl border border-zinc-200 bg-white p-5">
                 <h2 className="mb-4 text-base font-semibold text-zinc-900">GA4 Snapshot</h2>
                 <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
                   <div className="rounded-lg border border-zinc-100 p-3">
@@ -265,7 +265,7 @@ export default function SeoAdminPage() {
             ) : null}
 
             {summary?.gsc ? (
-              <section className="mt-6 rounded-2xl border border-zinc-200 bg-white p-5">
+              <section className="mt-6 rounded-xl border border-zinc-200 bg-white p-5">
                 <h2 className="mb-4 text-base font-semibold text-zinc-900">
                   Search Console Snapshot
                 </h2>
@@ -330,7 +330,7 @@ export default function SeoAdminPage() {
             ) : null}
 
             <div className="mt-6 grid gap-6 lg:grid-cols-2">
-              <section className="rounded-2xl border border-zinc-200 bg-white p-5">
+              <section className="rounded-xl border border-zinc-200 bg-white p-5">
                 <div className="mb-4 flex items-center justify-between">
                   <h2 className="text-base font-semibold text-zinc-900">Daily Views</h2>
                   <p className="text-xs text-zinc-500">
@@ -361,7 +361,7 @@ export default function SeoAdminPage() {
                 )}
               </section>
 
-              <section className="rounded-2xl border border-zinc-200 bg-white p-5">
+              <section className="rounded-xl border border-zinc-200 bg-white p-5">
                 <h2 className="mb-4 text-base font-semibold text-zinc-900">Top Pages</h2>
                 {summary?.topPages?.length ? (
                   <div className="space-y-2">
@@ -380,7 +380,7 @@ export default function SeoAdminPage() {
                 )}
               </section>
 
-              <section className="rounded-2xl border border-zinc-200 bg-white p-5">
+              <section className="rounded-xl border border-zinc-200 bg-white p-5">
                 <h2 className="mb-4 text-base font-semibold text-zinc-900">Traffic Sources</h2>
                 {summary?.topSources?.length ? (
                   <div className="space-y-2">
@@ -406,7 +406,7 @@ export default function SeoAdminPage() {
                 )}
               </section>
 
-              <section className="rounded-2xl border border-zinc-200 bg-white p-5">
+              <section className="rounded-xl border border-zinc-200 bg-white p-5">
                 <h2 className="mb-4 text-base font-semibold text-zinc-900">Device Mix</h2>
                 {summary?.devices?.length ? (
                   <div className="space-y-2">
@@ -426,7 +426,7 @@ export default function SeoAdminPage() {
               </section>
             </div>
 
-            <section className="mt-6 rounded-2xl border border-zinc-200 bg-white p-5">
+            <section className="mt-6 rounded-xl border border-zinc-200 bg-white p-5">
               <h2 className="mb-4 text-base font-semibold text-zinc-900">Top Search Terms</h2>
               {summary?.topSearchTerms?.length ? (
                 <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
@@ -446,7 +446,7 @@ export default function SeoAdminPage() {
             </section>
 
             <div className="mt-6 grid gap-6 lg:grid-cols-2">
-              <section className="rounded-2xl border border-zinc-200 bg-white p-5">
+              <section className="rounded-xl border border-zinc-200 bg-white p-5">
                 <h2 className="mb-4 text-base font-semibold text-zinc-900">Top CTAs Clicked</h2>
                 {summary?.topClicks?.length ? (
                   <div className="space-y-2">
@@ -481,8 +481,8 @@ export default function SeoAdminPage() {
                 )}
               </section>
 
-              <section className="rounded-2xl border border-zinc-200 bg-white p-5">
-                <h2 className="mb-4 text-base font-semibold text-zinc-900">Broken URLs (404s)</h2>
+              <section className="rounded-xl border border-zinc-200 bg-white p-5">
+                <h2 className="mb-4 text-base font-semibold text-zinc-900">Broken URLs (404S)</h2>
                 {summary?.brokenUrls?.length ? (
                   <div className="space-y-2">
                     {summary.brokenUrls.map((row) => (

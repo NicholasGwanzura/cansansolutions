@@ -104,10 +104,10 @@ const values = [
 ];
 
 const stats = [
-  { label: 'Products in stock', value: '200+' },
-  { label: 'Happy customers', value: '1,000+' },
-  { label: 'Brands carried', value: '50+' },
-  { label: 'Years in business', value: '5+' },
+  { label: 'Products in Stock', value: '200+' },
+  { label: 'Happy Customers', value: '1,000+' },
+  { label: 'Brands Carried', value: '50+' },
+  { label: 'Years in Business', value: '5+' },
 ];
 
 export default function AboutPage() {
@@ -121,15 +121,15 @@ export default function AboutPage() {
           <>
             <Link
               href="/products"
-              className="inline-flex min-h-11 items-center justify-center rounded-full bg-white px-5 py-3 text-sm font-semibold text-zinc-950 transition hover:bg-red-50"
+              className="inline-flex min-h-11 items-center justify-center rounded-button bg-white px-5 py-3 text-sm font-semibold text-zinc-950 transition hover:bg-red-50"
             >
-              Shop products
+              Shop Products
             </Link>
             <Link
               href="/contact"
-              className="inline-flex min-h-11 items-center justify-center rounded-full border border-white/25 bg-white/10 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/15"
+              className="inline-flex min-h-11 items-center justify-center rounded-button border border-white/25 bg-white/10 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/15"
             >
-              Contact us
+              Contact Us
             </Link>
           </>
         }
@@ -149,7 +149,7 @@ export default function AboutPage() {
 
       {/* Story */}
       <section className="mx-auto max-w-3xl px-6 py-16">
-        <h2 className="mb-5 text-2xl font-bold text-zinc-900">Our story</h2>
+        <h2 className="mb-5 text-2xl font-bold text-zinc-900">Our Story</h2>
         <div className="space-y-4 text-sm leading-7 text-zinc-600">
           <p>
             Cansan Solutions was founded with a simple belief: everyone deserves access to quality
@@ -174,10 +174,10 @@ export default function AboutPage() {
       {/* Values */}
       <section className="bg-zinc-50 px-6 py-16">
         <div className="mx-auto max-w-5xl">
-          <h2 className="mb-10 text-center text-2xl font-bold text-zinc-900">What we stand for</h2>
+          <h2 className="mb-10 text-center text-2xl font-bold text-zinc-900">What We Stand For</h2>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {values.map((v) => (
-              <div key={v.title} className="rounded-2xl bg-white p-6 shadow-sm">
+              <div key={v.title} className="rounded-card bg-white p-6 shadow-sm">
                 <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-red-50 text-red-600">
                   {v.icon}
                 </div>
@@ -198,13 +198,13 @@ export default function AboutPage() {
         <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
           <Link
             href="/products"
-            className="rounded-full bg-red-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-red-700"
+            className="rounded-button bg-red-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-red-700"
           >
             Shop Products
           </Link>
           <Link
             href="/contact"
-            className="rounded-full border border-zinc-300 px-6 py-3 text-sm font-semibold text-zinc-700 transition hover:bg-zinc-50"
+            className="rounded-button border border-zinc-300 px-6 py-3 text-sm font-semibold text-zinc-700 transition hover:bg-zinc-50"
           >
             Contact Us
           </Link>

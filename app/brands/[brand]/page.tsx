@@ -91,7 +91,7 @@ export default async function BrandPage({ params }: { params: RouteParams }) {
                     ))}
                   </div>
                 ) : (
-                  <div className="mt-5 rounded-3xl border border-zinc-200 bg-zinc-50 p-6">
+                  <div className="mt-5 rounded-panel border border-zinc-200 bg-zinc-50 p-6">
                     <p className="text-sm leading-relaxed text-zinc-600">
                       This brand page is live so buyers can enquire even when product visibility changes. Use WhatsApp if you need a current {matchedBrand.name} quote or want us to source a model not shown yet.
                     </p>
@@ -101,7 +101,7 @@ export default async function BrandPage({ params }: { params: RouteParams }) {
             </div>
 
             <aside className="space-y-6">
-              <div className="rounded-3xl border border-zinc-200 bg-white p-6 shadow-sm">
+              <div className="rounded-panel border border-zinc-200 bg-white p-6 shadow-sm">
                 <p className="text-xs font-bold uppercase tracking-widest text-zinc-400">Brand FAQ</p>
                 <div className="mt-4 space-y-4">
                   {matchedBrand.faq.map((item) => (
@@ -113,16 +113,16 @@ export default async function BrandPage({ params }: { params: RouteParams }) {
                 </div>
               </div>
 
-              <div className="rounded-3xl bg-red-600 p-6 text-white">
+              <div className="rounded-panel bg-red-600 p-6 text-white">
                 <h2 className="text-xl font-bold">Need a {matchedBrand.name} quote?</h2>
                 <p className="mt-3 text-sm leading-relaxed text-red-100">
                   Send the model or the product links you want. We will confirm stock, pricing, and next steps.
                 </p>
                 <div className="mt-5 flex flex-wrap gap-3">
-                  <Link href="/contact" className="rounded-full bg-white px-5 py-3 text-sm font-semibold text-red-600 transition hover:bg-red-50">
+                  <Link href="/contact" className="rounded-button bg-white px-5 py-3 text-sm font-semibold text-red-600 transition hover:bg-red-50">
                     Contact Cansan
                   </Link>
-                  <Link href="/bulk-orders" className="rounded-full border border-white/30 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/10">
+                  <Link href="/bulk-orders" className="rounded-button border border-white/30 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/10">
                     Bulk Quote
                   </Link>
                 </div>

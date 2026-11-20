@@ -62,15 +62,15 @@ const SOLUTIONS: SolutionPage[] = [
     checklistTitle: 'What this solution usually includes',
     checklist: [
       {
-        title: 'Role-based laptop selection',
+        title: 'Role-Based Laptop Selection',
         description: 'Choose suitable specs for admin staff, managers, sales teams, and heavier users without overspending across the board.',
       },
       {
-        title: 'Brand and model standardisation',
+        title: 'Brand and Model Standardisation',
         description: 'Make future repeat orders easier by narrowing to one or two sensible business-ready options.',
       },
       {
-        title: 'Accessories and rollout planning',
+        title: 'Accessories and Rollout Planning',
         description: 'Bundle chargers, bags, mice, monitors, docks, or basic peripherals into one quote when needed.',
       },
     ],
@@ -148,15 +148,15 @@ const SOLUTIONS: SolutionPage[] = [
     checklistTitle: 'What a CCTV package discussion should cover',
     checklist: [
       {
-        title: 'Camera count and placement',
+        title: 'Camera Count and Placement',
         description: 'Decide what needs to be seen clearly instead of just adding cameras without a plan.',
       },
       {
-        title: 'Recorder and storage retention',
+        title: 'Recorder and Storage Retention',
         description: 'Choose DVR or NVR capacity based on how long footage should remain available.',
       },
       {
-        title: 'Remote viewing and power realities',
+        title: 'Remote Viewing and Power Realities',
         description: 'Factor in phone viewing, internet reliability, and power protection before finalising the quote.',
       },
     ],
@@ -238,11 +238,11 @@ const SOLUTIONS: SolutionPage[] = [
         description: 'The number of walls, floors, and dead zones matters more than box-level hype.',
       },
       {
-        title: 'Router versus access point decision',
+        title: 'Router Versus Access Point Decision',
         description: 'Some homes need a stronger single device, while others need extra nodes or access points.',
       },
       {
-        title: 'Setup that matches actual internet use',
+        title: 'Setup That Matches Actual Internet Use',
         description: 'Streaming, remote work, CCTV, gaming, and school use all change what hardware makes sense.',
       },
     ],
@@ -320,15 +320,15 @@ const SOLUTIONS: SolutionPage[] = [
     checklistTitle: 'What the backup discussion should include',
     checklist: [
       {
-        title: 'Which devices must stay on',
+        title: 'Which Devices Must Stay On',
         description: 'Routers, laptops, desktop PCs, and monitors need different backup sizing and planning.',
       },
       {
-        title: 'How long the backup must last',
+        title: 'How Long the Backup Must Last',
         description: 'A few minutes to save work is very different from maintaining hours of internet uptime.',
       },
       {
-        title: 'Home versus business continuity needs',
+        title: 'Home Versus Business Continuity Needs',
         description: 'Office buyers often need quote support across multiple devices instead of a single UPS unit.',
       },
     ],

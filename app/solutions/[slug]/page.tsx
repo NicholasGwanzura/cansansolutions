@@ -83,11 +83,11 @@ export default async function SolutionPage({ params }: { params: RouteParams }) 
         <section className="mx-auto max-w-6xl px-6 py-16">
           <div className="grid gap-10 lg:grid-cols-[1.25fr_0.82fr]">
             <div>
-              <div className="rounded-3xl border border-zinc-200 bg-white p-6 shadow-sm">
-                <p className="text-xs font-bold uppercase tracking-widest text-zinc-400">Who this page is for</p>
+              <div className="rounded-panel border border-zinc-200 bg-white p-6 shadow-sm">
+                <p className="text-xs font-bold uppercase tracking-widest text-zinc-400">Who This Page Is For</p>
                 <p className="mt-4 text-sm leading-relaxed text-zinc-700">{solution.buyerSummary}</p>
 
-                <div className="mt-6 rounded-2xl bg-zinc-50 p-5">
+                <div className="mt-6 rounded-card bg-zinc-50 p-5">
                   <p className="text-xs font-bold uppercase tracking-widest text-zinc-400">What buyers usually need help with</p>
                   <ul className="mt-4 space-y-3">
                     {solution.proofPoints.map((item) => (
@@ -100,11 +100,11 @@ export default async function SolutionPage({ params }: { params: RouteParams }) 
                 </div>
               </div>
 
-              <section className="mt-8 rounded-3xl border border-zinc-200 bg-white p-6 shadow-sm">
+              <section className="mt-8 rounded-panel border border-zinc-200 bg-white p-6 shadow-sm">
                 <h2 className="text-2xl font-bold text-zinc-900">{solution.checklistTitle}</h2>
                 <div className="mt-6 grid gap-4 md:grid-cols-3">
                   {solution.checklist.map((item) => (
-                    <div key={item.title} className="rounded-2xl border border-zinc-200 bg-zinc-50 p-5">
+                    <div key={item.title} className="rounded-card border border-zinc-200 bg-zinc-50 p-5">
                       <h3 className="text-sm font-semibold text-zinc-900">{item.title}</h3>
                       <p className="mt-3 text-sm leading-relaxed text-zinc-600">{item.description}</p>
                     </div>
@@ -112,11 +112,11 @@ export default async function SolutionPage({ params }: { params: RouteParams }) 
                 </div>
               </section>
 
-              <section className="mt-8 rounded-3xl border border-zinc-200 bg-white p-6 shadow-sm">
+              <section className="mt-8 rounded-panel border border-zinc-200 bg-white p-6 shadow-sm">
                 <h2 className="text-2xl font-bold text-zinc-900">{solution.processTitle}</h2>
                 <div className="mt-6 space-y-4">
                   {solution.processSteps.map((step, index) => (
-                    <div key={step} className="flex gap-4 rounded-2xl border border-zinc-200 bg-zinc-50 p-4">
+                    <div key={step} className="flex gap-4 rounded-card border border-zinc-200 bg-zinc-50 p-4">
                       <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-zinc-900 text-sm font-bold text-white">
                         {index + 1}
                       </div>
@@ -126,11 +126,11 @@ export default async function SolutionPage({ params }: { params: RouteParams }) 
                 </div>
               </section>
 
-              <section className="mt-8 rounded-3xl border border-zinc-200 bg-zinc-50 p-6">
-                <h2 className="text-2xl font-bold text-zinc-900">Frequently asked questions</h2>
+              <section className="mt-8 rounded-panel border border-zinc-200 bg-zinc-50 p-6">
+                <h2 className="text-2xl font-bold text-zinc-900">Frequently Asked Questions</h2>
                 <div className="mt-6 space-y-4">
                   {solution.faqs.map((faq) => (
-                    <div key={faq.question} className="rounded-2xl border border-zinc-200 bg-white p-5">
+                    <div key={faq.question} className="rounded-card border border-zinc-200 bg-white p-5">
                       <h3 className="text-sm font-semibold text-zinc-900">{faq.question}</h3>
                       <p className="mt-2 text-sm leading-relaxed text-zinc-600">{faq.answer}</p>
                     </div>
@@ -140,8 +140,8 @@ export default async function SolutionPage({ params }: { params: RouteParams }) 
             </div>
 
             <aside className="space-y-6">
-              <div className="rounded-3xl border border-zinc-200 bg-white p-6 shadow-sm">
-                <p className="text-xs font-bold uppercase tracking-widest text-zinc-400">Why this works</p>
+              <div className="rounded-panel border border-zinc-200 bg-white p-6 shadow-sm">
+                <p className="text-xs font-bold uppercase tracking-widest text-zinc-400">Why This Works</p>
                 <h2 className="mt-3 text-lg font-semibold text-zinc-900">{solution.fitTitle}</h2>
                 <ul className="mt-4 space-y-3">
                   {solution.fitBullets.map((item) => (
@@ -153,14 +153,14 @@ export default async function SolutionPage({ params }: { params: RouteParams }) 
                 </ul>
               </div>
 
-              <div className="rounded-3xl border border-zinc-200 bg-white p-6 shadow-sm">
-                <p className="text-xs font-bold uppercase tracking-widest text-zinc-400">Recommended next steps</p>
+              <div className="rounded-panel border border-zinc-200 bg-white p-6 shadow-sm">
+                <p className="text-xs font-bold uppercase tracking-widest text-zinc-400">Recommended Next Steps</p>
                 <div className="mt-4 space-y-3">
                   {solution.relatedLinks.map((item) => (
                     <Link
                       key={item.href}
                       href={item.href}
-                      className="block rounded-2xl border border-zinc-200 bg-zinc-50 p-4 transition hover:border-red-200 hover:bg-red-50/40"
+                      className="block rounded-card border border-zinc-200 bg-zinc-50 p-4 transition hover:border-red-200 hover:bg-red-50/40"
                     >
                       <p className="text-sm font-semibold text-zinc-900">{item.label}</p>
                       <p className="mt-2 text-sm leading-relaxed text-zinc-600">{item.description}</p>
@@ -169,16 +169,16 @@ export default async function SolutionPage({ params }: { params: RouteParams }) 
                 </div>
               </div>
 
-              <div className="rounded-3xl bg-red-600 p-6 text-white">
+              <div className="rounded-panel bg-red-600 p-6 text-white">
                 <h2 className="text-xl font-bold">Ready to move this solution forward?</h2>
                 <p className="mt-3 text-sm leading-relaxed text-red-100">
                   Use the quote or contact path below and send the problem, budget, and timeline. That gets the conversation out of guesswork and into a real buying decision.
                 </p>
                 <div className="mt-5 flex flex-wrap gap-3">
-                  <Link href={solution.primaryCtaHref} className="rounded-full bg-white px-5 py-3 text-sm font-semibold text-red-600 transition hover:bg-red-50">
+                  <Link href={solution.primaryCtaHref} className="rounded-button bg-white px-5 py-3 text-sm font-semibold text-red-600 transition hover:bg-red-50">
                     {solution.primaryCtaLabel}
                   </Link>
-                  <Link href={solution.secondaryCtaHref} className="rounded-full border border-white/30 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/10">
+                  <Link href={solution.secondaryCtaHref} className="rounded-button border border-white/30 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/10">
                     {solution.secondaryCtaLabel}
                   </Link>
                 </div>

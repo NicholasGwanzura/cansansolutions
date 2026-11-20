@@ -10,7 +10,7 @@ export function ProductSkeleton({ count = 8 }: ProductSkeletonProps) {
       {Array.from({ length: count }).map((_, i) => (
         <div
           key={i}
-          className="flex flex-col rounded-2xl border border-zinc-100 bg-white p-4"
+          className="flex flex-col rounded-card border border-zinc-100 bg-white p-4"
         >
           {/* Image skeleton */}
           <div className="mb-4 aspect-[4/3] animate-pulse rounded-xl bg-zinc-100" />
@@ -42,7 +42,7 @@ export function ProductDetailSkeleton() {
 
       <div className="grid gap-10 lg:grid-cols-2">
         {/* Image skeleton */}
-        <div className="aspect-square animate-pulse rounded-2xl bg-zinc-100" />
+        <div className="aspect-square animate-pulse rounded-card bg-zinc-100" />
 
         {/* Info skeleton */}
         <div className="flex flex-col gap-4">

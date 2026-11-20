@@ -1,6 +1,7 @@
 'use client';
 
 import { createContext, useContext, useState, useCallback, type ReactNode } from 'react';
+import { Icon } from '@/components/icons';
 
 type ToastType = 'success' | 'error' | 'info';
 
@@ -60,7 +61,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
               className="ml-2 text-white/70 hover:text-white"
               aria-label="Dismiss"
             >
-              ✕
+              <Icon name="xMark" className="h-4 w-4" />
             </button>
           </div>
         ))}

@@ -14,6 +14,7 @@ import AdminLayout from '../components/AdminLayout';
 import { Notice } from '../components/ui';
 import DocumentBankDetails from '../components/DocumentBankDetails';
 import { downloadCsv } from '@/lib/csv-export';
+import { Icon } from '@/components/icons';
 
 const CURRENCIES = ['USD', 'KES', 'ZAR', 'ZWL'];
 const STATUSES: QuoteStatus[] = ['draft', 'sent', 'accepted', 'rejected', 'expired'];
@@ -382,13 +383,13 @@ export default function QuotesAdmin() {
                 )
               }
               disabled={quotes.length === 0}
-              className="flex items-center gap-1.5 rounded-xl border border-zinc-200 bg-white px-3 py-2 text-sm font-semibold text-zinc-700 transition hover:bg-zinc-50 disabled:opacity-50"
+              className="flex items-center gap-1.5 rounded-button border border-zinc-200 bg-white px-3 py-2 text-sm font-semibold text-zinc-700 transition hover:bg-zinc-50 disabled:opacity-50"
             >
               Export CSV
             </button>
             <button
               onClick={() => startEdit()}
-              className="flex items-center gap-1.5 rounded-xl bg-red-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-red-700"
+              className="flex items-center gap-1.5 rounded-button bg-red-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-red-700"
             >
               <svg
                 width="14"
@@ -409,18 +410,18 @@ export default function QuotesAdmin() {
         <div className="mb-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
           <div className="rounded-xl border border-zinc-200 bg-white p-4">
             <p className="text-xs font-medium text-zinc-500">Total Quotes</p>
-            <p className="text-2xl font-bold text-zinc-900">{totalCount}</p>
+            <p className="text-2xl font-semibold tracking-tight text-zinc-950">{totalCount}</p>
           </div>
           <div className="rounded-xl border border-zinc-200 bg-white p-4">
             <p className="text-xs font-medium text-zinc-500">Accepted</p>
-            <p className="text-2xl font-bold text-green-600">
+            <p className="text-2xl font-semibold tracking-tight text-zinc-950">
               {fmtCurrency(acceptedAmount, 'USD')}
             </p>
             <p className="text-xs text-zinc-400">{acceptedCount} quotes</p>
           </div>
           <div className="rounded-xl border border-zinc-200 bg-white p-4">
             <p className="text-xs font-medium text-zinc-500">Pending</p>
-            <p className="text-2xl font-bold text-blue-600">{pendingCount}</p>
+            <p className="text-2xl font-semibold tracking-tight text-zinc-950">{pendingCount}</p>
           </div>
           <div className="rounded-xl border border-zinc-200 bg-white p-4">
             <p className="text-xs font-medium text-zinc-500">Rejected</p>
@@ -436,7 +437,7 @@ export default function QuotesAdmin() {
             <div className="h-7 w-7 animate-spin rounded-full border-2 border-red-600 border-t-transparent" />
           </div>
         ) : quotes.length === 0 ? (
-          <div className="rounded-2xl border border-zinc-200 bg-white p-12 text-center">
+          <div className="rounded-xl border border-zinc-200 bg-white p-12 text-center">
             <svg
               className="mx-auto mb-3 text-zinc-300"
               width="48"
@@ -452,10 +453,10 @@ export default function QuotesAdmin() {
                 d="M10.125 2.25h-4.5c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125v-9M10.125 2.25h.375a9 9 0 0 1 9 9v.375M10.125 2.25A3.375 3.375 0 0 1 13.5 5.625v1.5c0 .621.504 1.125 1.125 1.125h1.5a3.375 3.375 0 0 1 3.375 3.375M9 15l2.25 2.25L15 12"
               />
             </svg>
-            <p className="text-zinc-500 mb-3">No quotes yet</p>
+            <p className="text-zinc-500 mb-3">No Quotes Yet</p>
             <button
               onClick={() => startEdit()}
-              className="rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white hover:bg-red-700"
+              className="rounded-button bg-red-600 px-4 py-2 text-sm font-semibold text-white hover:bg-red-700"
             >
               Create First Quote
             </button>
@@ -495,26 +496,26 @@ export default function QuotesAdmin() {
                       <div className="flex gap-1.5">
                         <button
                           onClick={() => startEdit(q)}
-                          className="rounded-lg border border-zinc-200 px-2.5 py-1 text-xs font-medium text-zinc-600 hover:bg-zinc-50"
+                          className="rounded-button border border-zinc-200 px-2.5 py-1 text-xs font-medium text-zinc-600 hover:bg-zinc-50"
                         >
                           Edit
                         </button>
                         <button
                           onClick={() => setPrinting(q)}
-                          className="rounded-lg border border-zinc-200 px-2.5 py-1 text-xs font-medium text-zinc-600 hover:bg-zinc-50"
+                          className="rounded-button border border-zinc-200 px-2.5 py-1 text-xs font-medium text-zinc-600 hover:bg-zinc-50"
                         >
                           Preview
                         </button>
                         <button
                           onClick={() => downloadPdf(q)}
                           disabled={downloading}
-                          className="rounded-lg border border-zinc-900 bg-zinc-900 px-2.5 py-1 text-xs font-medium text-white hover:bg-zinc-700 disabled:opacity-60"
+                          className="rounded-button border border-zinc-900 bg-zinc-900 px-2.5 py-1 text-xs font-medium text-white hover:bg-zinc-700 disabled:opacity-60"
                         >
                           PDF
                         </button>
                         <button
                           onClick={() => removeQuote(q.id)}
-                          className="rounded-lg border border-red-200 bg-red-50 px-2.5 py-1 text-xs font-medium text-red-600 hover:bg-red-100"
+                          className="rounded-button border border-red-200 bg-red-50 px-2.5 py-1 text-xs font-medium text-red-600 hover:bg-red-100"
                         >
                           Delete
                         </button>
@@ -550,7 +551,7 @@ export default function QuotesAdmin() {
                   onClick={() => setEditing(null)}
                   className="inline-flex h-10 w-10 items-center justify-center rounded-lg text-lg text-zinc-400 hover:bg-zinc-50 hover:text-zinc-600"
                 >
-                  &#10005;
+                  <Icon name="xMark" className="h-4 w-4" />
                 </button>
               </div>
 
@@ -683,7 +684,7 @@ export default function QuotesAdmin() {
                                   setShowProductPicker(showProductPicker === idx ? null : idx);
                                   setProductSearch({});
                                 }}
-                                className={`shrink-0 rounded-lg border px-2 py-2 transition ${showProductPicker === idx ? 'border-red-400 bg-red-50 text-red-600' : 'border-zinc-200 text-zinc-400 hover:text-zinc-600 hover:bg-zinc-50'}`}
+                                className={`shrink-0 rounded-button border px-2 py-2 transition ${showProductPicker === idx ? 'border-red-400 bg-red-50 text-red-600' : 'border-zinc-200 text-zinc-400 hover:text-zinc-600 hover:bg-zinc-50'}`}
                                 title="Pick from product catalog"
                               >
                                 <svg
@@ -772,7 +773,7 @@ export default function QuotesAdmin() {
                               onChange={(e) =>
                                 setProductSearch({ ...productSearch, [idx]: e.target.value })
                               }
-                              className="w-full rounded-md border border-zinc-200 bg-white px-3 py-1.5 text-sm mb-2 focus:outline-none focus:ring-2 focus:ring-red-400"
+                              className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-1.5 text-sm mb-2 focus:outline-none focus:ring-2 focus:ring-red-400"
                               placeholder="Type to search products..."
                               onKeyDown={(e) => {
                                 if (e.key === 'Escape') setShowProductPicker(null);
@@ -792,7 +793,7 @@ export default function QuotesAdmin() {
                                   <button
                                     key={p.id}
                                     type="button"
-                                    className="flex w-full items-center justify-between rounded-md bg-white px-3 py-2 text-sm hover:bg-red-600 hover:text-white group transition"
+                                    className="flex w-full items-center justify-between rounded-button bg-white px-3 py-2 text-sm hover:bg-red-600 hover:text-white group transition"
                                     onClick={() => pickProduct(idx, p)}
                                   >
                                     <span className="truncate text-left font-medium">{p.name}</span>
@@ -808,7 +809,7 @@ export default function QuotesAdmin() {
                                     .toLowerCase()
                                     .includes((productSearch[idx] || '').toLowerCase()),
                               ).length === 0 && (
-                                <p className="px-3 py-2 text-xs text-zinc-400">No products found</p>
+                                <p className="px-3 py-2 text-xs text-zinc-400">No Products Found</p>
                               )}
                             </div>
                           </div>
@@ -962,14 +963,14 @@ export default function QuotesAdmin() {
                   <button
                     type="button"
                     onClick={() => setEditing(null)}
-                    className="flex-1 rounded-xl border border-zinc-200 py-2.5 text-sm font-semibold text-zinc-600"
+                    className="flex-1 rounded-lg border border-zinc-200 py-2.5 text-sm font-semibold text-zinc-600"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
                     disabled={saving}
-                    className="flex-1 rounded-xl bg-red-600 py-2.5 text-sm font-semibold text-white disabled:opacity-60"
+                    className="flex-1 rounded-lg bg-red-600 py-2.5 text-sm font-semibold text-white disabled:opacity-60"
                   >
                     {saving ? 'Saving...' : 'Save Quote'}
                   </button>
@@ -989,7 +990,7 @@ export default function QuotesAdmin() {
                   <button
                     onClick={() => downloadPdf(printing)}
                     disabled={downloading}
-                    className="flex items-center gap-1.5 rounded-lg bg-zinc-900 px-4 py-2 text-sm font-semibold text-white hover:bg-zinc-700 disabled:opacity-60"
+                    className="flex items-center gap-1.5 rounded-button bg-zinc-900 px-4 py-2 text-sm font-semibold text-white hover:bg-zinc-700 disabled:opacity-60"
                   >
                     <svg
                       width="14"
@@ -1011,7 +1012,7 @@ export default function QuotesAdmin() {
                     <button
                       onClick={sendEmailPdf}
                       disabled={sendingEmail}
-                      className="flex items-center gap-1.5 rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white hover:bg-red-700 disabled:opacity-60"
+                      className="flex items-center gap-1.5 rounded-button bg-red-600 px-4 py-2 text-sm font-semibold text-white hover:bg-red-700 disabled:opacity-60"
                     >
                       <svg
                         width="14"
@@ -1032,7 +1033,7 @@ export default function QuotesAdmin() {
                   ) : null}
                   <button
                     onClick={() => setPrinting(null)}
-                    className="rounded-lg border border-zinc-200 px-4 py-2 text-sm font-semibold text-zinc-600 hover:bg-zinc-50"
+                    className="rounded-button border border-zinc-200 px-4 py-2 text-sm font-semibold text-zinc-600 hover:bg-zinc-50"
                   >
                     Close
                   </button>
@@ -1275,11 +1276,11 @@ export default function QuotesAdmin() {
             <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md max-h-[80vh] flex flex-col overflow-hidden">
               <div className="flex items-center justify-between px-5 py-4 border-b border-zinc-100">
                 <h3 className="font-heading text-sm font-bold text-zinc-900">Select a Client</h3>
-                <button
+                <button aria-label="Close"
                   onClick={() => setClientPicker(false)}
                   className="text-zinc-400 hover:text-zinc-600"
                 >
-                  &#10005;
+                  <Icon name="xMark" className="h-4 w-4" />
                 </button>
               </div>
 
@@ -1325,7 +1326,7 @@ export default function QuotesAdmin() {
                               key={c.id}
                               type="button"
                               onClick={() => (editing ? changeClient(c) : startEditWithClient(c))}
-                              className="flex w-full items-start gap-3 rounded-xl border border-zinc-100 p-3 text-left hover:bg-zinc-50 transition"
+                              className="flex w-full items-start gap-3 rounded-lg border border-zinc-100 p-3 text-left hover:bg-zinc-50 transition"
                             >
                               <div
                                 className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-white font-bold text-sm ${color}`}
@@ -1343,7 +1344,7 @@ export default function QuotesAdmin() {
                           );
                         })}
                       {clients.length === 0 && (
-                        <p className="text-sm text-zinc-400 text-center py-4">No clients yet</p>
+                        <p className="text-sm text-zinc-400 text-center py-4">No Clients Yet</p>
                       )}
                     </div>
                   </>

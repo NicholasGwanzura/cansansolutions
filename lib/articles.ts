@@ -86,7 +86,7 @@ const INSIGHTS: InsightArticle[] = [
         ],
       },
       {
-        heading: 'Questions to ask before paying',
+        heading: 'Questions to Ask Before Paying',
         paragraphs: [
           'Do not stop at the price tag. Ask what generation the processor is, whether the battery still holds well, and whether the machine is new or pre-owned. That gives a much better view of value.',
           'Local support also matters. If the charger fails, Windows needs activation help, or the buyer needs a bag or mouse added, a responsive store can save time and frustration.',
@@ -164,21 +164,21 @@ const INSIGHTS: InsightArticle[] = [
     ],
     sections: [
       {
-        heading: 'Where HP usually wins',
+        heading: 'Where HP Usually Wins',
         paragraphs: [
           'HP tends to show up more often in student, office, and retail inventories. That wider availability can make it easier to compare prices and find a suitable machine quickly.',
           'For buyers who want a familiar brand with lots of options from basic to premium, HP is often the easier route.',
         ],
       },
       {
-        heading: 'Where Dell often feels stronger',
+        heading: 'Where Dell Often Feels Stronger',
         paragraphs: [
           'Dell has a strong reputation for solid business laptops, especially when buyers care about keyboard quality, office reliability, and fleet standardisation. That makes Dell attractive for SMEs and buyers who expect longer working hours from the device.',
           'In many cases, Dell also feels like the safer choice when businesses want several matching machines instead of one-off retail purchases.',
         ],
       },
       {
-        heading: 'How to make the final decision',
+        heading: 'How to Make the Final Decision',
         paragraphs: [
           'Compare the exact model, generation, RAM, storage, warranty, and battery condition. A weaker HP should not beat a stronger Dell just because of price, and the reverse is also true.',
           'If the buyer needs multiple units, business-friendly support and quote speed matter almost as much as the hardware itself.',
@@ -255,7 +255,7 @@ const INSIGHTS: InsightArticle[] = [
     ],
     sections: [
       {
-        heading: 'What usually shapes the quote',
+        heading: 'What Usually Shapes the Quote',
         paragraphs: [
           'The final CCTV price is driven by camera quality, property size, installation complexity, and whether the buyer wants remote phone viewing. Long cable runs and multi-floor setups push labour and material costs up quickly.',
           'Storage also matters. If the buyer wants footage kept longer, the recorder and drive capacity need to match that expectation.',
@@ -268,14 +268,14 @@ const INSIGHTS: InsightArticle[] = [
         ],
       },
       {
-        heading: 'Where people waste money',
+        heading: 'Where People Waste Money',
         paragraphs: [
           'Some buyers overpay for more cameras when better positioning would cover the risk more effectively. Others underpay for poor-quality night vision and end up with footage that is useless when they actually need it.',
           'Another common mistake is ignoring after-install support. A system that cannot be checked, adjusted, or explained properly creates avoidable follow-up costs.',
         ],
       },
       {
-        heading: 'How to brief an installer properly',
+        heading: 'How to Brief an Installer Properly',
         paragraphs: [
           'Buyers should state what they need to monitor: entrance gates, tills, offices, stock rooms, or home perimeters. That changes the camera type and placement strategy immediately.',
           'If the site has weak internet or irregular power, mention that early. It affects how remote viewing and power protection should be planned.',
@@ -438,7 +438,7 @@ const INSIGHTS: InsightArticle[] = [
     ],
     sections: [
       {
-        heading: 'Start with the equipment list',
+        heading: 'Start with the Equipment List',
         paragraphs: [
           'A laptop, router, desktop PC, monitor, and printer do not draw the same amount of power. The more devices you expect the UPS to support, the larger and more expensive the solution becomes.',
           'That is why buyers should start with the exact devices and how long they need them to stay on during a power cut.',
@@ -450,14 +450,14 @@ const INSIGHTS: InsightArticle[] = [
         ],
       },
       {
-        heading: 'Why runtime expectations matter',
+        heading: 'Why Runtime Expectations Matter',
         paragraphs: [
           'Some buyers only need five to ten minutes to save work and shut down safely. Others want enough uptime to finish a meeting or keep the internet alive. Those are very different sizing decisions.',
           'A cheap UPS can look attractive until the buyer realises the runtime is too short to be useful.',
         ],
       },
       {
-        heading: 'What businesses should ask for',
+        heading: 'What Businesses Should Ask For',
         paragraphs: [
           'For SME buyers, the smarter move is to ask for recommendations based on how many workstations, routers, and other essentials must remain on. That leads to a more accurate and scalable purchase.',
           'If the office also needs network uptime, pairing backup planning with Wi-Fi and power protection advice usually gives a cleaner solution than buying randomly.',
@@ -529,14 +529,14 @@ const INSIGHTS: InsightArticle[] = [
     ],
     sections: [
       {
-        heading: 'Choose specs by job role',
+        heading: 'Choose Specs by Job Role',
         paragraphs: [
           'Admin staff, sales teams, managers, and design-heavy users do not need the same hardware. Grouping laptop requirements by role is one of the fastest ways to reduce wasted spend.',
           'Many SMEs can cover most staff with a dependable 8GB RAM and SSD setup, then reserve stronger machines for heavier users.',
         ],
       },
       {
-        heading: 'Why standardisation helps',
+        heading: 'Why Standardisation Helps',
         paragraphs: [
           'When a business buys laptops with wildly different chargers, sizes, and performance levels, support becomes harder. Standardising to one or two sensible models makes training, replacement, and procurement easier.',
           'It also improves buying leverage because repeat purchases become more predictable for the supplier.',
@@ -548,7 +548,7 @@ const INSIGHTS: InsightArticle[] = [
         ],
       },
       {
-        heading: 'What to ask the supplier',
+        heading: 'What to Ask the Supplier',
         paragraphs: [
           'A good supplier should be able to recommend options by role, confirm stock, explain warranty, and provide a realistic delivery timeline. If they cannot do that clearly before payment, they are unlikely to become easier later.',
           'For larger orders, the speed and clarity of the quote process itself often signals how smoothly the business relationship will go.',
@@ -633,14 +633,14 @@ const INSIGHTS: InsightArticle[] = [
         ],
       },
       {
-        heading: 'Storage and phone viewing',
+        heading: 'Storage and Phone Viewing',
         paragraphs: [
           'A camera system is only useful if footage can be reviewed when something happens. Recorder capacity determines how many days are retained, while internet quality affects whether remote phone viewing works smoothly.',
           'Ask how the system behaves during an internet outage and whether footage continues recording locally. That distinction matters for homes with unreliable connectivity.',
         ],
       },
       {
-        heading: 'Questions to ask before installation',
+        heading: 'Questions to Ask Before Installation',
         paragraphs: [
           'Request a clear package that separates hardware, cabling, labour, setup, and any remote-viewing configuration. This makes quotes easier to compare and avoids surprises after installation.',
         ],
@@ -723,13 +723,13 @@ const INSIGHTS: InsightArticle[] = [
         ],
       },
       {
-        heading: 'RAM versus storage',
+        heading: 'RAM Versus Storage',
         paragraphs: [
           'RAM controls how many active tasks the laptop can handle comfortably. Storage controls how quickly it starts and how much data it can hold. A laptop should ideally have enough of both, with an SSD preferred over an old mechanical drive.',
         ],
       },
       {
-        heading: 'Check upgrade options',
+        heading: 'Check Upgrade Options',
         paragraphs: [
           'Some laptops allow a RAM upgrade while others have memory soldered to the board. Ask before buying if future expansion matters, especially when choosing a lower-cost machine.',
         ],
@@ -799,13 +799,13 @@ const INSIGHTS: InsightArticle[] = [
     ],
     sections: [
       {
-        heading: 'When fibre makes sense',
+        heading: 'When Fibre Makes Sense',
         paragraphs: [
           'Fibre is a strong fit for homes and offices that need stable video calls, streaming, cloud work, and multiple connected devices. It usually offers more consistent performance than a busy mobile network.',
         ],
       },
       {
-        heading: 'When LTE is the better option',
+        heading: 'When LTE Is the Better Option',
         paragraphs: [
           'LTE can be easier to deploy and move, making it useful for renters, temporary sites, backup internet, or areas where fibre is not yet available. Performance depends heavily on local signal and network congestion.',
         ],
@@ -816,7 +816,7 @@ const INSIGHTS: InsightArticle[] = [
         ],
       },
       {
-        heading: 'Do not forget Wi-Fi coverage',
+        heading: 'Do Not Forget Wi-Fi Coverage',
         paragraphs: [
           'Even a fast fibre or LTE connection can feel poor if the router is hidden in a corner. Larger homes may need a second access point, wired backhaul, or mesh system for reliable room-to-room coverage.',
         ],
@@ -887,13 +887,13 @@ const INSIGHTS: InsightArticle[] = [
     ],
     sections: [
       {
-        heading: 'Laser versus inkjet',
+        heading: 'Laser Versus Inkjet',
         paragraphs: [
           'Laser is often a strong fit for offices printing invoices, letters, reports, and forms regularly. Inkjet can make more sense for colour-heavy work, occasional printing, or buyers who need a lower initial price.',
         ],
       },
       {
-        heading: 'Calculate the real running cost',
+        heading: 'Calculate the Real Running Cost',
         paragraphs: [
           'Ask how many pages the cartridge or tank is expected to produce and how easy replacement supplies are to find locally. A low-priced printer with scarce consumables can create more disruption than a slightly more expensive model.',
         ],
@@ -905,7 +905,7 @@ const INSIGHTS: InsightArticle[] = [
         ],
       },
       {
-        heading: 'Features that save office time',
+        heading: 'Features That Save Office Time',
         paragraphs: [
           'Automatic duplex printing, a document feeder, network connectivity, and scanning can save staff time every day. Choose these features based on the workflow, not because they sound impressive on a specification sheet.',
         ],

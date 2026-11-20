@@ -24,8 +24,8 @@ const SALES_CHAT_HREF = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(
 )}`;
 const CATEGORY_GROUPS = [
   { label: 'Computers', slugs: ['laptops', 'desktops', 'monitors', 'pc-parts'] },
-  { label: 'Connectivity & security', slugs: ['networking', 'cctv', 'sa-imports'] },
-  { label: 'Everyday tech', slugs: ['mobile', 'printing', 'accessories', 'audio', 'drives', 'bundles'] },
+  { label: 'Connectivity & Security', slugs: ['networking', 'cctv', 'sa-imports'] },
+  { label: 'Everyday Tech', slugs: ['mobile', 'printing', 'accessories', 'audio', 'drives', 'bundles'] },
 ] as const;
 
 export function Header() {
@@ -159,11 +159,11 @@ export function Header() {
           <div className="ml-auto flex items-center gap-2">
             <Link
               href="/contact"
-              className="hidden min-h-11 items-center gap-2 rounded-lg border border-zinc-200 bg-white px-3 py-2 text-xs font-semibold text-zinc-700 transition hover:border-red-200 hover:bg-red-50 hover:text-red-700 lg:inline-flex"
+              className="hidden min-h-11 items-center gap-2 rounded-button border border-zinc-200 bg-white px-3 py-2 text-xs font-semibold text-zinc-700 transition hover:border-red-200 hover:bg-red-50 hover:text-red-700 lg:inline-flex"
             >
               <span className="flex flex-col leading-tight">
                 <span className="text-[10px] font-medium text-zinc-400">Need help?</span>
-                <span>Talk to sales</span>
+                <span>Talk to Sales</span>
               </span>
             </Link>
             <div className="hidden items-center gap-2 rounded-lg border border-zinc-200 bg-zinc-50 px-3 py-2 text-xs text-zinc-700 lg:flex">
@@ -183,7 +183,7 @@ export function Header() {
                 <circle cx="12" cy="9" r="2" />
               </svg>
               <span>
-                <span className="block text-[10px] leading-none text-zinc-400">Deliver to</span>
+                <span className="block text-[10px] leading-none text-zinc-400">Deliver To</span>
                 <strong className="font-semibold">Harare</strong>
               </span>
             </div>
@@ -262,7 +262,7 @@ export function Header() {
                 <button
                   onClick={() => setCategoriesOpen((value) => !value)}
                   aria-expanded={categoriesOpen}
-                  className="flex min-h-11 items-center gap-1.5 rounded-lg px-3 py-3 text-sm font-bold text-zinc-900 transition hover:bg-red-50 hover:text-red-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
+                  className="flex min-h-11 items-center gap-1.5 rounded-button px-3 py-3 text-sm font-bold text-zinc-900 transition hover:bg-red-50 hover:text-red-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
                 >
                   All Categories
                   <svg
@@ -282,7 +282,7 @@ export function Header() {
                 </button>
 
                 {categoriesOpen && (
-                  <div className="absolute left-0 top-full z-50 mt-1 w-[min(760px,calc(100vw-2rem))] rounded-2xl border border-zinc-200 bg-white p-5 shadow-2xl">
+                  <div className="absolute left-0 top-full z-50 mt-1 w-[min(760px,calc(100vw-2rem))] rounded-card border border-zinc-200 bg-white p-5 shadow-2xl">
                     <div className="grid gap-5 sm:grid-cols-3">
                       {CATEGORY_GROUPS.map((group) => (
                         <div key={group.label}>
@@ -298,7 +298,7 @@ export function Header() {
                                   key={category.id}
                                   href={getCategoryHref(category.slug)}
                                   onClick={() => setCategoriesOpen(false)}
-                                  className="block rounded-lg px-3 py-2 text-sm text-zinc-700 transition hover:bg-red-50 hover:text-red-700"
+                                  className="block rounded-button px-3 py-2 text-sm text-zinc-700 transition hover:bg-red-50 hover:text-red-700"
                                 >
                                   {category.label}
                                 </Link>
@@ -309,13 +309,13 @@ export function Header() {
                       ))}
                     </div>
                     <div className="mt-4 flex flex-wrap items-center gap-2 border-t border-zinc-100 pt-4">
-                      <span className="mr-1 text-xs font-semibold text-zinc-500">Popular brands</span>
+                      <span className="mr-1 text-xs font-semibold text-zinc-500">Popular Brands</span>
                       {STORE_BRANDS.map((brand) => (
                         <Link
                           key={brand.slug}
                           href={getBrandHref(brand.slug)}
                           onClick={() => setCategoriesOpen(false)}
-                          className="rounded-full border border-zinc-200 px-3 py-1.5 text-xs font-semibold text-zinc-700 transition hover:border-red-200 hover:bg-red-50 hover:text-red-700"
+                          className="rounded-button border border-zinc-200 px-3 py-1.5 text-xs font-semibold text-zinc-700 transition hover:border-red-200 hover:bg-red-50 hover:text-red-700"
                         >
                           {brand.name}
                         </Link>
@@ -325,7 +325,7 @@ export function Header() {
                         onClick={() => setCategoriesOpen(false)}
                         className="ml-auto text-xs font-bold text-red-700 hover:text-red-800"
                       >
-                        View all products →
+                        View All Products →
                       </Link>
                     </div>
                   </div>
@@ -336,7 +336,7 @@ export function Header() {
                 <Link
                   key={category.id}
                   href={getCategoryHref(category.slug)}
-                  className={`flex min-h-11 items-center rounded-lg px-3 py-3 text-sm font-medium transition ${pathname.startsWith(getCategoryHref(category.slug)) ? 'bg-red-50 text-red-700' : 'text-zinc-600 hover:bg-zinc-50 hover:text-zinc-950'}`}
+                  className={`flex min-h-11 items-center rounded-button px-3 py-3 text-sm font-medium transition ${pathname.startsWith(getCategoryHref(category.slug)) ? 'bg-red-50 text-red-700' : 'text-zinc-600 hover:bg-zinc-50 hover:text-zinc-950'}`}
                 >
                   {category.label}
                 </Link>
@@ -349,7 +349,7 @@ export function Header() {
                     key={href}
                     href={href}
                     aria-current={active ? 'page' : undefined}
-                    className={`flex min-h-11 items-center rounded-lg px-3 py-3 text-sm font-medium transition ${
+                    className={`flex min-h-11 items-center rounded-button px-3 py-3 text-sm font-medium transition ${
                       active
                         ? 'bg-red-50 text-red-700'
                         : 'text-zinc-600 hover:bg-zinc-50 hover:text-zinc-950'
@@ -365,7 +365,7 @@ export function Header() {
               href={SALES_CHAT_HREF}
               target="_blank"
               rel="noreferrer"
-              className="flex min-h-10 items-center gap-2 rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-red-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
+              className="flex min-h-10 items-center gap-2 rounded-button bg-red-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-red-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
             >
               <svg
                 aria-hidden="true"
@@ -415,7 +415,7 @@ export function Header() {
               <Link
                 href="/products"
                 onClick={() => setMenuOpen(false)}
-                className={`rounded-lg px-3 py-2.5 text-sm font-medium transition ${
+                className={`rounded-button px-3 py-2.5 text-sm font-medium transition ${
                   pathname.startsWith('/products')
                     ? 'bg-red-50 text-red-700'
                     : 'text-zinc-700 hover:bg-zinc-50'
@@ -430,7 +430,7 @@ export function Header() {
                     key={category.id}
                     href={getCategoryHref(category.slug)}
                     onClick={() => setMenuOpen(false)}
-                    className="inline-flex min-h-11 items-center rounded-full border border-zinc-200 px-3 py-2 text-xs text-zinc-600 transition hover:border-red-200 hover:bg-red-50 hover:text-red-700"
+                    className="inline-flex min-h-11 items-center rounded-button border border-zinc-200 px-3 py-2 text-xs text-zinc-600 transition hover:border-red-200 hover:bg-red-50 hover:text-red-700"
                   >
                     {category.label}
                   </Link>
@@ -442,7 +442,7 @@ export function Header() {
                   key={href}
                   href={href}
                   onClick={() => setMenuOpen(false)}
-                  className={`rounded-lg px-3 py-2.5 text-sm font-medium transition ${
+                  className={`rounded-button px-3 py-2.5 text-sm font-medium transition ${
                     pathname === href ? 'bg-red-50 text-red-700' : 'text-zinc-700 hover:bg-zinc-50'
                   }`}
                 >

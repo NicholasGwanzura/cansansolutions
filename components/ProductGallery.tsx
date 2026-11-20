@@ -11,7 +11,7 @@ export function ProductGallery({ name, images }: ProductGalleryProps) {
 
   return (
     <div className="space-y-3">
-      <div className="relative flex min-h-[320px] items-center justify-center overflow-hidden rounded-2xl border border-zinc-100 bg-[radial-gradient(circle_at_top,#fff1f2,#f8fafc_58%)] p-8 sm:min-h-[390px]">
+      <div className="relative flex min-h-[320px] items-center justify-center overflow-hidden rounded-card border border-zinc-100 bg-[radial-gradient(circle_at_top,#fff1f2,#f8fafc_58%)] p-8 sm:min-h-[390px]">
         <ProductImage
           src={sources[active]}
           alt={`${name} image ${active + 1}`}

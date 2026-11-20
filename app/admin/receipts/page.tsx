@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from 'react';
 import type { Receipt, PaymentMethod, LineItem, CustomerInfo, CompanyProfile, Product, Client } from '@/lib/types';
 import AdminLayout from '../components/AdminLayout';
 import { Notice } from '../components/ui';
+import { Icon } from '@/components/icons';
 
 const CURRENCIES = ['USD', 'KES', 'ZAR', 'ZWL'];
 const PAYMENT_METHODS: { value: PaymentMethod; label: string }[] = [
@@ -292,7 +293,7 @@ export default function ReceiptsAdmin() {
           <h1 className="text-2xl font-semibold tracking-tight text-zinc-950">Receipts</h1>
           <button
             onClick={() => startEdit()}
-            className="flex items-center gap-1.5 rounded-xl bg-red-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-red-700"
+            className="flex items-center gap-1.5 rounded-button bg-red-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-red-700"
           >
             <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
@@ -305,19 +306,19 @@ export default function ReceiptsAdmin() {
         <div className="mb-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
           <div className="rounded-xl border border-zinc-200 bg-white p-4">
             <p className="text-xs font-medium text-zinc-500">Total Receipts</p>
-            <p className="text-2xl font-bold text-zinc-900">{totalCount}</p>
+            <p className="text-2xl font-semibold tracking-tight text-zinc-950">{totalCount}</p>
           </div>
           <div className="rounded-xl border border-zinc-200 bg-white p-4">
             <p className="text-xs font-medium text-zinc-500">Total Amount</p>
-            <p className="text-2xl font-bold text-green-600">{fmtCurrency(totalAmount, 'USD')}</p>
+            <p className="text-2xl font-semibold tracking-tight text-zinc-950">{fmtCurrency(totalAmount, 'USD')}</p>
           </div>
           <div className="rounded-xl border border-zinc-200 bg-white p-4">
             <p className="text-xs font-medium text-zinc-500">Cash Payments</p>
-            <p className="text-2xl font-bold text-zinc-900">{cashCount}</p>
+            <p className="text-2xl font-semibold tracking-tight text-zinc-950">{cashCount}</p>
           </div>
           <div className="rounded-xl border border-zinc-200 bg-white p-4">
             <p className="text-xs font-medium text-zinc-500">Card Payments</p>
-            <p className="text-2xl font-bold text-zinc-900">{cardCount}</p>
+            <p className="text-2xl font-semibold tracking-tight text-zinc-950">{cardCount}</p>
           </div>
         </div>
 
@@ -327,12 +328,12 @@ export default function ReceiptsAdmin() {
             <div className="h-7 w-7 animate-spin rounded-full border-2 border-red-600 border-t-transparent" />
           </div>
         ) : receipts.length === 0 ? (
-          <div className="rounded-2xl border border-zinc-200 bg-white p-12 text-center">
+          <div className="rounded-xl border border-zinc-200 bg-white p-12 text-center">
             <svg className="mx-auto mb-3 text-zinc-300" width="48" height="48" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M9 14.25l6-6m4.5-3.493V21.75l-3.75-1.5-3.75 1.5-3.75-1.5-3.75 1.5V4.757c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0c1.1.128 1.907 1.077 1.907 2.185ZM9.75 9h.008v.008H9.75V9Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm4.125 4.5h.008v.008h-.008V13.5Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
             </svg>
-            <p className="text-zinc-500 mb-3">No receipts yet</p>
-            <button onClick={() => startEdit()} className="rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white hover:bg-red-700">
+            <p className="text-zinc-500 mb-3">No Receipts Yet</p>
+            <button onClick={() => startEdit()} className="rounded-button bg-red-600 px-4 py-2 text-sm font-semibold text-white hover:bg-red-700">
               Create First Receipt
             </button>
           </div>
@@ -365,10 +366,10 @@ export default function ReceiptsAdmin() {
                     <td className="px-4 py-3 text-right font-medium text-zinc-900">{fmtCurrency(r.total, r.currency)}</td>
                     <td className="px-4 py-3">
                       <div className="flex gap-1.5">
-                        <button onClick={() => startEdit(r)} className="rounded-lg border border-zinc-200 px-2.5 py-1 text-xs font-medium text-zinc-600 hover:bg-zinc-50">Edit</button>
-                        <button onClick={() => setPrinting(r)} className="rounded-lg border border-zinc-200 px-2.5 py-1 text-xs font-medium text-zinc-600 hover:bg-zinc-50">Preview</button>
-                        <button onClick={() => downloadRowPdf(r)} disabled={downloading} className="rounded-lg border border-zinc-900 bg-zinc-900 px-2.5 py-1 text-xs font-medium text-white hover:bg-zinc-700 disabled:opacity-60">PDF</button>
-                        <button onClick={() => removeReceipt(r.id)} className="rounded-lg border border-red-200 bg-red-50 px-2.5 py-1 text-xs font-medium text-red-600 hover:bg-red-100">Delete</button>
+                        <button onClick={() => startEdit(r)} className="rounded-button border border-zinc-200 px-2.5 py-1 text-xs font-medium text-zinc-600 hover:bg-zinc-50">Edit</button>
+                        <button onClick={() => setPrinting(r)} className="rounded-button border border-zinc-200 px-2.5 py-1 text-xs font-medium text-zinc-600 hover:bg-zinc-50">Preview</button>
+                        <button onClick={() => downloadRowPdf(r)} disabled={downloading} className="rounded-button border border-zinc-900 bg-zinc-900 px-2.5 py-1 text-xs font-medium text-white hover:bg-zinc-700 disabled:opacity-60">PDF</button>
+                        <button onClick={() => removeReceipt(r.id)} className="rounded-button border border-red-200 bg-red-50 px-2.5 py-1 text-xs font-medium text-red-600 hover:bg-red-100">Delete</button>
                       </div>
                     </td>
                   </tr>
@@ -387,7 +388,7 @@ export default function ReceiptsAdmin() {
                 <h2 className="font-heading text-sm font-bold text-zinc-900">
                   {receipts.find((r) => r.id === editing.id) ? 'Edit Receipt' : 'New Receipt'}
                 </h2>
-                <button onClick={() => setEditing(null)} className="text-zinc-400 hover:text-zinc-600">&#10005;</button>
+                <button aria-label="Close" onClick={() => setEditing(null)} className="text-zinc-400 hover:text-zinc-600"><Icon name="xMark" className="h-4 w-4" /></button>
               </div>
 
               <form
@@ -439,7 +440,7 @@ export default function ReceiptsAdmin() {
                               <button
                                 type="button"
                                 onClick={() => { setShowProductPicker(showProductPicker === idx ? null : idx); setProductSearch({}); }}
-                                className={`shrink-0 rounded-lg border px-2 py-2 transition ${showProductPicker === idx ? 'border-red-400 bg-red-50 text-red-600' : 'border-zinc-200 text-zinc-400 hover:text-zinc-600 hover:bg-zinc-50'}`}
+                                className={`shrink-0 rounded-button border px-2 py-2 transition ${showProductPicker === idx ? 'border-red-400 bg-red-50 text-red-600' : 'border-zinc-200 text-zinc-400 hover:text-zinc-600 hover:bg-zinc-50'}`}
                                 title="Pick from product catalog"
                               >
                                 <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" /></svg>
@@ -469,7 +470,7 @@ export default function ReceiptsAdmin() {
                               autoFocus
                               value={productSearch[idx] || ''}
                               onChange={(e) => setProductSearch({ ...productSearch, [idx]: e.target.value })}
-                              className="w-full rounded-md border border-zinc-200 bg-white px-3 py-1.5 text-sm mb-2 focus:outline-none focus:ring-2 focus:ring-red-400"
+                              className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-1.5 text-sm mb-2 focus:outline-none focus:ring-2 focus:ring-red-400"
                               placeholder="Type to search products..."
                               onKeyDown={(e) => { if (e.key === 'Escape') setShowProductPicker(null); }}
                             />
@@ -481,7 +482,7 @@ export default function ReceiptsAdmin() {
                                   <button
                                     key={p.id}
                                     type="button"
-                                    className="flex w-full items-center justify-between rounded-md bg-white px-3 py-2 text-sm hover:bg-red-600 hover:text-white group transition"
+                                    className="flex w-full items-center justify-between rounded-button bg-white px-3 py-2 text-sm hover:bg-red-600 hover:text-white group transition"
                                     onClick={() => pickProduct(idx, p)}
                                   >
                                     <span className="truncate text-left font-medium">{p.name}</span>
@@ -489,7 +490,7 @@ export default function ReceiptsAdmin() {
                                   </button>
                                 ))}
                               {products.filter((p) => !productSearch[idx] || p.name.toLowerCase().includes((productSearch[idx] || '').toLowerCase())).length === 0 && (
-                                <p className="px-3 py-2 text-xs text-zinc-400">No products found</p>
+                                <p className="px-3 py-2 text-xs text-zinc-400">No Products Found</p>
                               )}
                             </div>
                           </div>
@@ -523,7 +524,7 @@ export default function ReceiptsAdmin() {
                         </select>
                       </div>
                       <div>
-                        <label className="block text-xs font-semibold text-zinc-500 mb-1">Invoice Ref (optional)</label>
+                        <label className="block text-xs font-semibold text-zinc-500 mb-1">Invoice Ref (Optional)</label>
                         <input value={editing.invoiceId || ''} onChange={(e) => setEditing({ ...editing, invoiceId: e.target.value })} className="w-full rounded-lg border border-zinc-200 px-3 py-2 text-sm" placeholder="INV-0001" />
                       </div>
                     </div>
@@ -559,8 +560,8 @@ export default function ReceiptsAdmin() {
                 </div>
 
                 <div className="flex gap-2 pt-2">
-                  <button type="button" onClick={() => setEditing(null)} className="flex-1 rounded-xl border border-zinc-200 py-2.5 text-sm font-semibold text-zinc-600">Cancel</button>
-                  <button type="submit" disabled={saving} className="flex-1 rounded-xl bg-red-600 py-2.5 text-sm font-semibold text-white disabled:opacity-60">{saving ? 'Saving...' : 'Save Receipt'}</button>
+                  <button type="button" onClick={() => setEditing(null)} className="flex-1 rounded-lg border border-zinc-200 py-2.5 text-sm font-semibold text-zinc-600">Cancel</button>
+                  <button type="submit" disabled={saving} className="flex-1 rounded-lg bg-red-600 py-2.5 text-sm font-semibold text-white disabled:opacity-60">{saving ? 'Saving...' : 'Save Receipt'}</button>
                 </div>
               </form>
             </div>
@@ -577,7 +578,7 @@ export default function ReceiptsAdmin() {
                   <button
                     onClick={() => downloadPdf('receipt-print', `${printing.number}.pdf`)}
                     disabled={downloading}
-                    className="flex items-center gap-1.5 rounded-lg bg-zinc-900 px-4 py-2 text-sm font-semibold text-white hover:bg-zinc-700 disabled:opacity-60"
+                    className="flex items-center gap-1.5 rounded-button bg-zinc-900 px-4 py-2 text-sm font-semibold text-white hover:bg-zinc-700 disabled:opacity-60"
                   >
                     <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>
                     {downloading ? 'Generating…' : 'Download PDF'}
@@ -586,13 +587,13 @@ export default function ReceiptsAdmin() {
                     <button
                       onClick={sendEmailPdf}
                       disabled={sendingEmail}
-                      className="flex items-center gap-1.5 rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white hover:bg-red-700 disabled:opacity-60"
+                      className="flex items-center gap-1.5 rounded-button bg-red-600 px-4 py-2 text-sm font-semibold text-white hover:bg-red-700 disabled:opacity-60"
                     >
                       <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" /></svg>
                       {sendingEmail ? 'Sending…' : 'Send Email'}
                     </button>
                   ) : null}
-                  <button onClick={() => setPrinting(null)} className="rounded-lg border border-zinc-200 px-4 py-2 text-sm font-semibold text-zinc-600 hover:bg-zinc-50">Close</button>
+                  <button onClick={() => setPrinting(null)} className="rounded-button border border-zinc-200 px-4 py-2 text-sm font-semibold text-zinc-600 hover:bg-zinc-50">Close</button>
                 </div>
               </div>
 
@@ -703,7 +704,7 @@ export default function ReceiptsAdmin() {
             <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md max-h-[80vh] flex flex-col overflow-hidden">
               <div className="flex items-center justify-between px-5 py-4 border-b border-zinc-100">
                 <h3 className="font-heading text-sm font-bold text-zinc-900">Select a Client</h3>
-                <button onClick={() => setClientPicker(false)} className="text-zinc-400 hover:text-zinc-600">&#10005;</button>
+                <button aria-label="Close" onClick={() => setClientPicker(false)} className="text-zinc-400 hover:text-zinc-600"><Icon name="xMark" className="h-4 w-4" /></button>
               </div>
 
               <div className="p-4 space-y-3 flex-1 overflow-y-auto">
@@ -734,7 +735,7 @@ export default function ReceiptsAdmin() {
                               key={c.id}
                               type="button"
                               onClick={() => editing ? changeClient(c) : startEditWithClient(c)}
-                              className="flex w-full items-start gap-3 rounded-xl border border-zinc-100 p-3 text-left hover:bg-zinc-50 transition"
+                              className="flex w-full items-start gap-3 rounded-lg border border-zinc-100 p-3 text-left hover:bg-zinc-50 transition"
                             >
                               <div className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-white font-bold text-sm ${color}`}>
                                 {c.name.charAt(0).toUpperCase()}
@@ -750,7 +751,7 @@ export default function ReceiptsAdmin() {
                           );
                         })}
                       {clients.length === 0 && (
-                        <p className="text-sm text-zinc-400 text-center py-4">No clients yet</p>
+                        <p className="text-sm text-zinc-400 text-center py-4">No Clients Yet</p>
                       )}
                     </div>
                   </>

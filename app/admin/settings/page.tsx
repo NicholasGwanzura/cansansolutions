@@ -141,16 +141,20 @@ export default function SettingsPage() {
       <main className="max-w-3xl px-4 py-6 sm:px-6 lg:px-8">
         <div className="mb-6">
           <h1 className="text-2xl font-semibold tracking-tight text-zinc-950">Settings</h1>
-          <p className="text-sm text-zinc-500">Manage admin preferences</p>
+          <p className="mt-1 text-sm text-zinc-500">Company details, document defaults and store preferences.</p>
         </div>
 
         <Notice message={message} onDismiss={dismissMessage} />
 
         <div className="space-y-6">
           {/* Company Profile */}
-          <div className="rounded-2xl border border-zinc-200 bg-white p-5">
-            <h3 className="font-semibold text-zinc-900 mb-4">Company Profile</h3>
-            <form onSubmit={saveCompanyProfile} className="space-y-4">
+          <div className="rounded-xl border border-zinc-200 bg-white p-5">
+            <div className="mb-5">
+              <h2 className="text-base font-semibold text-zinc-950">Company Profile</h2>
+              <p className="mt-0.5 text-sm text-zinc-500">Printed on invoices, quotes, receipts and delivery notes.</p>
+            </div>
+            <form onSubmit={saveCompanyProfile} className="space-y-5">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-zinc-400">Brand</p>
               <div className="flex items-end gap-4">
                 <div className="flex-1">
                   <label className="block text-xs font-semibold text-zinc-500 mb-1">Logo URL</label>
@@ -170,7 +174,7 @@ export default function SettingsPage() {
                   />
                 )}
               </div>
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                 <div>
                   <label className="block text-xs font-semibold text-zinc-500 mb-1">
                     Company Name
@@ -190,6 +194,7 @@ export default function SettingsPage() {
                   />
                 </div>
               </div>
+              <p className="border-t border-zinc-100 pt-5 text-[11px] font-semibold uppercase tracking-[0.12em] text-zinc-400">Address</p>
               <div>
                 <label className="block text-xs font-semibold text-zinc-500 mb-1">
                   Address Line 1
@@ -210,7 +215,7 @@ export default function SettingsPage() {
                   className="w-full rounded-lg border border-zinc-200 px-3 py-2 text-sm"
                 />
               </div>
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                 <div>
                   <label className="block text-xs font-semibold text-zinc-500 mb-1">City</label>
                   <input
@@ -228,7 +233,8 @@ export default function SettingsPage() {
                   />
                 </div>
               </div>
-              <div className="grid grid-cols-2 gap-3">
+              <p className="border-t border-zinc-100 pt-5 text-[11px] font-semibold uppercase tracking-[0.12em] text-zinc-400">Contact</p>
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                 <div>
                   <label className="block text-xs font-semibold text-zinc-500 mb-1">Phone</label>
                   <input
@@ -246,7 +252,8 @@ export default function SettingsPage() {
                   />
                 </div>
               </div>
-              <div className="grid grid-cols-4 gap-3">
+              <p className="border-t border-zinc-100 pt-5 text-[11px] font-semibold uppercase tracking-[0.12em] text-zinc-400">Website &amp; Registration</p>
+              <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
                 <div>
                   <label className="block text-xs font-semibold text-zinc-500 mb-1">Website</label>
                   <input
@@ -301,7 +308,7 @@ export default function SettingsPage() {
                       ...company,
                       bankAccounts: [...(company.bankAccounts || []), { bankName: '', branch: '', currency: 'USD', accountNumber: '' }],
                     })}
-                    className="shrink-0 rounded-lg border border-zinc-200 px-3 py-2 text-xs font-semibold text-zinc-700 hover:bg-zinc-50"
+                    className="shrink-0 rounded-button border border-zinc-200 px-3 py-2 text-xs font-semibold text-zinc-700 hover:bg-zinc-50"
                   >
                     Add bank
                   </button>
@@ -322,9 +329,9 @@ export default function SettingsPage() {
                           Remove
                         </button>
                       </div>
-                      <div className="grid grid-cols-2 gap-3">
+                      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                         <div>
-                          <label className="mb-1 block text-xs font-semibold text-zinc-500">Bank name</label>
+                          <label className="mb-1 block text-xs font-semibold text-zinc-500">Bank Name</label>
                           <input
                             value={account.bankName}
                             onChange={(e) => setCompany({ ...company, bankAccounts: company.bankAccounts.map((item, i) => i === index ? { ...item, bankName: e.target.value } : item) })}
@@ -351,7 +358,7 @@ export default function SettingsPage() {
                           />
                         </div>
                         <div>
-                          <label className="mb-1 block text-xs font-semibold text-zinc-500">Account number</label>
+                          <label className="mb-1 block text-xs font-semibold text-zinc-500">Account Number</label>
                           <input
                             value={account.accountNumber}
                             onChange={(e) => setCompany({ ...company, bankAccounts: company.bankAccounts.map((item, i) => i === index ? { ...item, accountNumber: e.target.value } : item) })}
@@ -367,15 +374,15 @@ export default function SettingsPage() {
               <button
                 type="submit"
                 disabled={savingCompany}
-                className="rounded-xl bg-red-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-red-700 disabled:opacity-60"
+                className="rounded-button bg-red-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-red-700 disabled:opacity-60"
               >
                 {savingCompany ? 'Saving...' : 'Save Company Profile'}
               </button>
             </form>
           </div>
 
-          <div className="rounded-2xl border border-amber-200 bg-amber-50 p-5">
-            <h3 className="font-semibold text-zinc-900">Admin password</h3>
+          <div className="rounded-xl border border-amber-200 bg-amber-50 p-5">
+            <h3 className="font-semibold text-zinc-900">Admin Password</h3>
             <p className="mt-2 text-sm leading-6 text-zinc-600">
               The admin password is managed through the{' '}
               <code className="rounded bg-white px-1.5 py-0.5 text-xs font-semibold text-zinc-800">
@@ -387,7 +394,7 @@ export default function SettingsPage() {
           </div>
 
           {/* Site Settings */}
-          <div className="rounded-2xl border border-zinc-200 bg-white p-5">
+          <div className="rounded-xl border border-zinc-200 bg-white p-5">
             <h3 className="font-semibold text-zinc-900 mb-4">Site Preferences</h3>
             <form onSubmit={saveSettings} className="space-y-4">
               <div>
@@ -435,14 +442,14 @@ export default function SettingsPage() {
               </div>
               <button
                 type="submit"
-                className="rounded-xl bg-zinc-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-zinc-800"
+                className="rounded-button bg-zinc-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-zinc-800"
               >
                 Save Settings
               </button>
             </form>
           </div>
 
-          <div className="rounded-2xl border border-zinc-200 bg-white p-5">
+          <div className="rounded-xl border border-zinc-200 bg-white p-5">
             <h3 className="font-semibold text-zinc-900 mb-2">Homepage Banner</h3>
             <p className="text-sm text-zinc-500">
               The &quot;Premium Tech Collection&quot; banner image is managed from the Banners
@@ -450,7 +457,7 @@ export default function SettingsPage() {
             </p>
             <Link
               href="/admin/banners"
-              className="mt-4 inline-flex items-center gap-2 rounded-xl bg-red-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-red-700"
+              className="mt-4 inline-flex items-center gap-2 rounded-button bg-red-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-red-700"
             >
               Open Banners
               <svg
@@ -471,7 +478,7 @@ export default function SettingsPage() {
           </div>
 
           {/* About */}
-          <div className="rounded-2xl border border-zinc-200 bg-white p-5">
+          <div className="rounded-xl border border-zinc-200 bg-white p-5">
             <h3 className="font-semibold text-zinc-900 mb-4">About</h3>
             <div className="space-y-2 text-sm text-zinc-600">
               <p>

@@ -158,15 +158,15 @@ export function ProductsClient({
             <div className="flex shrink-0 gap-3">
               <Link
                 href="/contact"
-                className="inline-flex min-h-11 items-center justify-center rounded-full bg-red-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-red-700"
+                className="inline-flex min-h-11 items-center justify-center rounded-button bg-red-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-red-700"
               >
                 Need help?
               </Link>
               <Link
                 href="/delivery"
-                className="hidden min-h-11 items-center justify-center rounded-full border border-zinc-300 bg-white px-5 py-3 text-sm font-semibold text-zinc-800 transition hover:border-red-300 hover:text-red-600 sm:inline-flex"
+                className="hidden min-h-11 items-center justify-center rounded-button border border-zinc-300 bg-white px-5 py-3 text-sm font-semibold text-zinc-800 transition hover:border-red-300 hover:text-red-600 sm:inline-flex"
               >
-                Delivery info
+                Delivery Info
               </Link>
             </div>
           </div>
@@ -174,21 +174,21 @@ export function ProductsClient({
       </section>
 
       <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6">
-        <div className="mt-4 hidden gap-3 rounded-3xl border border-zinc-200 bg-zinc-50 p-4 text-sm text-zinc-600 sm:grid sm:grid-cols-3 sm:p-5">
+        <div className="mt-4 hidden gap-3 rounded-panel border border-zinc-200 bg-zinc-50 p-4 text-sm text-zinc-600 sm:grid sm:grid-cols-3 sm:p-5">
           <div>
-            <p className="font-semibold text-zinc-900">WhatsApp-first ordering</p>
+            <p className="font-semibold text-zinc-900">WhatsApp-First Ordering</p>
             <p className="mt-1">
               Confirm stock, get pricing help, and close orders without waiting on a form.
             </p>
           </div>
           <div>
-            <p className="font-semibold text-zinc-900">Harare delivery support</p>
+            <p className="font-semibold text-zinc-900">Harare Delivery Support</p>
             <p className="mt-1">
               Same-day delivery options and nationwide courier coordination for stocked items.
             </p>
           </div>
           <div>
-            <p className="font-semibold text-zinc-900">Bulk and business quotes</p>
+            <p className="font-semibold text-zinc-900">Bulk and Business Quotes</p>
             <p className="mt-1">
               Need multiple units? Use category pages to shortlist products, then request a quote
               fast.
@@ -197,7 +197,7 @@ export function ProductsClient({
         </div>
 
         <div className="mt-6 grid gap-6 lg:grid-cols-[230px_minmax(0,1fr)]">
-          <aside className="hidden h-fit rounded-3xl border border-zinc-200 bg-white p-5 shadow-sm lg:block">
+          <aside className="hidden h-fit rounded-panel border border-zinc-200 bg-white p-5 shadow-sm lg:block">
             <div className="flex items-center justify-between">
               <h2 className="text-lg font-semibold text-zinc-950">Filters</h2>
               {hasActiveFilters && (
@@ -205,7 +205,7 @@ export function ProductsClient({
                   onClick={clearAllFilters}
                   className="text-xs font-semibold text-red-600 hover:text-red-700"
                 >
-                  Clear all
+                  Clear All
                 </button>
               )}
             </div>
@@ -216,7 +216,7 @@ export function ProductsClient({
               <div className="mt-3 space-y-1">
                 <Link
                   href="/products"
-                  className={`block rounded-xl px-3 py-2 text-sm font-medium transition ${activeCategory === 'all' ? 'bg-red-50 text-red-700' : 'text-zinc-600 hover:bg-zinc-50 hover:text-red-600'}`}
+                  className={`block rounded-button px-3 py-2 text-sm font-medium transition ${activeCategory === 'all' ? 'bg-red-50 text-red-700' : 'text-zinc-600 hover:bg-zinc-50 hover:text-red-600'}`}
                 >
                   All Categories
                 </Link>
@@ -224,7 +224,7 @@ export function ProductsClient({
                   <Link
                     key={cat.id}
                     href={getCategoryHref(cat.slug)}
-                    className={`block rounded-xl px-3 py-2 text-sm font-medium transition ${activeCategory === cat.slug ? 'bg-red-50 text-red-700' : 'text-zinc-600 hover:bg-zinc-50 hover:text-red-600'}`}
+                    className={`block rounded-button px-3 py-2 text-sm font-medium transition ${activeCategory === cat.slug ? 'bg-red-50 text-red-700' : 'text-zinc-600 hover:bg-zinc-50 hover:text-red-600'}`}
                   >
                     {cat.label}
                   </Link>
@@ -247,7 +247,7 @@ export function ProductsClient({
                       setActiveType(value);
                       if (value === 'bundle') setActiveCondition('all');
                     }}
-                    className={`block w-full rounded-xl px-3 py-2 text-left text-sm font-medium transition ${activeType === value ? 'bg-red-50 text-red-700' : 'text-zinc-600 hover:bg-zinc-50 hover:text-red-600'}`}
+                    className={`block w-full rounded-button px-3 py-2 text-left text-sm font-medium transition ${activeType === value ? 'bg-red-50 text-red-700' : 'text-zinc-600 hover:bg-zinc-50 hover:text-red-600'}`}
                   >
                     {label}
                   </button>
@@ -262,15 +262,15 @@ export function ProductsClient({
                 <div className="mt-3 space-y-1">
                   {(
                     [
-                      { value: 'all', label: 'All conditions' },
-                      { value: 'new', label: 'Brand new' },
+                      { value: 'all', label: 'All Conditions' },
+                      { value: 'new', label: 'Brand New' },
                       { value: 'pre-owned', label: 'Pre-owned' },
                     ] as const
                   ).map(({ value, label }) => (
                     <button
                       key={value}
                       onClick={() => setActiveCondition(value)}
-                      className={`block w-full rounded-xl px-3 py-2 text-left text-sm font-medium transition ${activeCondition === value ? 'bg-red-50 text-red-700' : 'text-zinc-600 hover:bg-zinc-50 hover:text-red-600'}`}
+                      className={`block w-full rounded-button px-3 py-2 text-left text-sm font-medium transition ${activeCondition === value ? 'bg-red-50 text-red-700' : 'text-zinc-600 hover:bg-zinc-50 hover:text-red-600'}`}
                     >
                       {label}
                     </button>
@@ -283,7 +283,7 @@ export function ProductsClient({
                 htmlFor="desktop-sort"
                 className="text-xs font-bold uppercase tracking-[0.16em] text-zinc-500"
               >
-                Sort by
+                Sort By
               </label>
               <select
                 id="desktop-sort"
@@ -351,7 +351,7 @@ export function ProductsClient({
                 onClick={() => setShowMobileFilters((value) => !value)}
                 aria-expanded={showMobileFilters}
                 aria-controls="mobile-filters-panel"
-                className="inline-flex min-h-11 items-center gap-2 rounded-full border border-zinc-200 bg-white px-4 py-2 text-sm font-semibold text-zinc-800"
+                className="inline-flex min-h-11 items-center gap-2 rounded-button border border-zinc-200 bg-white px-4 py-2 text-sm font-semibold text-zinc-800"
               >
                 <svg
                   aria-hidden="true"
@@ -374,7 +374,7 @@ export function ProductsClient({
 
             <div
               id="mobile-filters-panel"
-              className={`${showMobileFilters ? 'block' : 'hidden'} rounded-3xl border border-zinc-200 bg-white p-4 shadow-sm sm:block sm:border-0 sm:bg-transparent sm:p-0 sm:shadow-none lg:hidden`}
+              className={`${showMobileFilters ? 'block' : 'hidden'} rounded-panel border border-zinc-200 bg-white p-4 shadow-sm sm:block sm:border-0 sm:bg-transparent sm:p-0 sm:shadow-none lg:hidden`}
             >
               {/* Filters row */}
               <div className="mb-4 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
@@ -403,7 +403,7 @@ export function ProductsClient({
                         setActiveType(value);
                         if (value === 'bundle') setActiveCondition('all');
                       }}
-                      className={`inline-flex min-h-11 shrink-0 items-center rounded-full px-4 py-2 text-sm font-semibold transition ${
+                      className={`inline-flex min-h-11 shrink-0 items-center rounded-button px-4 py-2 text-sm font-semibold transition ${
                         activeType === value
                           ? value === 'bundle'
                             ? 'bg-zinc-900 text-white'
@@ -456,7 +456,7 @@ export function ProductsClient({
                       type="button"
                       aria-pressed={activeCondition === value}
                       onClick={() => setActiveCondition(value)}
-                      className={`inline-flex min-h-11 shrink-0 items-center rounded-full px-4 py-2 text-sm font-semibold transition ${
+                      className={`inline-flex min-h-11 shrink-0 items-center rounded-button px-4 py-2 text-sm font-semibold transition ${
                         activeCondition === value
                           ? value === 'new'
                             ? 'bg-green-600 text-white'
@@ -475,7 +475,7 @@ export function ProductsClient({
               <div className="mb-6 flex flex-col gap-2 sm:flex-row sm:flex-wrap">
                 <Link
                   href="/products"
-                  className={`inline-flex min-h-11 shrink-0 items-center rounded-full px-4 py-2 text-sm font-semibold transition ${
+                  className={`inline-flex min-h-11 shrink-0 items-center rounded-button px-4 py-2 text-sm font-semibold transition ${
                     activeCategory === 'all'
                       ? 'bg-red-600 text-white'
                       : 'border border-zinc-200 text-zinc-600 hover:border-red-300 hover:text-red-600'
@@ -487,7 +487,7 @@ export function ProductsClient({
                   <Link
                     key={cat.id}
                     href={getCategoryHref(cat.slug)}
-                    className={`inline-flex min-h-11 shrink-0 items-center rounded-full px-4 py-2 text-sm font-semibold transition ${
+                    className={`inline-flex min-h-11 shrink-0 items-center rounded-button px-4 py-2 text-sm font-semibold transition ${
                       activeCategory === cat.slug
                         ? 'bg-red-600 text-white'
                         : 'border border-zinc-200 text-zinc-600 hover:border-red-300 hover:text-red-600'
@@ -533,7 +533,7 @@ export function ProductsClient({
 
             {/* Grid */}
             {filtered.length > 0 ? (
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
+              <div className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-3">
                 {filtered.map((product) => (
                   <ProductCard
                     key={product.id}

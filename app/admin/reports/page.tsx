@@ -128,7 +128,7 @@ export default function ReportsAdmin() {
           <button
             onClick={downloadReport}
             disabled={downloading}
-            className="flex items-center gap-1.5 rounded-lg bg-zinc-900 px-4 py-2 text-sm font-semibold text-white hover:bg-zinc-700 disabled:opacity-60"
+            className="flex items-center gap-1.5 rounded-button bg-zinc-900 px-4 py-2 text-sm font-semibold text-white hover:bg-zinc-700 disabled:opacity-60"
           >
             <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>
             {downloading ? 'Generating…' : 'Download PDF'}
@@ -142,12 +142,12 @@ export default function ReportsAdmin() {
           <div className="rounded-xl border border-zinc-200 bg-white p-4">
             <p className="text-xs font-medium text-zinc-500">Total Revenue</p>
             <p className="text-xl font-bold text-green-600">{fmtCurrency(summary.totalRevenue)}</p>
-            <p className="text-[10px] text-zinc-400">Paid invoices</p>
+            <p className="text-[10px] text-zinc-400">Paid Invoices</p>
           </div>
           <div className="rounded-xl border border-zinc-200 bg-white p-4">
             <p className="text-xs font-medium text-zinc-500">Total Received</p>
             <p className="text-xl font-bold text-green-600">{fmtCurrency(summary.totalReceived)}</p>
-            <p className="text-[10px] text-zinc-400">All receipts</p>
+            <p className="text-[10px] text-zinc-400">All Receipts</p>
           </div>
           <div className="rounded-xl border border-zinc-200 bg-white p-4">
             <p className="text-xs font-medium text-zinc-500">Total Expenses</p>
@@ -244,7 +244,7 @@ export default function ReportsAdmin() {
                   </div>
                 ))}
               {Object.keys(categoryTotals).length === 0 && (
-                <p className="text-sm text-zinc-400">No expenses recorded yet</p>
+                <p className="text-sm text-zinc-400">No Expenses Recorded Yet</p>
               )}
             </div>
           </div>
@@ -254,7 +254,7 @@ export default function ReportsAdmin() {
         <div className="rounded-xl border border-zinc-200 bg-white p-5">
           <h2 className="font-semibold text-zinc-900 mb-4">Top Customers</h2>
           {topCustomers.length === 0 ? (
-            <p className="text-sm text-zinc-400">No invoices recorded yet</p>
+            <p className="text-sm text-zinc-400">No Invoices Recorded Yet</p>
           ) : (
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
@@ -287,7 +287,7 @@ export default function ReportsAdmin() {
         <div className="rounded-xl border border-zinc-200 bg-white p-5">
           <h2 className="font-semibold text-zinc-900 mb-4">Recent Activity</h2>
           {activity.length === 0 ? (
-            <p className="text-sm text-zinc-400">No activity yet</p>
+            <p className="text-sm text-zinc-400">No Activity Yet</p>
           ) : (
             <div className="space-y-2">
               {activity.map((item, i) => (

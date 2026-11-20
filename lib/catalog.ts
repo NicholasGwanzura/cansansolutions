@@ -63,15 +63,15 @@ const CATEGORY_PAGE_CONTENT: Record<string, CategoryPageContent> = {
       'Shop business laptops, student laptops, and premium ultrabooks in Harare with local stock checks, straightforward advice, and fast WhatsApp ordering.',
     trustPoints: [
       {
-        title: 'Right specs for the budget',
+        title: 'Right Specs for the Budget',
         description: 'We help customers choose RAM, storage, and processor options that fit real workloads instead of upselling blindly.',
       },
       {
-        title: 'Business, school, and everyday options',
+        title: 'Business, School, and Everyday Options',
         description: 'From entry-level machines to executive laptops, the range is built for Zimbabwean buyers who care about value and reliability.',
       },
       {
-        title: 'Fast quote support',
+        title: 'Fast Quote Support',
         description: 'Need multiple units for a team or school? Shortlist products here, then get a bulk quote on WhatsApp quickly.',
       },
     ],
@@ -99,15 +99,15 @@ const CATEGORY_PAGE_CONTENT: Record<string, CategoryPageContent> = {
       'Compare routers, access points, switches, and networking accessories for homes, offices, and SME installations in Harare.',
     trustPoints: [
       {
-        title: 'Home and office WiFi support',
+        title: 'Home and Office WiFi Support',
         description: 'Cansan helps buyers match the right router or access point to room size, user count, and internet setup.',
       },
       {
-        title: 'Hardware plus setup guidance',
+        title: 'Hardware Plus Setup Guidance',
         description: 'This is not just a product list. Customers can also move from product selection into installation or setup enquiries.',
       },
       {
-        title: 'Practical recommendations',
+        title: 'Practical Recommendations',
         description: 'If you are replacing poor WiFi coverage, we can point you toward a mesh, access point, or switch setup that actually fixes it.',
       },
     ],
@@ -135,15 +135,15 @@ const CATEGORY_PAGE_CONTENT: Record<string, CategoryPageContent> = {
       'Browse smartphones and mobile accessories in Harare with stock confirmation, WhatsApp ordering, and quick local support.',
     trustPoints: [
       {
-        title: 'Phone pricing with local support',
+        title: 'Phone Pricing with Local Support',
         description: 'Instead of guessing from outdated listings, buyers can confirm model availability and final pricing before they travel.',
       },
       {
-        title: 'Mainstream brands people ask for',
+        title: 'Mainstream Brands People Ask For',
         description: 'The page is designed around practical demand in Zimbabwe, with popular Samsung and other value-focused models.',
       },
       {
-        title: 'Fast buying flow',
+        title: 'Fast Buying Flow',
         description: 'Once you find the right device, the quickest path is to send the product on WhatsApp and close the order there.',
       },
     ],
@@ -171,15 +171,15 @@ const CATEGORY_PAGE_CONTENT: Record<string, CategoryPageContent> = {
       'Shop CCTV cameras, DVRs, and security gear in Harare for homes, offices, shops, and growing businesses.',
     trustPoints: [
       {
-        title: 'Security gear plus guidance',
+        title: 'Security Gear Plus Guidance',
         description: 'Customers can shortlist CCTV hardware here, then move into advice on the right camera count and recorder type.',
       },
       {
-        title: 'Built for homes and businesses',
+        title: 'Built for Homes and Businesses',
         description: 'The product range supports both straightforward home security needs and larger small-business setups.',
       },
       {
-        title: 'Installation-ready conversations',
+        title: 'Installation-Ready Conversations',
         description: 'If you need more than the hardware, this category feeds directly into CCTV supply and installation enquiries.',
       },
     ],
@@ -207,15 +207,15 @@ const CATEGORY_PAGE_CONTENT: Record<string, CategoryPageContent> = {
       'Shop selected tech sourced from South Africa with clear lead times, local payment support, and Zimbabwe delivery handling by Cansan.',
     trustPoints: [
       {
-        title: 'Sourced from trusted South African suppliers',
+        title: 'Sourced from Trusted South African Suppliers',
         description: 'Products in this section are imported from vetted SA channels and clearly marked before checkout.',
       },
       {
-        title: 'Clear 5-day delivery expectation',
+        title: 'Clear 5-Day Delivery Expectation',
         description: 'These imports follow a planned lead time of around 5 days after order confirmation.',
       },
       {
-        title: 'Local support and payment in Zimbabwe',
+        title: 'Local Support and Payment in Zimbabwe',
         description: 'You still pay locally and get after-sales guidance through Cansan, even for special-order imports.',
       },
     ],
@@ -281,15 +281,15 @@ export function getCategoryPageContent(category: string): CategoryPageContent {
       intro: 'Browse quality tech products in Harare with local support, stock confirmation, and quick WhatsApp ordering.',
       trustPoints: [
         {
-          title: 'Local product advice',
+          title: 'Local Product Advice',
           description: 'Get help choosing the right option before you spend.',
         },
         {
-          title: 'Fast stock confirmation',
+          title: 'Fast Stock Confirmation',
           description: 'Use WhatsApp to verify pricing and availability before visiting.',
         },
         {
-          title: 'Bulk and business support',
+          title: 'Bulk and Business Support',
           description: 'Shortlist products here, then request a quote for larger orders.',
         },
       ],
@@ -323,11 +323,11 @@ export function getCategoryPageContent(category: string): CategoryPageContent {
           description: `Get practical advice before buying ${matchedCategory.label.toLowerCase()} in Harare.`,
         },
         {
-          title: 'Local stock confirmation',
+          title: 'Local Stock Confirmation',
           description: 'WhatsApp is the fastest way to confirm pricing, stock, and delivery options.',
         },
         {
-          title: 'Bulk order support',
+          title: 'Bulk Order Support',
           description: 'Shortlist products here and request a quote for school, office, or business purchases.',
         },
       ],

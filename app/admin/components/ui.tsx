@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
+import { Icon } from '@/components/icons';
 
 /**
  * Shared admin UI primitives. Keep these small and dependency-free so every
@@ -68,7 +69,7 @@ export function Notice({
           className={`-mr-1 shrink-0 rounded px-1 leading-5 ${isError ? 'text-red-400 hover:text-red-700' : 'text-zinc-400 hover:text-white'}`}
           aria-label="Dismiss"
         >
-          ✕
+          <Icon name="xMark" className="h-4 w-4" />
         </button>
       </div>
     </div>

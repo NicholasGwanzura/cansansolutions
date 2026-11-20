@@ -19,7 +19,7 @@ export function AddToCartButton({ product, label, className }: AddToCartButtonPr
     <button
       disabled={!product.inStock}
       onClick={() => addToCart(product)}
-      className={`flex flex-1 items-center justify-center rounded-full bg-red-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-red-700 disabled:cursor-not-allowed disabled:bg-zinc-200 disabled:text-zinc-400 ${className ?? ''}`}
+      className={`flex flex-1 items-center justify-center rounded-button bg-red-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-red-700 disabled:cursor-not-allowed disabled:bg-zinc-200 disabled:text-zinc-400 ${className ?? ''}`}
     >
       {product.inStock ? buttonLabel : 'Out of Stock'}
     </button>

@@ -49,7 +49,7 @@ export default function DeliveryPage() {
         <section className="bg-zinc-950 px-6 py-20 text-white">
           <div className="mx-auto max-w-3xl text-center">
             <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-red-400">Delivery & Collection</p>
-            <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">How delivery works at Cansan</h1>
+            <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">How Delivery Works at Cansan</h1>
             <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-zinc-400">
               Buyers care about when they can get the product, not vague promises. This page sets expectations for Harare delivery, courier orders, and in-store collection.
             </p>
@@ -60,19 +60,19 @@ export default function DeliveryPage() {
           <div className="grid gap-6 lg:grid-cols-3">
             {[
               {
-                title: 'Harare-first delivery support',
+                title: 'Harare-First Delivery Support',
                 body: 'The strongest delivery promise is local. Cansan can coordinate same-day or next-step delivery inside Harare when stock and timing allow.',
               },
               {
-                title: 'Courier where practical',
+                title: 'Courier Where Practical',
                 body: 'Nationwide delivery is available for many items, but it should be quoted and confirmed based on the product and destination.',
               },
               {
-                title: 'Stock confirmation before movement',
+                title: 'Stock Confirmation Before Movement',
                 body: 'The process is designed to prevent wasted trips and failed drop-offs by confirming the item before delivery is arranged.',
               },
             ].map((item) => (
-              <div key={item.title} className="rounded-3xl border border-zinc-200 bg-white p-6 shadow-sm">
+              <div key={item.title} className="rounded-panel border border-zinc-200 bg-white p-6 shadow-sm">
                 <h2 className="text-lg font-semibold text-zinc-900">{item.title}</h2>
                 <p className="mt-3 text-sm leading-relaxed text-zinc-600">{item.body}</p>
               </div>
@@ -82,10 +82,10 @@ export default function DeliveryPage() {
 
         <section className="bg-zinc-50 px-6 py-16">
           <div className="mx-auto max-w-4xl">
-            <h2 className="text-2xl font-bold text-zinc-900">Common delivery questions</h2>
+            <h2 className="text-2xl font-bold text-zinc-900">Common Delivery Questions</h2>
             <div className="mt-6 space-y-4">
               {faqs.map((faq) => (
-                <div key={faq.question} className="rounded-2xl border border-zinc-200 bg-white p-5">
+                <div key={faq.question} className="rounded-card border border-zinc-200 bg-white p-5">
                   <h3 className="text-sm font-semibold text-zinc-900">{faq.question}</h3>
                   <p className="mt-2 text-sm leading-relaxed text-zinc-600">{faq.answer}</p>
                 </div>
@@ -95,16 +95,16 @@ export default function DeliveryPage() {
         </section>
 
         <section className="px-6 py-16">
-          <div className="mx-auto max-w-5xl rounded-3xl bg-red-600 px-8 py-10 text-white">
+          <div className="mx-auto max-w-5xl rounded-panel bg-red-600 px-8 py-10 text-white">
             <h2 className="text-2xl font-bold">Need delivery timing before you order?</h2>
             <p className="mt-3 max-w-2xl text-sm leading-relaxed text-blue-100">
               Send the product link and your location. We will confirm stock, collection readiness, or delivery options before you pay.
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
-              <Link href="/contact" className="rounded-full bg-white px-5 py-3 text-sm font-semibold text-blue-600 transition hover:bg-blue-50">
+              <Link href="/contact" className="rounded-button bg-white px-5 py-3 text-sm font-semibold text-blue-600 transition hover:bg-blue-50">
                 Ask About Delivery
               </Link>
-              <Link href="/products" className="rounded-full border border-white/30 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/10">
+              <Link href="/products" className="rounded-button border border-white/30 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/10">
                 Browse Products
               </Link>
             </div>

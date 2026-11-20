@@ -58,15 +58,15 @@ export default function InsightsPage() {
             <>
               <Link
                 href="/products"
-                className="inline-flex min-h-11 items-center justify-center rounded-full bg-white px-5 py-3 text-sm font-semibold text-zinc-950 transition hover:bg-red-50"
+                className="inline-flex min-h-11 items-center justify-center rounded-button bg-white px-5 py-3 text-sm font-semibold text-zinc-950 transition hover:bg-red-50"
               >
-                Browse products
+                Browse Products
               </Link>
               <Link
                 href="/contact"
-                className="inline-flex min-h-11 items-center justify-center rounded-full border border-white/25 bg-white/10 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/15"
+                className="inline-flex min-h-11 items-center justify-center rounded-button border border-white/25 bg-white/10 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/15"
               >
-                Ask for advice
+                Ask for Advice
               </Link>
             </>
           }
@@ -78,7 +78,7 @@ export default function InsightsPage() {
               <Link
                 key={item.href}
                 href={item.href}
-                className="group rounded-2xl border border-zinc-200 bg-white p-5 shadow-[0_2px_5px_rgba(24,24,27,0.05)] transition duration-200 hover:border-zinc-300 hover:shadow-md focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600"
+                className="group rounded-card border border-zinc-200 bg-white p-5 shadow-[0_2px_5px_rgba(24,24,27,0.05)] transition duration-200 hover:border-zinc-300 hover:shadow-md focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600"
               >
                 <p className="text-sm font-semibold text-zinc-900">{item.label}</p>
                 <p className="mt-2 text-sm leading-relaxed text-zinc-600">{item.description}</p>
@@ -107,7 +107,7 @@ export default function InsightsPage() {
         </section>
 
         <section className="px-6 pb-16">
-          <div className="mx-auto max-w-5xl rounded-3xl bg-red-600 px-8 py-10 text-white">
+          <div className="mx-auto max-w-5xl rounded-panel bg-red-600 px-8 py-10 text-white">
             <h2 className="text-2xl font-bold">Need help turning research into the right order?</h2>
             <p className="mt-3 max-w-2xl text-sm leading-relaxed text-red-100">
               Read the guides, shortlist what fits, then ask Cansan for a quote. The goal is not
@@ -116,13 +116,13 @@ export default function InsightsPage() {
             <div className="mt-6 flex flex-wrap gap-3">
               <Link
                 href="/products"
-                className="rounded-full bg-white px-5 py-3 text-sm font-semibold text-red-600 transition hover:bg-red-50"
+                className="rounded-button bg-white px-5 py-3 text-sm font-semibold text-red-600 transition hover:bg-red-50"
               >
-                Browse products
+                Browse Products
               </Link>
               <Link
                 href="/contact"
-                className="rounded-full border border-white/30 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/10"
+                className="rounded-button border border-white/30 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/10"
               >
                 Contact Cansan
               </Link>

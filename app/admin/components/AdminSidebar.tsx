@@ -367,7 +367,7 @@ export const NAV_SECTIONS: { label: string; items: NavItem[] }[] = [
     label: 'Overview',
     items: [
       { href: '/admin', label: 'Dashboard', icon: DashboardIcon },
-      { href: '/admin/pos', label: 'Point of sale', icon: PosIcon },
+      { href: '/admin/pos', label: 'Point of Sale', icon: PosIcon },
     ],
   },
   {
@@ -386,7 +386,7 @@ export const NAV_SECTIONS: { label: string; items: NavItem[] }[] = [
       { href: '/admin/quotes', label: 'Quotes', icon: QuoteIcon },
       { href: '/admin/invoices', label: 'Invoices', icon: InvoiceIcon },
       { href: '/admin/receipts', label: 'Receipts', icon: ReceiptIcon },
-      { href: '/admin/delivery-notes', label: 'Delivery notes', icon: DeliveryIcon },
+      { href: '/admin/delivery-notes', label: 'Delivery Notes', icon: DeliveryIcon },
     ],
   },
   {
@@ -439,7 +439,7 @@ function NavLink({
       href={item.href}
       onClick={onNavigate}
       aria-current={active ? 'page' : undefined}
-      className={`group relative flex h-8 items-center gap-2.5 rounded-md px-2.5 text-[13px] font-medium transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-400 ${
+      className={`group relative flex h-8 items-center gap-2.5 rounded-button px-2.5 text-[13px] font-medium transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-400 ${
         active
           ? 'bg-white/[0.08] text-white'
           : 'text-zinc-400 hover:bg-white/[0.05] hover:text-zinc-100'
@@ -460,13 +460,15 @@ function SidebarBody({ pathname, onNavigate }: { pathname: string; onNavigate?: 
   return (
     <>
       <div className="flex h-14 shrink-0 items-center gap-2.5 px-4">
-        <Image
-          src="/images/brand/cansan-logo.png"
-          alt="Cansan"
-          width={116}
-          height={31}
-          className="h-6 w-auto object-contain brightness-0 invert"
-        />
+        <span className="flex h-8 items-center rounded-lg bg-white px-2">
+          <Image
+            src="/images/brand/cansan-logo.png"
+            alt="Cansan"
+            width={116}
+            height={31}
+            className="h-5 w-auto object-contain"
+          />
+        </span>
         <span className="rounded border border-zinc-700 px-1.5 py-px text-[9px] font-semibold uppercase tracking-[0.14em] text-zinc-400">
           Admin
         </span>

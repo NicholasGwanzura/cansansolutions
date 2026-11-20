@@ -174,7 +174,7 @@ export function ComingSoonClient({ until }: ComingSoonClientProps) {
 
       <div className="relative mx-auto flex min-h-screen max-w-6xl flex-col justify-center px-6 py-16">
         <div className="mb-10 flex justify-center lg:justify-start">
-          <div className="rounded-2xl bg-white p-2.5 shadow-lg shadow-black/20">
+          <div className="rounded-card bg-white p-2.5 shadow-lg shadow-black/20">
             <BrandLogo className="w-[150px]" priority />
           </div>
         </div>
@@ -203,7 +203,7 @@ export function ComingSoonClient({ until }: ComingSoonClientProps) {
                 href={whatsappHref}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-green-600 px-6 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-green-500 sm:w-auto"
+                className="inline-flex w-full items-center justify-center gap-2 rounded-button bg-green-600 px-6 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-green-500 sm:w-auto"
               >
                 <svg
                   aria-hidden="true"
@@ -218,7 +218,7 @@ export function ComingSoonClient({ until }: ComingSoonClientProps) {
               </a>
               <a
                 href={`tel:+${WA_NUMBER}`}
-                className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-white/15 px-6 py-3 text-sm font-semibold text-white transition hover:border-white/30 sm:w-auto"
+                className="inline-flex w-full items-center justify-center gap-2 rounded-button border border-white/15 px-6 py-3 text-sm font-semibold text-white transition hover:border-white/30 sm:w-auto"
               >
                 {SITE_PHONE}
               </a>
@@ -247,7 +247,7 @@ export function ComingSoonClient({ until }: ComingSoonClientProps) {
           </div>
 
           {/* Right: status card */}
-          <div className="rounded-3xl border border-white/10 bg-white/5 p-8 backdrop-blur-sm">
+          <div className="rounded-panel border border-white/10 bg-white/5 p-8 backdrop-blur-sm">
             {countdown ? (
               <div className="mb-7 text-center">
                 <p className="text-xs font-semibold uppercase tracking-widest text-zinc-500">
@@ -259,7 +259,7 @@ export function ComingSoonClient({ until }: ComingSoonClientProps) {
                     { value: countdown.minutes, label: 'min' },
                     { value: countdown.seconds, label: 'sec' },
                   ].map((unit) => (
-                    <div key={unit.label} className="w-16 rounded-2xl bg-white/5 py-3">
+                    <div key={unit.label} className="w-16 rounded-card bg-white/5 py-3">
                       <p className="font-heading text-2xl font-extrabold tabular-nums text-white">
                         {String(unit.value).padStart(2, '0')}
                       </p>
@@ -337,7 +337,7 @@ export function ComingSoonClient({ until }: ComingSoonClientProps) {
                   onClick={() => setShowStaffLogin(true)}
                   className="text-xs font-medium text-zinc-500 transition hover:text-zinc-300"
                 >
-                  Staff sign-in
+                  Staff Sign-In
                 </button>
               )}
             </div>

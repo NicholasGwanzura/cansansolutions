@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import type { Product, Client, CompanyProfile, LineItem, CustomerInfo, PaymentMethod, Invoice, Receipt } from '@/lib/types';
 import AdminLayout from '../components/AdminLayout';
+import { Icon } from '@/components/icons';
 
 const WALK_IN: CustomerInfo = { name: 'Walk-in Customer', email: '', phone: '', address: '' };
 const PAYMENT_METHODS: PaymentMethod[] = ['cash', 'card', 'bank_transfer', 'mobile_money', 'other'];
@@ -184,7 +185,7 @@ function POS() {
         {/* Product catalog */}
         <section className="flex flex-col border-b border-zinc-200 bg-zinc-50 lg:min-h-0 lg:flex-1 lg:border-b-0 lg:border-r">
           <div className="border-b border-zinc-200 bg-white p-4">
-            <h1 className="text-lg font-semibold tracking-tight text-zinc-950">Point of sale</h1>
+            <h1 className="text-lg font-semibold tracking-tight text-zinc-950">Point of Sale</h1>
             <input
               autoFocus
               value={search}
@@ -204,7 +205,7 @@ function POS() {
                   <button
                     key={p.id}
                     onClick={() => addToCart(p)}
-                    className="group flex flex-col rounded-xl border border-zinc-200 bg-white p-3 text-left shadow-sm transition hover:border-red-400 hover:shadow-md"
+                    className="group flex flex-col rounded-lg border border-zinc-200 bg-white p-3 text-left shadow-sm transition hover:border-red-400 hover:shadow-md"
                   >
                     <p className="line-clamp-2 text-sm font-semibold text-zinc-900">{p.name}</p>
                     {p.category && <p className="mt-0.5 text-[11px] uppercase tracking-wide text-zinc-400">{p.category}</p>}
@@ -244,13 +245,13 @@ function POS() {
                   <button
                     onClick={downloadLastReceipt}
                     disabled={downloading}
-                    className="w-full rounded-lg bg-zinc-900 px-4 py-2.5 text-sm font-semibold text-white hover:bg-zinc-700 disabled:opacity-60"
+                    className="w-full rounded-button bg-zinc-900 px-4 py-2.5 text-sm font-semibold text-white hover:bg-zinc-700 disabled:opacity-60"
                   >
                     {downloading ? 'Generating…' : 'Download Receipt PDF'}
                   </button>
                   <button
                     onClick={clearSale}
-                    className="w-full rounded-lg border border-zinc-200 bg-white px-4 py-2.5 text-sm font-semibold text-zinc-700 hover:bg-zinc-50"
+                    className="w-full rounded-button border border-zinc-200 bg-white px-4 py-2.5 text-sm font-semibold text-zinc-700 hover:bg-zinc-50"
                   >
                     New Sale
                   </button>
@@ -275,7 +276,7 @@ function POS() {
                   <div key={li.id} className="rounded-lg border border-zinc-100 bg-white p-3">
                     <div className="flex items-start justify-between gap-2">
                       <p className="flex-1 text-sm font-medium text-zinc-900">{li.description}</p>
-                      <button onClick={() => removeItem(li.id)} className="text-zinc-300 hover:text-red-500" aria-label="Remove">&#10005;</button>
+                      <button onClick={() => removeItem(li.id)} className="text-zinc-300 hover:text-red-500" aria-label="Remove"><Icon name="xMark" className="h-4 w-4" /></button>
                     </div>
                     <div className="mt-2 flex items-center justify-between gap-2">
                       <div className="flex items-center rounded-lg border border-zinc-200">
@@ -321,7 +322,7 @@ function POS() {
                     step="0.01"
                     value={taxRate}
                     onChange={(e) => setTaxRate(parseFloat(e.target.value) || 0)}
-                    className="w-16 rounded-md border border-zinc-200 bg-white px-2 py-0.5 text-right text-xs"
+                    className="w-16 rounded-lg border border-zinc-200 bg-white px-2 py-0.5 text-right text-xs"
                   />
                 </div>
                 <div className="flex items-center justify-between text-zinc-500">
@@ -332,7 +333,7 @@ function POS() {
                     step="0.01"
                     value={discount}
                     onChange={(e) => setDiscount(parseFloat(e.target.value) || 0)}
-                    className="w-20 rounded-md border border-zinc-200 bg-white px-2 py-0.5 text-right text-xs"
+                    className="w-20 rounded-lg border border-zinc-200 bg-white px-2 py-0.5 text-right text-xs"
                   />
                 </div>
                 <div className="flex items-center justify-between pt-1 border-t border-zinc-200">
@@ -363,7 +364,7 @@ function POS() {
               <button
                 onClick={completeSale}
                 disabled={cart.length === 0 || posting}
-                className="w-full rounded-xl bg-red-600 px-4 py-3 text-sm font-bold uppercase tracking-wider text-white shadow-lg shadow-red-600/20 transition hover:bg-red-700 disabled:opacity-50 disabled:shadow-none"
+                className="w-full rounded-button bg-red-600 px-4 py-3 text-sm font-bold uppercase tracking-wider text-white shadow-lg shadow-red-600/20 transition hover:bg-red-700 disabled:opacity-50 disabled:shadow-none"
               >
                 {posting ? 'Processing…' : `Complete Sale · ${fmt(total, currency)}`}
               </button>
@@ -377,7 +378,7 @@ function POS() {
             <div className="flex max-h-[80vh] w-full max-w-md flex-col overflow-hidden rounded-2xl bg-white shadow-2xl">
               <div className="flex items-center justify-between border-b border-zinc-100 px-5 py-4">
                 <h3 className="font-semibold text-zinc-900">Select Customer</h3>
-                <button onClick={() => setClientPicker(false)} className="text-zinc-400 hover:text-zinc-600">&#10005;</button>
+                <button aria-label="Close" onClick={() => setClientPicker(false)} className="text-zinc-400 hover:text-zinc-600"><Icon name="xMark" className="h-4 w-4" /></button>
               </div>
               <div className="p-4 space-y-3 flex-1 overflow-y-auto">
                 <input
@@ -389,19 +390,19 @@ function POS() {
                 />
                 <button
                   onClick={() => { setClient(null); setClientPicker(false); }}
-                  className="flex w-full items-center gap-3 rounded-xl border border-zinc-100 p-3 text-left hover:bg-zinc-50"
+                  className="flex w-full items-center gap-3 rounded-lg border border-zinc-100 p-3 text-left hover:bg-zinc-50"
                 >
                   <div className="flex h-9 w-9 items-center justify-center rounded-full bg-zinc-900 text-white text-sm font-bold">W</div>
                   <div>
-                    <p className="text-sm font-semibold text-zinc-900">Walk-in Customer</p>
-                    <p className="text-xs text-zinc-500">No record kept</p>
+                    <p className="text-sm font-semibold text-zinc-900">Walk-In Customer</p>
+                    <p className="text-xs text-zinc-500">No Record Kept</p>
                   </div>
                 </button>
                 {visibleClients.map((c) => (
                   <button
                     key={c.id}
                     onClick={() => { setClient(c); setClientPicker(false); }}
-                    className="flex w-full items-center gap-3 rounded-xl border border-zinc-100 p-3 text-left hover:bg-zinc-50"
+                    className="flex w-full items-center gap-3 rounded-lg border border-zinc-100 p-3 text-left hover:bg-zinc-50"
                   >
                     <div className="flex h-9 w-9 items-center justify-center rounded-full bg-red-500 text-white text-sm font-bold">
                       {c.name.charAt(0).toUpperCase()}
@@ -517,7 +518,7 @@ function POS() {
             <button
               type="button"
               onClick={() => document.getElementById('pos-cart')?.scrollIntoView({ behavior: 'smooth' })}
-              className="flex w-full items-center justify-between rounded-lg bg-red-600 px-4 py-3 text-sm font-semibold text-white"
+              className="flex w-full items-center justify-between rounded-button bg-red-600 px-4 py-3 text-sm font-semibold text-white"
             >
               <span>
                 Review sale · {cart.reduce((n, li) => n + li.quantity, 0)} item

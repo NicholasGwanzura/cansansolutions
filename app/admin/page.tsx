@@ -151,7 +151,7 @@ function KpiCard({
           ? 'text-red-600'
           : 'text-zinc-900';
   const Card = (
-    <div className="rounded-xl border border-zinc-200 bg-white p-4 shadow-sm transition hover:border-zinc-300 hover:shadow">
+    <div className="rounded-xl border border-zinc-200/80 bg-white p-4 transition hover:border-zinc-300 hover:shadow">
       <p className="text-[11px] font-semibold uppercase tracking-widest text-zinc-400">{label}</p>
       <p className={`font-heading text-2xl font-bold mt-1 ${toneClass}`}>{value}</p>
       {hint && <p className="text-[11px] text-zinc-400 mt-0.5">{hint}</p>}
@@ -226,7 +226,7 @@ function AttentionSection({ attention }: { attention: OverviewData['attention'] 
     },
     {
       key: 'quotes',
-      title: 'Quotes Expiring ≤ 7d',
+      title: 'Quotes Expiring ≤ 7D',
       tone: 'bg-amber-50 text-amber-700 border-amber-100',
       items: attention.expiringQuotes.map((q) => ({
         key: q.id,
@@ -242,7 +242,7 @@ function AttentionSection({ attention }: { attention: OverviewData['attention'] 
     },
     {
       key: 'stock',
-      title: 'Out-of-Stock Featured',
+      title: 'Out-Of-Stock Featured',
       tone: 'bg-zinc-50 text-zinc-700 border-zinc-200',
       items: attention.outOfStockFeatured.map((p) => ({
         key: p.id,
@@ -275,7 +275,7 @@ function AttentionSection({ attention }: { attention: OverviewData['attention'] 
           Needs Your Attention
         </p>
         <p className="text-sm font-semibold text-zinc-900 mt-0.5">
-          Action items across the business
+          Action Items Across the Business
         </p>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -322,7 +322,7 @@ function QuickActions() {
     { href: '/admin/products', label: 'Product', icon: 'product' },
   ];
   return (
-    <div className="rounded-xl border border-zinc-200 bg-white p-4 shadow-sm">
+    <div className="rounded-xl border border-zinc-200/80 bg-white p-4">
       <p className="text-[11px] font-semibold uppercase tracking-widest text-zinc-400 mb-3">
         Quick Actions
       </p>
@@ -450,16 +450,16 @@ function DashboardOverview() {
       <main className="mx-auto max-w-[1600px] space-y-6 p-4 sm:p-6 lg:p-8">
         <div className="flex items-start justify-between">
           <div>
-            <h1 className="font-heading text-2xl font-bold text-zinc-900">Dashboard</h1>
+            <h1 className="font-heading text-2xl font-semibold tracking-tight text-zinc-950">Dashboard</h1>
             <p className="text-sm text-zinc-500 mt-0.5">
               Live snapshot of receivables, expenses, and inventory.
             </p>
           </div>
           <Link
             href="/admin/reports"
-            className="text-xs font-semibold text-zinc-500 hover:text-zinc-900 border border-zinc-200 rounded-lg px-3 py-1.5 hover:bg-white"
+            className="text-xs font-semibold text-zinc-500 hover:text-zinc-900 border border-zinc-200 rounded-button px-3 py-1.5 hover:bg-white"
           >
-            Full reports →
+            Full Reports →
           </Link>
         </div>
 

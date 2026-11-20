@@ -2,23 +2,34 @@ import Link from 'next/link';
 import { BrandLogo } from './BrandLogo';
 import { CATALOG_CATEGORIES, getCategoryHref } from '@/lib/catalog';
 import { SITE_EMAIL, SITE_PHONE, WA_NUMBER } from '@/lib/site';
+import { CATEGORY_ICONS } from './category-icons';
+import { Icon, type IconName } from './icons';
 
 const categoryLinks = CATALOG_CATEGORIES.map((category) => ({
   href: getCategoryHref(category.slug),
   label: category.label,
+  icon: category.icon,
 }));
 
-const supportLinks = [
-  { href: '/contact', label: 'Contact Us' },
-  { href: '/about', label: 'About Us' },
-  { href: '/services', label: 'Services' },
-  { href: '/insights', label: 'Insights' },
-  { href: '/payments', label: 'Payment Options' },
-  { href: '/delivery', label: 'Delivery Information' },
-  { href: '/warranty', label: 'Warranty Policy' },
-  { href: '/bulk-orders', label: 'Bulk Orders' },
-  { href: '/solutions', label: 'Solutions' },
-  { href: '/brands', label: 'Brands' },
+function CategoryGlyph({ icon }: { icon: string }) {
+  return (
+    <span aria-hidden className="flex h-4 w-4 shrink-0 items-center justify-center [&>svg]:h-4 [&>svg]:w-4">
+      {CATEGORY_ICONS[icon] ?? CATEGORY_ICONS.deals}
+    </span>
+  );
+}
+
+const supportLinks: { href: string; label: string; icon: IconName }[] = [
+  { href: '/contact', label: 'Contact Us', icon: 'chat' },
+  { href: '/about', label: 'About Us', icon: 'info' },
+  { href: '/services', label: 'Services', icon: 'wrench' },
+  { href: '/insights', label: 'Insights', icon: 'lightBulb' },
+  { href: '/payments', label: 'Payment Options', icon: 'creditCard' },
+  { href: '/delivery', label: 'Delivery Information', icon: 'truck' },
+  { href: '/warranty', label: 'Warranty Policy', icon: 'shieldCheck' },
+  { href: '/bulk-orders', label: 'Bulk Orders', icon: 'building' },
+  { href: '/solutions', label: 'Solutions', icon: 'squares' },
+  { href: '/brands', label: 'Brands', icon: 'star' },
 ];
 
 export function Footer() {
@@ -47,7 +58,7 @@ export function Footer() {
               href={`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent("Hi Cansan Solutions, I'd like to enquire about a product.")}`}
               target="_blank"
               rel="noreferrer"
-              className="mt-5 inline-flex items-center gap-2 rounded-full bg-red-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-red-700"
+              className="mt-5 inline-flex items-center gap-2 rounded-button bg-red-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-red-700"
             >
               <svg
                 aria-hidden="true"
@@ -64,56 +75,44 @@ export function Footer() {
 
           {/* Mobile: collapsible groups */}
           <div className="space-y-3 lg:hidden">
-            <details className="rounded-2xl border border-zinc-200 bg-white px-4 py-3">
+            <details className="rounded-card border border-zinc-200 bg-white px-4 py-3">
               <summary className="cursor-pointer list-none text-sm font-semibold text-zinc-900">
                 Top Categories
               </summary>
               <ul className="mt-3 grid grid-cols-2 gap-3">
-                {categoryLinks.map(({ href, label }) => (
+                {categoryLinks.map(({ href, label, icon }) => (
                   <li key={href}>
                     <Link
                       href={href}
                       className="group flex items-center justify-between gap-2 text-sm text-zinc-600 transition hover:text-red-700"
                     >
-                      {label}
-                      <svg
-                        aria-hidden="true"
-                        className="h-3.5 w-3.5 shrink-0 text-zinc-400 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:text-red-600"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        strokeWidth={2}
-                      >
-                        <path strokeLinecap="round" strokeLinejoin="round" d="m9 18 6-6-6-6" />
-                      </svg>
+                      <span className="flex items-center gap-2">
+                        <span className="text-zinc-400 transition group-hover:text-red-600"><CategoryGlyph icon={icon} /></span>
+                        {label}
+                      </span>
+                      <Icon name="chevronRight" className="h-3.5 w-3.5 shrink-0 text-zinc-300" />
                     </Link>
                   </li>
                 ))}
               </ul>
             </details>
 
-            <details className="rounded-2xl border border-zinc-200 bg-white px-4 py-3">
+            <details className="rounded-card border border-zinc-200 bg-white px-4 py-3">
               <summary className="cursor-pointer list-none text-sm font-semibold text-zinc-900">
                 Help &amp; Support
               </summary>
               <ul className="mt-3 space-y-3">
-                {supportLinks.map(({ href, label }) => (
+                {supportLinks.map(({ href, label, icon }) => (
                   <li key={href}>
                     <Link
                       href={href}
                       className="group flex items-center justify-between gap-2 text-sm text-zinc-600 transition hover:text-red-700"
                     >
-                      {label}
-                      <svg
-                        aria-hidden="true"
-                        className="h-3.5 w-3.5 shrink-0 text-zinc-400 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:text-red-600"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        strokeWidth={2}
-                      >
-                        <path strokeLinecap="round" strokeLinejoin="round" d="m9 18 6-6-6-6" />
-                      </svg>
+                      <span className="flex items-center gap-2">
+                        <Icon name={icon} className="h-4 w-4 shrink-0 text-zinc-400 transition group-hover:text-red-600" />
+                        {label}
+                      </span>
+                      <Icon name="chevronRight" className="h-3.5 w-3.5 shrink-0 text-zinc-300" />
                     </Link>
                   </li>
                 ))}
@@ -127,23 +126,14 @@ export function Footer() {
               Top Categories
             </h3>
             <ul className="space-y-2.5">
-              {categoryLinks.map(({ href, label }) => (
+              {categoryLinks.map(({ href, label, icon }) => (
                 <li key={href}>
                   <Link
                     href={href}
-                    className="group inline-flex items-center gap-1.5 text-sm text-zinc-600 transition hover:text-red-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
+                    className="group inline-flex items-center gap-2.5 text-sm text-zinc-600 transition hover:text-red-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
                   >
+                    <span className="text-zinc-400 transition group-hover:text-red-600"><CategoryGlyph icon={icon} /></span>
                     {label}
-                    <svg
-                      aria-hidden="true"
-                      className="h-3.5 w-3.5 text-zinc-400 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:text-red-600"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth={2}
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" d="m9 18 6-6-6-6" />
-                    </svg>
                   </Link>
                 </li>
               ))}
@@ -156,23 +146,14 @@ export function Footer() {
               Help &amp; Support
             </h3>
             <ul className="space-y-2.5">
-              {supportLinks.map(({ href, label }) => (
+              {supportLinks.map(({ href, label, icon }) => (
                 <li key={href}>
                   <Link
                     href={href}
-                    className="group inline-flex items-center gap-1.5 text-sm text-zinc-600 transition hover:text-red-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
+                    className="group inline-flex items-center gap-2.5 text-sm text-zinc-600 transition hover:text-red-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
                   >
+                    <Icon name={icon} className="h-4 w-4 shrink-0 text-zinc-400 transition group-hover:text-red-600" />
                     {label}
-                    <svg
-                      aria-hidden="true"
-                      className="h-3.5 w-3.5 text-zinc-400 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:text-red-600"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth={2}
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" d="m9 18 6-6-6-6" />
-                    </svg>
                   </Link>
                 </li>
               ))}
@@ -189,37 +170,47 @@ export function Footer() {
             </p>
 
             <div className="mt-4">
-              <p className="text-sm font-semibold text-zinc-900">WhatsApp &amp; Calls</p>
-              <p className="mt-1 text-sm text-zinc-600">
+              <p className="flex items-center gap-2 text-sm font-semibold text-zinc-900">
+                <Icon name="phone" className="h-4 w-4 text-red-600" />
+                WhatsApp &amp; Calls
+              </p>
+              <p className="mt-1 flex items-center gap-1.5 pl-6 text-sm text-zinc-600">
+                <Icon name="clock" className="h-3.5 w-3.5 text-zinc-400" />
                 Mon&ndash;Fri 8am&ndash;6pm &middot; Sat 9am&ndash;4pm
               </p>
               <a
                 href={`https://wa.me/${WA_NUMBER}`}
                 target="_blank"
                 rel="noreferrer"
-                className="mt-1 inline-block text-sm font-medium text-red-700 hover:text-red-800"
+                className="mt-1 inline-block pl-6 text-sm font-medium text-red-700 hover:text-red-800"
               >
                 {SITE_PHONE}
               </a>
             </div>
 
             <div className="mt-4">
-              <p className="text-sm font-semibold text-zinc-900">Email</p>
+              <p className="flex items-center gap-2 text-sm font-semibold text-zinc-900">
+                <Icon name="envelope" className="h-4 w-4 text-red-600" />
+                Email
+              </p>
               <a
                 href={`mailto:${SITE_EMAIL}`}
-                className="mt-1 inline-block text-sm text-zinc-600 hover:text-red-700"
+                className="mt-1 inline-block pl-6 text-sm text-zinc-600 hover:text-red-700"
               >
                 {SITE_EMAIL}
               </a>
             </div>
 
             <div className="mt-4">
-              <p className="text-sm font-semibold text-zinc-900">Visit Us</p>
+              <p className="flex items-center gap-2 text-sm font-semibold text-zinc-900">
+                <Icon name="mapPin" className="h-4 w-4 text-red-600" />
+                Visit Us
+              </p>
               <a
                 href="https://maps.google.com/?q=Shop+7+ZB+House+Corner+Speke+and+1st+Street+Harare+Zimbabwe"
                 target="_blank"
                 rel="noreferrer"
-                className="mt-1 inline-block text-sm text-zinc-600 hover:text-red-700"
+                className="mt-1 inline-block pl-6 text-sm text-zinc-600 hover:text-red-700"
               >
                 Shop 7, ZB House, Corner Speke & 1st Street, Harare
               </a>

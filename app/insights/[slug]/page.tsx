@@ -100,10 +100,10 @@ export default async function InsightArticlePage({ params }: { params: RoutePara
         <section className="mx-auto max-w-6xl px-6 py-16">
           <div className="grid gap-10 lg:grid-cols-[1.3fr_0.8fr]">
             <article>
-              <div className="rounded-3xl border border-zinc-200 bg-white p-6 shadow-sm">
+              <div className="rounded-panel border border-zinc-200 bg-white p-6 shadow-sm">
                 <p className="text-sm leading-relaxed text-zinc-700">{article.intro}</p>
-                <div className="mt-6 rounded-2xl bg-zinc-50 p-5">
-                  <p className="text-xs font-bold uppercase tracking-widest text-zinc-400">Key takeaways</p>
+                <div className="mt-6 rounded-card bg-zinc-50 p-5">
+                  <p className="text-xs font-bold uppercase tracking-widest text-zinc-400">Key Takeaways</p>
                   <ul className="mt-4 space-y-3">
                     {article.takeaways.map((item) => (
                       <li key={item} className="flex items-start gap-3 text-sm leading-relaxed text-zinc-600">
@@ -117,7 +117,7 @@ export default async function InsightArticlePage({ params }: { params: RoutePara
 
               <div className="mt-8 space-y-8">
                 {article.sections.map((section) => (
-                  <section key={section.heading} className="rounded-3xl border border-zinc-200 bg-white p-6 shadow-sm">
+                  <section key={section.heading} className="rounded-panel border border-zinc-200 bg-white p-6 shadow-sm">
                     <h2 className="text-2xl font-bold text-zinc-900">{section.heading}</h2>
                     <div className="mt-4 space-y-4">
                       {section.paragraphs.map((paragraph) => (
@@ -140,11 +140,11 @@ export default async function InsightArticlePage({ params }: { params: RoutePara
                 ))}
               </div>
 
-              <section className="mt-8 rounded-3xl border border-zinc-200 bg-zinc-50 p-6">
-                <p className="text-xs font-bold uppercase tracking-widest text-zinc-400">Frequently asked questions</p>
+              <section className="mt-8 rounded-panel border border-zinc-200 bg-zinc-50 p-6">
+                <p className="text-xs font-bold uppercase tracking-widest text-zinc-400">Frequently Asked Questions</p>
                 <div className="mt-5 space-y-4">
                   {article.faqs.map((faq) => (
-                    <div key={faq.question} className="rounded-2xl border border-zinc-200 bg-white p-5">
+                    <div key={faq.question} className="rounded-card border border-zinc-200 bg-white p-5">
                       <h2 className="text-sm font-semibold text-zinc-900">{faq.question}</h2>
                       <p className="mt-2 text-sm leading-relaxed text-zinc-600">{faq.answer}</p>
                     </div>
@@ -154,22 +154,22 @@ export default async function InsightArticlePage({ params }: { params: RoutePara
             </article>
 
             <aside className="space-y-6">
-              <div className="rounded-3xl border border-zinc-200 bg-white p-6 shadow-sm">
-                <p className="text-xs font-bold uppercase tracking-widest text-zinc-400">Target query</p>
+              <div className="rounded-panel border border-zinc-200 bg-white p-6 shadow-sm">
+                <p className="text-xs font-bold uppercase tracking-widest text-zinc-400">Target Query</p>
                 <p className="mt-3 text-lg font-semibold text-zinc-900">{article.primaryKeyword}</p>
                 <p className="mt-3 text-sm leading-relaxed text-zinc-600">
                   This article is built to answer the buying question clearly and move the reader toward a product, service, or quote request.
                 </p>
               </div>
 
-              <div className="rounded-3xl border border-zinc-200 bg-white p-6 shadow-sm">
-                <p className="text-xs font-bold uppercase tracking-widest text-zinc-400">Recommended next steps</p>
+              <div className="rounded-panel border border-zinc-200 bg-white p-6 shadow-sm">
+                <p className="text-xs font-bold uppercase tracking-widest text-zinc-400">Recommended Next Steps</p>
                 <div className="mt-4 space-y-3">
                   {article.relatedLinks.map((item) => (
                     <Link
                       key={item.href}
                       href={item.href}
-                      className="block rounded-2xl border border-zinc-200 bg-zinc-50 p-4 transition hover:border-red-200 hover:bg-red-50/40"
+                      className="block rounded-card border border-zinc-200 bg-zinc-50 p-4 transition hover:border-red-200 hover:bg-red-50/40"
                     >
                       <p className="text-sm font-semibold text-zinc-900">{item.label}</p>
                       <p className="mt-2 text-sm leading-relaxed text-zinc-600">{item.description}</p>
@@ -178,14 +178,14 @@ export default async function InsightArticlePage({ params }: { params: RoutePara
                 </div>
               </div>
 
-              <div className="rounded-3xl bg-red-600 p-6 text-white">
+              <div className="rounded-panel bg-red-600 p-6 text-white">
                 <h2 className="text-xl font-bold">{article.cta.title}</h2>
                 <p className="mt-3 text-sm leading-relaxed text-red-100">{article.cta.body}</p>
                 <div className="mt-5 flex flex-wrap gap-3">
-                  <Link href={article.cta.primaryHref} className="rounded-full bg-white px-5 py-3 text-sm font-semibold text-red-600 transition hover:bg-red-50">
+                  <Link href={article.cta.primaryHref} className="rounded-button bg-white px-5 py-3 text-sm font-semibold text-red-600 transition hover:bg-red-50">
                     {article.cta.primaryLabel}
                   </Link>
-                  <Link href={article.cta.secondaryHref} className="rounded-full border border-white/30 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/10">
+                  <Link href={article.cta.secondaryHref} className="rounded-button border border-white/30 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/10">
                     {article.cta.secondaryLabel}
                   </Link>
                 </div>

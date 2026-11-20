@@ -104,7 +104,7 @@ export default async function CategoryProductsPage({
 
           <div className="mt-8 grid gap-4 md:grid-cols-3">
             {categoryContent.trustPoints.map((point) => (
-              <div key={point.title} className="rounded-3xl border border-zinc-200 bg-white p-6 shadow-sm">
+              <div key={point.title} className="rounded-panel border border-zinc-200 bg-white p-6 shadow-sm">
                 <h3 className="text-sm font-semibold text-zinc-900">{point.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-zinc-600">{point.description}</p>
               </div>
@@ -121,7 +121,7 @@ export default async function CategoryProductsPage({
               <h2 className="mt-2 text-2xl font-bold text-zinc-900">Frequently asked about {matchedCategory.label.toLowerCase()}</h2>
               <div className="mt-6 space-y-4">
                 {categoryContent.faqs.map((item) => (
-                  <div key={item.question} className="rounded-2xl border border-zinc-200 bg-white p-5">
+                  <div key={item.question} className="rounded-card border border-zinc-200 bg-white p-5">
                     <h3 className="text-sm font-semibold text-zinc-900">{item.question}</h3>
                     <p className="mt-2 text-sm leading-relaxed text-zinc-600">{item.answer}</p>
                   </div>
@@ -129,20 +129,20 @@ export default async function CategoryProductsPage({
               </div>
             </div>
 
-            <aside className="rounded-3xl bg-zinc-950 p-8 text-white">
+            <aside className="rounded-panel bg-zinc-950 p-8 text-white">
               <p className="text-xs font-bold uppercase tracking-widest text-red-400">Ready To Buy</p>
               <h2 className="mt-2 text-2xl font-bold">{categoryContent.ctaTitle}</h2>
               <p className="mt-3 text-sm leading-relaxed text-zinc-300">{categoryContent.ctaBody}</p>
               <div className="mt-6 flex flex-wrap gap-3">
                 <Link
                   href={categoryContent.ctaHref}
-                  className="rounded-full bg-red-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-red-500"
+                  className="rounded-button bg-red-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-red-500"
                 >
                   {categoryContent.ctaLabel}
                 </Link>
                 <Link
                   href="/contact"
-                  className="rounded-full border border-white/20 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/10"
+                  className="rounded-button border border-white/20 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/10"
                 >
                   Contact the Store
                 </Link>

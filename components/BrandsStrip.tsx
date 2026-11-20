@@ -96,7 +96,7 @@ export function BrandsStrip() {
         </h3>
         <div className="mt-3">
           <Link href="/brands" className="text-sm font-medium text-red-600 hover:text-red-700 hover:underline">
-            Browse brand collections
+            Browse Brand Collections
           </Link>
         </div>
       </div>

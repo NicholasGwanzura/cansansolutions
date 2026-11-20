@@ -27,7 +27,7 @@ export function FeaturedSection({ products }: FeaturedSectionProps) {
             </h2>
           </div>
           <Link href="/products" className="text-sm font-medium text-red-600 hover:text-red-700">
-            View all
+            View All
           </Link>
         </div>
 

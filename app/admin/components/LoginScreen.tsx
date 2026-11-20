@@ -38,7 +38,7 @@ export default function LoginScreen({ onLogin }: { onLogin: () => void }) {
       />
       <div className="relative w-full max-w-md rounded-[2rem] border border-white/10 bg-white/[0.06] p-6 shadow-2xl backdrop-blur-xl sm:p-9">
         <div className="mb-8 text-center">
-          <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-red-600 text-white shadow-lg mb-4">
+          <div className="inline-flex h-14 w-14 items-center justify-center rounded-xl bg-red-600 text-white shadow-lg mb-4">
             <svg
               width="24"
               height="24"
@@ -67,7 +67,7 @@ export default function LoginScreen({ onLogin }: { onLogin: () => void }) {
               htmlFor="admin-password"
               className="mb-2 block text-xs font-semibold uppercase tracking-[0.14em] text-zinc-400"
             >
-              Admin password
+              Admin Password
             </label>
             <input
               id="admin-password"
@@ -77,7 +77,7 @@ export default function LoginScreen({ onLogin }: { onLogin: () => void }) {
               aria-invalid={Boolean(error)}
               value={pw}
               onChange={(e) => setPw(e.target.value)}
-              className="min-h-12 w-full rounded-xl border border-white/10 bg-zinc-950/70 px-4 py-3 pr-12 text-sm text-white placeholder-zinc-600 outline-none transition focus:border-red-500 focus:ring-4 focus:ring-red-500/15"
+              className="min-h-12 w-full rounded-lg border border-white/10 bg-zinc-950/70 px-4 py-3 pr-12 text-sm text-white placeholder-zinc-600 outline-none transition focus:border-red-500 focus:ring-4 focus:ring-red-500/15"
             />
             <button
               type="button"
@@ -131,7 +131,7 @@ export default function LoginScreen({ onLogin }: { onLogin: () => void }) {
           <button
             type="submit"
             disabled={loading}
-            className="min-h-12 w-full rounded-xl bg-red-600 py-3 text-sm font-bold text-white shadow-lg shadow-red-950/20 transition hover:-translate-y-0.5 hover:bg-red-500 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-400 disabled:cursor-not-allowed disabled:opacity-60"
+            className="min-h-12 w-full rounded-lg bg-red-600 py-3 text-sm font-bold text-white shadow-lg shadow-red-950/20 transition hover:-translate-y-0.5 hover:bg-red-500 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-400 disabled:cursor-not-allowed disabled:opacity-60"
           >
             {loading ? 'Verifying…' : 'Sign In'}
           </button>

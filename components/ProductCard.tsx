@@ -8,6 +8,7 @@ import type { Product } from '@/lib/types';
 import { getCategoryLabel, isBundleProduct, isSaImportProduct } from '@/lib/catalog';
 import { useToast } from './Toast';
 import { ProductImage } from './ProductImage';
+import { Icon } from './icons';
 
 type ProductCardProps = {
   product: Product;
@@ -66,28 +67,20 @@ function getMicroSpecs(product: Product): string[] {
     .filter(Boolean)
     .slice(0, 3) as string[];
 
-  const merged = [...preferred, ...fallbackFromName].slice(0, 3);
-
-  return merged.length > 0 ? merged : ['Genuine product', 'Local support'];
+  // No generic filler ("Genuine product", "Local support"): if a product has no
+  // real specs we show nothing rather than padding every card with the same lines.
+  return [...preferred, ...fallbackFromName].slice(0, 3);
 }
 
-function getStockText(product: Product): { label: string; tone: string } {
+function getStockBadge(product: Product): { label: string; tone: string } | null {
   if (!product.inStock) {
-    return { label: 'Out of stock', tone: 'text-red-600 bg-red-50 border-red-200' };
+    return { label: 'Out of Stock', tone: 'bg-zinc-900/80 text-white' };
   }
-
-  if (typeof product.stockCount === 'number' && product.stockCount <= 5) {
-    return {
-      label: `Only ${product.stockCount} left`,
-      tone: 'text-amber-700 bg-amber-50 border-amber-200',
-    };
+  if (typeof product.stockCount === 'number' && product.stockCount > 0 && product.stockCount <= 5) {
+    return { label: `Only ${product.stockCount} left`, tone: 'bg-amber-100 text-amber-800' };
   }
-
-  if (typeof product.stockCount === 'number' && product.stockCount <= 12) {
-    return { label: 'Low Stock', tone: 'text-orange-700 bg-orange-50 border-orange-200' };
-  }
-
-  return { label: 'In Stock', tone: 'text-emerald-700 bg-emerald-50 border-emerald-200' };
+  // "In stock" is the default state, so it doesn't earn a badge on every card.
+  return null;
 }
 
 export function ProductCard({ product, onQuickView }: ProductCardProps) {
@@ -99,13 +92,8 @@ export function ProductCard({ product, onQuickView }: ProductCardProps) {
   const isBundle = isBundleProduct(product);
 
   const microSpecs = useMemo(() => getMicroSpecs(product), [product]);
-  const stock = useMemo(() => getStockText(product), [product]);
+  const stockBadge = useMemo(() => getStockBadge(product), [product]);
   const saImport = useMemo(() => isSaImportProduct(product), [product]);
-  const urgencyMicrocopy = saImport
-    ? '5-day delivery from SA after order confirmation'
-    : product.inStock && typeof product.stockCount === 'number' && product.stockCount <= 5
-      ? 'Fast selling today in Zimbabwe'
-      : 'Fast delivery available in Zimbabwe';
 
   const hasDiscount = Boolean(product.originalPrice && product.originalPrice > product.price);
   const discountPercent =
@@ -131,9 +119,19 @@ export function ProductCard({ product, onQuickView }: ProductCardProps) {
     window.setTimeout(() => setAdding(false), 1000);
   };
 
+  const badges = [
+    hasDiscount ? { key: 'discount', label: `−${discountPercent}%`, tone: 'bg-red-600 text-white' } : null,
+    product.dealLabel ? { key: 'deal', label: product.dealLabel, tone: 'bg-zinc-900 text-white' } : null,
+    product.condition === 'pre-owned'
+      ? { key: 'condition', label: 'Pre-owned', tone: 'bg-white text-zinc-700 ring-1 ring-zinc-200' }
+      : null,
+  ]
+    .filter((badge): badge is { key: string; label: string; tone: string } => Boolean(badge))
+    .slice(0, 2);
+
   return (
-    <article className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:border-zinc-300 hover:shadow-xl motion-reduce:transition-none">
-      <div className="relative aspect-[4/3] overflow-hidden bg-[linear-gradient(145deg,#fafafa,#f4f4f5)] p-5">
+    <article data-reveal className="card-interactive group relative flex h-full flex-col overflow-hidden rounded-card border border-zinc-200/80 bg-white">
+      <div className="relative aspect-square overflow-hidden bg-zinc-50 sm:aspect-[4/3]">
         <Link
           href={`/products/${product.slug}`}
           aria-label={`View ${product.name}`}
@@ -145,36 +143,28 @@ export function ProductCard({ product, onQuickView }: ProductCardProps) {
           alt={product.name}
           fill
           loading="lazy"
-          sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
+          sizes="(max-width: 640px) 50vw, (max-width: 1200px) 33vw, 25vw"
           onError={() => setImageFailed(true)}
-          className="pointer-events-none object-contain p-4 transition duration-500 group-hover:scale-105 motion-reduce:transition-none"
+          className={`pointer-events-none object-contain p-4 mix-blend-multiply transition-transform duration-700 ease-smooth group-hover:scale-[1.04] motion-reduce:transition-none sm:p-6 ${product.inStock ? '' : 'opacity-60 grayscale'}`}
         />
 
-        {hasDiscount || product.dealLabel || product.condition || stock.label ? (
-          <div className="pointer-events-none absolute inset-x-3 top-3 z-10 flex items-start justify-between gap-2">
-            <div className="flex min-w-0 max-w-[56%] flex-col items-start gap-1.5">
-              {hasDiscount ? (
-                <span className="max-w-full rounded-full bg-red-600 px-2.5 py-1 text-[10px] font-bold tracking-wide text-white">
-                  -{discountPercent}%
+        {badges.length > 0 || stockBadge ? (
+          <div className="pointer-events-none absolute inset-x-2.5 top-2.5 z-10 flex items-start justify-between gap-2">
+            <div className="flex min-w-0 flex-wrap gap-1">
+              {badges.map((badge) => (
+                <span
+                  key={badge.key}
+                  className={`max-w-full truncate rounded-md px-1.5 py-0.5 text-[11px] font-semibold ${badge.tone}`}
+                >
+                  {badge.label}
                 </span>
-              ) : null}
-              {product.dealLabel ? (
-                <span className="max-w-full truncate rounded-full bg-amber-500 px-2.5 py-1 text-[10px] font-bold tracking-wide text-white">
-                  {product.dealLabel}
-                </span>
-              ) : null}
-              {product.condition ? (
-                <span className="max-w-full truncate rounded-full border border-white/80 bg-white/90 px-2.5 py-1 text-[10px] font-bold tracking-wide text-zinc-700">
-                  {product.condition === 'pre-owned' ? 'Pre-owned' : 'Brand new'}
-                </span>
-              ) : null}
+              ))}
             </div>
-
-            <span
-              className={`max-w-[44%] truncate rounded-full border px-3 py-1 text-right text-xs font-semibold ${stock.tone}`}
-            >
-              {stock.label}
-            </span>
+            {stockBadge ? (
+              <span className={`shrink-0 rounded-md px-1.5 py-0.5 text-[11px] font-semibold ${stockBadge.tone}`}>
+                {stockBadge.label}
+              </span>
+            ) : null}
           </div>
         ) : null}
 
@@ -188,35 +178,31 @@ export function ProductCard({ product, onQuickView }: ProductCardProps) {
             wishlisted ? `Remove ${product.name} from wishlist` : `Save ${product.name} to wishlist`
           }
           aria-pressed={wishlisted}
-          className={`absolute bottom-3 left-3 z-10 inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600 ${wishlisted ? 'border-red-200 bg-red-50 text-red-600' : 'border-zinc-200 bg-white text-zinc-500 hover:border-red-200 hover:text-red-600'}`}
+          className={`absolute bottom-1.5 right-1.5 z-10 inline-flex h-11 w-11 items-center justify-center rounded-full transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600 ${wishlisted ? 'text-red-600' : 'text-zinc-400 hover:text-red-600'}`}
         >
-          <svg
-            aria-hidden="true"
-            className="h-4 w-4"
-            fill={wishlisted ? 'currentColor' : 'none'}
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth={1.8}
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78Z"
-            />
-          </svg>
+          <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white shadow-sm ring-1 ring-zinc-200/80">
+            <Icon name="heart" className="h-4 w-4" fill={wishlisted ? 'currentColor' : 'none'} />
+          </span>
         </button>
       </div>
 
-      <div className="flex flex-1 flex-col p-4">
-        <p className="text-xs font-bold uppercase tracking-[0.12em] text-zinc-500">
-          {getCategoryLabel(product.category)}
+      <div className="flex flex-1 flex-col p-3 sm:p-4">
+        <p className="truncate text-[11px] font-medium text-zinc-500">
+          {getCategoryLabel(product.category).replace(/\s*\(.*\)$/, '')}
         </p>
         <Link
           href={`/products/${product.slug}`}
-          className="mt-1 text-base font-bold leading-snug text-zinc-900 transition hover:text-red-700"
+          className="mt-0.5 text-sm font-semibold leading-snug text-zinc-900 transition hover:text-red-700 sm:text-[15px]"
         >
           <h3 className="line-clamp-2">{product.name}</h3>
         </Link>
+
+        {microSpecs.length > 0 ? (
+          <p className="mt-1.5 line-clamp-1 text-xs text-zinc-500">
+            {microSpecs.slice(0, 2).map((spec) => spec.replace(/^[^:]+:\s*/, '')).join(' · ')}
+          </p>
+        ) : null}
+
         {onQuickView ? (
           <button
             type="button"
@@ -224,58 +210,44 @@ export function ProductCard({ product, onQuickView }: ProductCardProps) {
               event.preventDefault();
               onQuickView(product);
             }}
-            className="mt-1 inline-flex min-h-11 items-center rounded-lg text-xs font-semibold text-zinc-500 underline decoration-zinc-300 underline-offset-2 hover:text-red-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
+            className="mt-1 inline-flex min-h-8 w-fit items-center text-xs font-medium text-zinc-500 underline decoration-zinc-300 underline-offset-2 hover:text-red-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
           >
             Quick view
           </button>
         ) : null}
 
-        <ul className="mt-3 space-y-1.5 text-sm text-zinc-600">
-          {microSpecs.slice(0, 2).map((spec) => (
-            <li key={spec} className="flex items-start gap-2">
-              <span className="mt-1.5 h-1 w-1 rounded-full bg-red-500" />
-              <span className="line-clamp-1">{spec}</span>
-            </li>
-          ))}
-        </ul>
-
-        <div className="mt-4 flex items-end gap-2">
-          <p className="text-lg font-bold text-zinc-950">
-            {formatCurrency(product.price, product.currency)}
-          </p>
-          {hasDiscount && product.originalPrice ? (
-            <p className="text-sm text-zinc-400 line-through">
-              {formatCurrency(product.originalPrice, product.currency)}
+        <div className="mt-auto pt-3">
+          {saImport ? (
+            <p className="mb-2 flex items-center gap-1.5 text-xs font-medium text-amber-700">
+              <Icon name="truck" className="h-3.5 w-3.5 shrink-0" />
+              Ships from SA · ~5 days
             </p>
           ) : null}
-        </div>
+          <div className="flex flex-wrap items-baseline gap-x-2">
+            <p className="text-base font-bold tabular-nums text-zinc-950 sm:text-lg">
+              {formatCurrency(product.price, product.currency)}
+            </p>
+            {hasDiscount && product.originalPrice ? (
+              <p className="text-xs tabular-nums text-zinc-400 line-through">
+                {formatCurrency(product.originalPrice, product.currency)}
+              </p>
+            ) : null}
+          </div>
 
-        {hasDiscount && product.originalPrice ? (
-          <p className="mt-1 text-xs font-semibold text-red-700">
-            Save {formatCurrency(product.originalPrice - product.price, product.currency)}
-          </p>
-        ) : null}
-
-        <p
-          className={`mt-1 line-clamp-2 text-sm ${saImport ? 'font-semibold text-red-600' : 'text-zinc-500'}`}
-        >
-          {urgencyMicrocopy}
-        </p>
-
-        <div className="mt-auto flex gap-2 pt-4">
           <button
             type="button"
             onClick={handleAdd}
             disabled={!product.inStock || adding}
-            className="order-1 flex min-h-11 flex-1 items-center justify-center rounded-full bg-red-600 px-3 py-2.5 text-sm font-semibold text-white transition hover:bg-red-700 disabled:cursor-not-allowed disabled:bg-zinc-200 disabled:text-zinc-400"
+            className="press mt-3 flex min-h-10 w-full items-center justify-center gap-1.5 rounded-button bg-zinc-900 px-3 text-sm font-semibold text-white hover:bg-red-600 disabled:cursor-not-allowed disabled:bg-zinc-100 disabled:text-zinc-400 sm:min-h-11"
           >
+            {adding ? <Icon name="check" className="h-4 w-4" strokeWidth={2} /> : null}
             {product.inStock
               ? adding
                 ? 'Added'
                 : isBundle
-                  ? 'Add bundle'
-                  : 'Add to cart'
-              : 'Unavailable'}
+                  ? 'Add Bundle'
+                  : 'Add to Cart'
+              : 'Out of stock'}
           </button>
         </div>
       </div>

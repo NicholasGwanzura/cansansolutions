@@ -47,7 +47,7 @@ export default function SolutionsPage() {
               <Link
                 key={solution.slug}
                 href={getSolutionHref(solution.slug)}
-                className="group rounded-2xl border border-zinc-200 bg-white p-6 shadow-[0_2px_5px_rgba(24,24,27,0.06)] transition duration-200 hover:border-zinc-300 hover:shadow-md focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600"
+                className="group rounded-card border border-zinc-200 bg-white p-6 shadow-[0_2px_5px_rgba(24,24,27,0.06)] transition duration-200 hover:border-zinc-300 hover:shadow-md focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600"
               >
                 <p className="text-xs font-bold uppercase tracking-widest text-zinc-400">
                   {solution.eyebrow}

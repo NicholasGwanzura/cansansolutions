@@ -35,7 +35,7 @@ export function HeroBannerCarousel({ banners }: HeroBannerCarouselProps) {
 
   return (
     <div
-      className="relative overflow-hidden rounded-3xl border border-zinc-200 bg-zinc-950"
+      className="relative overflow-hidden rounded-panel border border-zinc-200 bg-zinc-950"
       onMouseEnter={() => {
         pausedRef.current = true;
       }}
@@ -75,7 +75,7 @@ export function HeroBannerCarousel({ banners }: HeroBannerCarouselProps) {
                   <Link
                     href={banner.buttonLink}
                     tabIndex={index === activeIndex ? 0 : -1}
-                    className="mt-5 inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-zinc-950 transition hover:-translate-y-0.5 hover:bg-zinc-100"
+                    className="mt-5 inline-flex items-center gap-2 rounded-button bg-white px-6 py-3 text-sm font-semibold text-zinc-950 transition hover:-translate-y-0.5 hover:bg-zinc-100"
                   >
                     {banner.buttonText}
                     <span aria-hidden="true">→</span>

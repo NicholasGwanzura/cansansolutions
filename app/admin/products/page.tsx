@@ -144,7 +144,7 @@ function ImageGalleryUpload({
       </div>
 
       <div
-        className={`rounded-2xl border-2 border-dashed p-5 text-center transition ${dragActive ? 'border-red-500 bg-red-50' : 'border-zinc-200 bg-zinc-50/70 hover:border-red-300 hover:bg-red-50/50'}`}
+        className={`rounded-xl border-2 border-dashed p-5 text-center transition ${dragActive ? 'border-red-500 bg-red-50' : 'border-zinc-200 bg-zinc-50/70 hover:border-red-300 hover:bg-red-50/50'}`}
         onDragEnter={(event) => {
           event.preventDefault();
           setDragActive(true);
@@ -188,7 +188,7 @@ function ImageGalleryUpload({
           type="button"
           onClick={() => inputRef.current?.click()}
           disabled={uploading}
-          className="mt-4 inline-flex min-h-11 items-center justify-center rounded-xl bg-zinc-950 px-4 py-2 text-sm font-semibold text-white transition hover:bg-red-600 disabled:cursor-not-allowed disabled:opacity-60"
+          className="mt-4 inline-flex min-h-11 items-center justify-center rounded-button bg-zinc-950 px-4 py-2 text-sm font-semibold text-white transition hover:bg-red-600 disabled:cursor-not-allowed disabled:opacity-60"
         >
           {uploading ? 'Uploading photos...' : 'Choose photos'}
         </button>
@@ -206,12 +206,12 @@ function ImageGalleryUpload({
             }
           }}
           placeholder="Or paste an image URL"
-          className="min-w-0 flex-1 rounded-xl border border-zinc-200 bg-white px-3 py-2 text-sm outline-none transition placeholder:text-zinc-400 focus:border-red-400 focus:ring-4 focus:ring-red-100"
+          className="min-w-0 flex-1 rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm outline-none transition placeholder:text-zinc-400 focus:border-red-400 focus:ring-4 focus:ring-red-100"
         />
         <button
           type="button"
           onClick={addImageUrl}
-          className="min-h-11 rounded-xl border border-zinc-200 px-3 text-sm font-semibold text-zinc-700 transition hover:border-red-300 hover:bg-red-50 hover:text-red-700"
+          className="min-h-11 rounded-button border border-zinc-200 px-3 text-sm font-semibold text-zinc-700 transition hover:border-red-300 hover:bg-red-50 hover:text-red-700"
         >
           Add URL
         </button>
@@ -658,7 +658,7 @@ function ProductForm({
                     type="button"
                     onClick={enhanceDescription}
                     disabled={enhancing}
-                    className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-violet-50 hover:bg-violet-100 disabled:opacity-50 text-violet-700 text-xs font-medium transition"
+                    className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-button bg-violet-50 hover:bg-violet-100 disabled:opacity-50 text-violet-700 text-xs font-medium transition"
                   >
                     {enhancing ? (
                       <>
@@ -827,7 +827,7 @@ function ProductForm({
                       type="button"
                       onClick={enhanceSpecs}
                       disabled={enhancingSpecs}
-                      className="inline-flex items-center gap-1.5 rounded-md bg-blue-50 px-2.5 py-1 text-xs font-medium text-blue-700 transition hover:bg-blue-100 disabled:opacity-50"
+                      className="inline-flex items-center gap-1.5 rounded-button bg-blue-50 px-2.5 py-1 text-xs font-medium text-blue-700 transition hover:bg-blue-100 disabled:opacity-50"
                     >
                       {enhancingSpecs ? (
                         <>
@@ -929,7 +929,7 @@ function ProductForm({
                   formRef.current?.requestSubmit();
                 }, 0);
               }}
-              className="w-full rounded-xl border border-red-200 bg-red-50 py-2.5 text-sm font-semibold text-red-600 transition hover:bg-red-100 disabled:opacity-60"
+              className="w-full rounded-lg border border-red-200 bg-red-50 py-2.5 text-sm font-semibold text-red-600 transition hover:bg-red-100 disabled:opacity-60"
             >
               {saving && addAnother ? 'Saving…' : '+ Save & Add Another'}
             </button>
@@ -938,7 +938,7 @@ function ProductForm({
             <button
               type="button"
               onClick={requestClose}
-              className="flex-1 rounded-xl border border-zinc-200 py-2.5 text-sm font-semibold text-zinc-600 transition hover:bg-zinc-50"
+              className="flex-1 rounded-lg border border-zinc-200 py-2.5 text-sm font-semibold text-zinc-600 transition hover:bg-zinc-50"
             >
               Cancel
             </button>
@@ -951,7 +951,7 @@ function ProductForm({
                   formRef.current?.requestSubmit();
                 }, 0);
               }}
-              className="flex-1 rounded-xl bg-red-600 py-2.5 text-sm font-semibold text-white transition hover:bg-red-700 disabled:opacity-60"
+              className="flex-1 rounded-lg bg-red-600 py-2.5 text-sm font-semibold text-white transition hover:bg-red-700 disabled:opacity-60"
             >
               {saving && !addAnother ? 'Saving…' : initial.name ? 'Save Changes' : 'Add Product'}
             </button>
@@ -1029,7 +1029,7 @@ function ImportProductsModal({
         </div>
 
         <div className="space-y-5 px-6 py-5">
-          <div className="rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
+          <div className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
             Use `replace current catalog` if you want only your products on the site. Use `add to
             current catalog` if you want to keep what is already there.
           </div>
@@ -1038,21 +1038,21 @@ function ImportProductsModal({
             <button
               type="button"
               onClick={() => onModeChange('replace')}
-              className={`rounded-full px-4 py-2 text-sm font-semibold transition ${mode === 'replace' ? 'bg-red-600 text-white' : 'border border-zinc-200 text-zinc-600 hover:border-red-300 hover:text-red-600'}`}
+              className={`rounded-button px-4 py-2 text-sm font-semibold transition ${mode === 'replace' ? 'bg-red-600 text-white' : 'border border-zinc-200 text-zinc-600 hover:border-red-300 hover:text-red-600'}`}
             >
               Replace Current Catalog
             </button>
             <button
               type="button"
               onClick={() => onModeChange('append')}
-              className={`rounded-full px-4 py-2 text-sm font-semibold transition ${mode === 'append' ? 'bg-zinc-900 text-white' : 'border border-zinc-200 text-zinc-600 hover:border-zinc-400 hover:text-zinc-900'}`}
+              className={`rounded-button px-4 py-2 text-sm font-semibold transition ${mode === 'append' ? 'bg-zinc-900 text-white' : 'border border-zinc-200 text-zinc-600 hover:border-zinc-400 hover:text-zinc-900'}`}
             >
               Add To Current Catalog
             </button>
             <button
               type="button"
               onClick={() => inputRef.current?.click()}
-              className="ml-auto rounded-xl border border-zinc-200 px-4 py-2 text-sm font-semibold text-zinc-700 transition hover:bg-zinc-50"
+              className="ml-auto rounded-button border border-zinc-200 px-4 py-2 text-sm font-semibold text-zinc-700 transition hover:bg-zinc-50"
             >
               Load JSON File
             </button>
@@ -1078,7 +1078,7 @@ function ImportProductsModal({
               rows={18}
               spellCheck={false}
               placeholder={IMPORT_PLACEHOLDER}
-              className="w-full rounded-2xl border border-zinc-200 bg-zinc-950 px-4 py-3 font-mono text-sm text-zinc-100 outline-none focus:border-red-300 focus:ring-2 focus:ring-red-100"
+              className="w-full rounded-lg border border-zinc-200 bg-zinc-950 px-4 py-3 font-mono text-sm text-zinc-100 outline-none focus:border-red-300 focus:ring-2 focus:ring-red-100"
             />
           </div>
         </div>
@@ -1092,7 +1092,7 @@ function ImportProductsModal({
             <button
               type="button"
               onClick={onClose}
-              className="rounded-xl border border-zinc-200 px-4 py-2.5 text-sm font-semibold text-zinc-600 transition hover:bg-zinc-50"
+              className="rounded-button border border-zinc-200 px-4 py-2.5 text-sm font-semibold text-zinc-600 transition hover:bg-zinc-50"
             >
               Cancel
             </button>
@@ -1100,7 +1100,7 @@ function ImportProductsModal({
               type="button"
               disabled={loading}
               onClick={onImport}
-              className="rounded-xl bg-red-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-red-700 disabled:opacity-60"
+              className="rounded-button bg-red-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-red-700 disabled:opacity-60"
             >
               {loading ? 'Importing…' : 'Import Products'}
             </button>
@@ -1166,7 +1166,7 @@ function FirstShopImportModal({
         </div>
 
         <div className="space-y-5 px-6 py-5">
-          <div className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800">
+          <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800">
             Imported items are mapped to <strong>SA Imports</strong> and tagged for{' '}
             <strong>5-day delivery from SA</strong>.
           </div>
@@ -1179,7 +1179,7 @@ function FirstShopImportModal({
               <input
                 value={collectionHandle}
                 onChange={(e) => onCollectionHandleChange(e.target.value)}
-                className="w-full rounded-xl border border-zinc-200 px-3 py-2 text-sm outline-none focus:border-red-300 focus:ring-2 focus:ring-red-100"
+                className="w-full rounded-lg border border-zinc-200 px-3 py-2 text-sm outline-none focus:border-red-300 focus:ring-2 focus:ring-red-100"
                 placeholder="external-solid-state-drive-ssd"
               />
             </div>
@@ -1193,7 +1193,7 @@ function FirstShopImportModal({
                 max={120}
                 value={limit}
                 onChange={(e) => onLimitChange(e.target.value)}
-                className="w-full rounded-xl border border-zinc-200 px-3 py-2 text-sm outline-none focus:border-red-300 focus:ring-2 focus:ring-red-100"
+                className="w-full rounded-lg border border-zinc-200 px-3 py-2 text-sm outline-none focus:border-red-300 focus:ring-2 focus:ring-red-100"
               />
             </div>
           </div>
@@ -1209,7 +1209,7 @@ function FirstShopImportModal({
                 step="0.0001"
                 value={bankRate}
                 onChange={(e) => onBankRateChange(e.target.value)}
-                className="w-full rounded-xl border border-zinc-200 px-3 py-2 text-sm outline-none focus:border-red-300 focus:ring-2 focus:ring-red-100"
+                className="w-full rounded-lg border border-zinc-200 px-3 py-2 text-sm outline-none focus:border-red-300 focus:ring-2 focus:ring-red-100"
                 placeholder="16.3104"
               />
               <p className="mt-1 text-xs text-zinc-500">
@@ -1227,7 +1227,7 @@ function FirstShopImportModal({
               value={productLinks}
               onChange={(e) => onProductLinksChange(e.target.value)}
               placeholder={`https://www.firstshop.co.za/products/verbatim-1tb-m-2-usb-3-2-external-pocket-ssd-black-red-32192-316748\nhttps://www.firstshop.co.za/products/another-product-handle`}
-              className="w-full rounded-2xl border border-zinc-200 bg-zinc-50 px-3 py-2 text-sm outline-none focus:border-red-300 focus:ring-2 focus:ring-red-100"
+              className="w-full rounded-lg border border-zinc-200 bg-zinc-50 px-3 py-2 text-sm outline-none focus:border-red-300 focus:ring-2 focus:ring-red-100"
             />
             <p className="mt-1 text-xs text-zinc-500">
               Paste one link per line. When links are provided, these products are imported
@@ -1244,7 +1244,7 @@ function FirstShopImportModal({
             <button
               type="button"
               onClick={onClose}
-              className="rounded-xl border border-zinc-200 px-4 py-2.5 text-sm font-semibold text-zinc-600 transition hover:bg-zinc-50"
+              className="rounded-button border border-zinc-200 px-4 py-2.5 text-sm font-semibold text-zinc-600 transition hover:bg-zinc-50"
             >
               Cancel
             </button>
@@ -1252,7 +1252,7 @@ function FirstShopImportModal({
               type="button"
               disabled={loading}
               onClick={onImport}
-              className="rounded-xl bg-red-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-red-700 disabled:opacity-60"
+              className="rounded-button bg-red-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-red-700 disabled:opacity-60"
             >
               {loading ? 'Importing…' : 'Import FirstShop SA'}
             </button>
@@ -1326,7 +1326,7 @@ function BulkEditModal({
               <button
                 type="button"
                 onClick={() => setInStock(inStock === true ? '' : true)}
-                className={`flex-1 rounded-lg border px-3 py-2 text-sm transition ${
+                className={`flex-1 rounded-button border px-3 py-2 text-sm transition ${
                   inStock === true
                     ? 'border-green-500 bg-green-50 text-green-700'
                     : 'border-zinc-200 hover:bg-zinc-50'
@@ -1337,7 +1337,7 @@ function BulkEditModal({
               <button
                 type="button"
                 onClick={() => setInStock(inStock === false ? '' : false)}
-                className={`flex-1 rounded-lg border px-3 py-2 text-sm transition ${
+                className={`flex-1 rounded-button border px-3 py-2 text-sm transition ${
                   inStock === false
                     ? 'border-red-500 bg-red-50 text-red-700'
                     : 'border-zinc-200 hover:bg-zinc-50'
@@ -1356,7 +1356,7 @@ function BulkEditModal({
               <button
                 type="button"
                 onClick={() => setFeatured(featured === true ? '' : true)}
-                className={`flex-1 rounded-lg border px-3 py-2 text-sm transition ${
+                className={`flex-1 rounded-button border px-3 py-2 text-sm transition ${
                   featured === true
                     ? 'border-red-500 bg-red-50 text-red-700'
                     : 'border-zinc-200 hover:bg-zinc-50'
@@ -1367,7 +1367,7 @@ function BulkEditModal({
               <button
                 type="button"
                 onClick={() => setFeatured(featured === false ? '' : false)}
-                className={`flex-1 rounded-lg border px-3 py-2 text-sm transition ${
+                className={`flex-1 rounded-button border px-3 py-2 text-sm transition ${
                   featured === false
                     ? 'border-zinc-500 bg-zinc-100 text-zinc-700'
                     : 'border-zinc-200 hover:bg-zinc-50'
@@ -1382,14 +1382,14 @@ function BulkEditModal({
         <div className="flex gap-2 mt-6">
           <button
             onClick={onClose}
-            className="flex-1 rounded-xl border border-zinc-200 py-2.5 text-sm font-semibold text-zinc-600 hover:bg-zinc-50 transition"
+            className="flex-1 rounded-lg border border-zinc-200 py-2.5 text-sm font-semibold text-zinc-600 hover:bg-zinc-50 transition"
           >
             Cancel
           </button>
           <button
             onClick={handleApply}
             disabled={!hasChanges || loading}
-            className="flex-1 rounded-xl bg-red-600 py-2.5 text-sm font-semibold text-white hover:bg-red-700 transition disabled:opacity-60"
+            className="flex-1 rounded-lg bg-red-600 py-2.5 text-sm font-semibold text-white hover:bg-red-700 transition disabled:opacity-60"
           >
             {loading ? 'Applying…' : `Update ${selectedCount} Products`}
           </button>
@@ -1890,7 +1890,7 @@ function Dashboard() {
             <>
               <button
                 onClick={openAdd}
-                className="inline-flex items-center gap-1.5 rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-red-700 shadow-sm"
+                className="inline-flex items-center gap-1.5 rounded-button bg-red-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-red-700 shadow-sm"
               >
                 <svg
                   width="14"
@@ -1912,18 +1912,18 @@ function Dashboard() {
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-5 mb-6">
           {[
             { label: 'Total Products', value: products.length, color: 'text-zinc-900' },
-            { label: 'In Stock', value: inStockCount, color: 'text-green-600' },
+            { label: 'In Stock', value: inStockCount, color: 'text-zinc-950' },
             { label: 'Out of Stock', value: products.length - inStockCount, color: 'text-red-500' },
             { label: 'Featured', value: featuredCount, color: 'text-red-600' },
             {
               label: 'Categories',
               value: new Set(products.map((p) => p.category)).size,
-              color: 'text-blue-600',
+              color: 'text-zinc-950',
             },
           ].map((stat) => (
             <div
               key={stat.label}
-              className="rounded-xl border border-zinc-200 bg-white p-4 shadow-sm"
+              className="rounded-xl border border-zinc-200/80 bg-white p-4"
             >
               <p className="text-xs text-zinc-400">{stat.label}</p>
               <p className={`font-heading text-2xl font-bold mt-0.5 ${stat.color}`}>{stat.value}</p>
@@ -1954,7 +1954,7 @@ function Dashboard() {
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search products…"
-                className="w-full rounded-xl border border-zinc-200 bg-white pl-9 pr-3 py-2 text-sm outline-none focus:border-red-300 focus:ring-2 focus:ring-red-100"
+                className="w-full rounded-lg border border-zinc-200 bg-white pl-9 pr-3 py-2 text-sm outline-none focus:border-red-300 focus:ring-2 focus:ring-red-100"
               />
             </div>
           </div>
@@ -1963,7 +1963,7 @@ function Dashboard() {
             <select
               value={filterCat}
               onChange={(e) => setFilterCat(e.target.value)}
-              className="rounded-xl border border-zinc-200 bg-white px-3 py-2 text-sm outline-none focus:border-red-300"
+              className="rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm outline-none focus:border-red-300"
             >
               <option value="">All categories</option>
               {CATEGORIES.map((c) => (
@@ -1976,7 +1976,7 @@ function Dashboard() {
             <select
               value={filterStock}
               onChange={(e) => setFilterStock(e.target.value as 'all' | 'in' | 'out')}
-              className="rounded-xl border border-zinc-200 bg-white px-3 py-2 text-sm outline-none focus:border-red-300"
+              className="rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm outline-none focus:border-red-300"
             >
               <option value="all">All stock</option>
               <option value="in">In stock</option>
@@ -1986,7 +1986,7 @@ function Dashboard() {
             <select
               value={filterFeatured}
               onChange={(e) => setFilterFeatured(e.target.value as 'all' | 'yes' | 'no')}
-              className="rounded-xl border border-zinc-200 bg-white px-3 py-2 text-sm outline-none focus:border-red-300"
+              className="rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm outline-none focus:border-red-300"
             >
               <option value="all">All items</option>
               <option value="yes">Featured only</option>
@@ -2019,7 +2019,7 @@ function Dashboard() {
                 setFilterFeatured('all');
                 setPriceRange({ min: '', max: '' });
               }}
-              className="rounded-xl border border-zinc-200 bg-white px-3 py-2 text-sm font-semibold text-zinc-600 transition hover:bg-zinc-50"
+              className="rounded-button border border-zinc-200 bg-white px-3 py-2 text-sm font-semibold text-zinc-600 transition hover:bg-zinc-50"
             >
               Clear Filters
             </button>
@@ -2030,7 +2030,7 @@ function Dashboard() {
               <>
                 <button
                   onClick={() => setBulkEditOpen(true)}
-                  className="flex items-center gap-1.5 rounded-xl border border-blue-200 bg-blue-50 px-4 py-2 text-sm font-semibold text-blue-600 transition hover:bg-blue-100"
+                  className="flex items-center gap-1.5 rounded-button border border-blue-200 bg-blue-50 px-4 py-2 text-sm font-semibold text-blue-600 transition hover:bg-blue-100"
                 >
                   <svg
                     width="14"
@@ -2051,7 +2051,7 @@ function Dashboard() {
                 <button
                   onClick={() => handleEnrichSpecs(Array.from(selectedIds))}
                   disabled={enrichingSpecs}
-                  className="flex items-center gap-1.5 rounded-xl border border-violet-200 bg-violet-50 px-4 py-2 text-sm font-semibold text-violet-700 transition hover:bg-violet-100 disabled:opacity-60"
+                  className="flex items-center gap-1.5 rounded-button border border-violet-200 bg-violet-50 px-4 py-2 text-sm font-semibold text-violet-700 transition hover:bg-violet-100 disabled:opacity-60"
                 >
                   {enrichingSpecs ? (
                     <span className="h-3.5 w-3.5 animate-spin rounded-full border-2 border-violet-700 border-t-transparent" />
@@ -2075,7 +2075,7 @@ function Dashboard() {
                 </button>
                 <button
                   onClick={() => setBatchDeleteOpen(true)}
-                  className="flex items-center gap-1.5 rounded-xl bg-red-100 px-4 py-2 text-sm font-semibold text-red-600 transition hover:bg-red-200"
+                  className="flex items-center gap-1.5 rounded-button bg-red-100 px-4 py-2 text-sm font-semibold text-red-600 transition hover:bg-red-200"
                 >
                   <svg
                     width="14"
@@ -2099,7 +2099,7 @@ function Dashboard() {
             <button
               onClick={() => handleEnrichSpecs()}
               disabled={enrichingSpecs || products.length === 0}
-              className="flex items-center gap-1.5 rounded-xl border border-violet-200 bg-violet-50 px-4 py-2 text-sm font-semibold text-violet-700 transition hover:bg-violet-100 disabled:opacity-60"
+              className="flex items-center gap-1.5 rounded-button border border-violet-200 bg-violet-50 px-4 py-2 text-sm font-semibold text-violet-700 transition hover:bg-violet-100 disabled:opacity-60"
             >
               {enrichingSpecs ? (
                 <span className="h-3.5 w-3.5 animate-spin rounded-full border-2 border-violet-700 border-t-transparent" />
@@ -2124,7 +2124,7 @@ function Dashboard() {
 
             <button
               onClick={() => setImportOpen(true)}
-              className="flex items-center gap-1.5 rounded-xl border border-zinc-200 bg-white px-4 py-2 text-sm font-semibold text-zinc-700 transition hover:bg-zinc-50"
+              className="flex items-center gap-1.5 rounded-button border border-zinc-200 bg-white px-4 py-2 text-sm font-semibold text-zinc-700 transition hover:bg-zinc-50"
             >
               <svg
                 width="14"
@@ -2146,7 +2146,7 @@ function Dashboard() {
             <button
               onClick={() => setFirstshopImportOpen(true)}
               disabled={importingFirstshop}
-              className="flex items-center gap-1.5 rounded-xl border border-red-200 bg-red-50 px-4 py-2 text-sm font-semibold text-red-700 transition hover:bg-red-100 disabled:opacity-60"
+              className="flex items-center gap-1.5 rounded-button border border-red-200 bg-red-50 px-4 py-2 text-sm font-semibold text-red-700 transition hover:bg-red-100 disabled:opacity-60"
             >
               {importingFirstshop ? (
                 <span className="h-3.5 w-3.5 animate-spin rounded-full border-2 border-red-700 border-t-transparent" />
@@ -2171,7 +2171,7 @@ function Dashboard() {
 
             <button
               onClick={exportProducts}
-              className="flex items-center gap-1.5 rounded-xl border border-zinc-200 bg-white px-4 py-2 text-sm font-semibold text-zinc-700 transition hover:bg-zinc-50"
+              className="flex items-center gap-1.5 rounded-button border border-zinc-200 bg-white px-4 py-2 text-sm font-semibold text-zinc-700 transition hover:bg-zinc-50"
             >
               <svg
                 width="14"
@@ -2207,10 +2207,10 @@ function Dashboard() {
             <div className="h-7 w-7 animate-spin rounded-full border-2 border-red-600 border-t-transparent" />
           </div>
         ) : (
-          <div className="rounded-2xl border border-zinc-200 bg-white shadow-sm overflow-hidden">
+          <div className="rounded-xl border border-zinc-200 bg-white shadow-sm overflow-hidden">
             {sortedFiltered.length === 0 ? (
               <div className="flex flex-col items-center justify-center gap-4 px-6 py-14 text-center">
-                <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-zinc-100 text-zinc-500">
+                <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-zinc-100 text-zinc-500">
                   <svg
                     width="24"
                     height="24"
@@ -2227,7 +2227,7 @@ function Dashboard() {
                   </svg>
                 </div>
                 <div>
-                  <p className="text-base font-semibold text-zinc-900">No products found</p>
+                  <p className="text-base font-semibold text-zinc-900">No Products Found</p>
                   <p className="mt-1 text-sm text-zinc-500">
                     Try adjusting your filters or import your catalog.
                   </p>
@@ -2235,13 +2235,13 @@ function Dashboard() {
                 <div className="flex flex-wrap items-center justify-center gap-2">
                   <button
                     onClick={() => setImportOpen(true)}
-                    className="rounded-xl bg-zinc-900 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-zinc-800"
+                    className="rounded-button bg-zinc-900 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-zinc-800"
                   >
                     Import Products JSON
                   </button>
                   <button
                     onClick={openAdd}
-                    className="rounded-xl border border-zinc-200 px-4 py-2.5 text-sm font-semibold text-zinc-700 transition hover:bg-zinc-50"
+                    className="rounded-button border border-zinc-200 px-4 py-2.5 text-sm font-semibold text-zinc-700 transition hover:bg-zinc-50"
                   >
                     Add Product Manually
                   </button>
@@ -2388,7 +2388,7 @@ function Dashboard() {
                             <div className="flex items-center justify-end gap-1">
                               <button
                                 onClick={() => handleDuplicate(p)}
-                                className="rounded-lg px-2 py-1.5 text-xs font-medium text-zinc-500 hover:bg-zinc-100 transition"
+                                className="rounded-button px-2 py-1.5 text-xs font-medium text-zinc-500 hover:bg-zinc-100 transition"
                                 title="Duplicate"
                               >
                                 <svg
@@ -2408,13 +2408,13 @@ function Dashboard() {
                               </button>
                               <button
                                 onClick={() => openEdit(p)}
-                                className="rounded-lg px-2.5 py-1.5 text-xs font-medium text-zinc-600 hover:bg-zinc-100 transition"
+                                className="rounded-button px-2.5 py-1.5 text-xs font-medium text-zinc-600 hover:bg-zinc-100 transition"
                               >
                                 Edit
                               </button>
                               <button
                                 onClick={() => setDeleteId(p.id)}
-                                className="rounded-lg px-2.5 py-1.5 text-xs font-medium text-red-500 hover:bg-red-50 transition"
+                                className="rounded-button px-2.5 py-1.5 text-xs font-medium text-red-500 hover:bg-red-50 transition"
                               >
                                 Delete
                               </button>
@@ -2436,7 +2436,7 @@ function Dashboard() {
                       <button
                         onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
                         disabled={currentPage === 1}
-                        className="rounded-lg border border-zinc-200 px-3 py-1.5 text-sm font-medium text-zinc-600 hover:bg-zinc-50 disabled:opacity-50"
+                        className="rounded-button border border-zinc-200 px-3 py-1.5 text-sm font-medium text-zinc-600 hover:bg-zinc-50 disabled:opacity-50"
                       >
                         Previous
                       </button>
@@ -2455,7 +2455,7 @@ function Dashboard() {
                           <button
                             key={pageNum}
                             onClick={() => setCurrentPage(pageNum)}
-                            className={`rounded-lg px-3 py-1.5 text-sm font-medium ${
+                            className={`rounded-button px-3 py-1.5 text-sm font-medium ${
                               currentPage === pageNum
                                 ? 'bg-red-600 text-white'
                                 : 'border border-zinc-200 text-zinc-600 hover:bg-zinc-50'
@@ -2468,7 +2468,7 @@ function Dashboard() {
                       <button
                         onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
                         disabled={currentPage === totalPages}
-                        className="rounded-lg border border-zinc-200 px-3 py-1.5 text-sm font-medium text-zinc-600 hover:bg-zinc-50 disabled:opacity-50"
+                        className="rounded-button border border-zinc-200 px-3 py-1.5 text-sm font-medium text-zinc-600 hover:bg-zinc-50 disabled:opacity-50"
                       >
                         Next
                       </button>
@@ -2581,13 +2581,13 @@ function Dashboard() {
             <div className="flex gap-2">
               <button
                 onClick={() => setDeleteId(null)}
-                className="flex-1 rounded-xl border border-zinc-200 py-2.5 text-sm font-semibold text-zinc-600 hover:bg-zinc-50 transition"
+                className="flex-1 rounded-lg border border-zinc-200 py-2.5 text-sm font-semibold text-zinc-600 hover:bg-zinc-50 transition"
               >
                 Cancel
               </button>
               <button
                 onClick={() => handleDelete(deleteId)}
-                className="flex-1 rounded-xl bg-red-600 py-2.5 text-sm font-semibold text-white hover:bg-red-700 transition"
+                className="flex-1 rounded-lg bg-red-600 py-2.5 text-sm font-semibold text-white hover:bg-red-700 transition"
               >
                 Delete
               </button>
@@ -2627,14 +2627,14 @@ function Dashboard() {
             <div className="flex gap-2">
               <button
                 onClick={() => setBatchDeleteOpen(false)}
-                className="flex-1 rounded-xl border border-zinc-200 py-2.5 text-sm font-semibold text-zinc-600 hover:bg-zinc-50 transition"
+                className="flex-1 rounded-lg border border-zinc-200 py-2.5 text-sm font-semibold text-zinc-600 hover:bg-zinc-50 transition"
               >
                 Cancel
               </button>
               <button
                 onClick={handleBatchDelete}
                 disabled={batchDeleting}
-                className="flex-1 rounded-xl bg-red-600 py-2.5 text-sm font-semibold text-white hover:bg-red-700 transition disabled:opacity-60"
+                className="flex-1 rounded-lg bg-red-600 py-2.5 text-sm font-semibold text-white hover:bg-red-700 transition disabled:opacity-60"
               >
                 {batchDeleting ? 'Deleting…' : `Delete ${selectedIds.size} Products`}
               </button>

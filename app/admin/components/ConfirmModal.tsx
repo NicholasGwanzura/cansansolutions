@@ -60,7 +60,7 @@ export default function ConfirmModal({
           <button
             type="button"
             onClick={onCancel}
-            className="rounded-xl border border-zinc-200 px-5 py-2.5 text-sm font-semibold text-zinc-600 transition hover:bg-zinc-50"
+            className="rounded-button border border-zinc-200 px-5 py-2.5 text-sm font-semibold text-zinc-600 transition hover:bg-zinc-50"
           >
             {cancelLabel}
           </button>
@@ -68,7 +68,7 @@ export default function ConfirmModal({
             ref={confirmRef}
             type="button"
             onClick={onConfirm}
-            className={`rounded-xl px-5 py-2.5 text-sm font-semibold text-white transition ${
+            className={`rounded-button px-5 py-2.5 text-sm font-semibold text-white transition ${
               variant === 'danger'
                 ? 'bg-red-600 hover:bg-red-700'
                 : 'bg-zinc-800 hover:bg-zinc-900'
